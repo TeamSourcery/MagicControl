@@ -1,0 +1,310 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- clock stuff -->
+    <string-array name="clock_style_entries">
+        <item>Right clock</item>
+        <item>Center clock</item>
+        <item>Vanish</item>
+    </string-array>
+
+    <string-array name="clock_style_values" translatable="false">
+        <item>1</item>
+        <item>2</item>
+        <item>0</item>
+    </string-array>
+
+    <string-array name="clock_ampm_entries">
+        <item>Don\'t show</item>
+        <item>Small AM/PM</item>
+        <item>Regular AM/PM</item>
+        
+    </string-array>
+
+    <string-array name="clock_ampm_values" translatable="false">
+        <item>2</item>
+        <item>1</item>
+        <item>0</item>
+        
+    </string-array>
+
+    <string-array name="clock_weekday_entries">
+        <item>Don\'t show</item>
+        <item>Small weekday</item>
+        <item>Regular weekday</item>
+    </string-array>
+
+    <string-array name="clock_weekday_values" translatable="false">
+        <item>0</item>
+        <item>1</item>
+        <item>2</item>
+    </string-array>
+
+    <!-- toggle style -->
+    <string-array name="toggle_style_entries">
+        <item>Icon only</item>
+        <item>Text only</item>
+    </string-array>
+
+    <string-array name="toggle_style_values" translatable="false">
+        <item>2</item>
+        <item>3</item>
+    </string-array>
+
+    <string-array name="toggles_layout_images">
+        <item>@drawable/toggle_layout_switches</item>
+        <item>@drawable/toggle_layout_buttons</item>
+    </string-array>
+
+    <string-array name="toggles_layout_entries">
+        <item>0</item>
+        <item>1</item>
+    </string-array>
+    
+    <!-- Generic toggle oberlay. Should be set per device in overlay -->
+    <string-array name="available_toggles_entries" translatable="false">
+        <item>ROTATE</item>
+        <item>BT</item>
+        <item>GPS</item>
+        <item>WIFI</item>
+        <item>AIRPLANE_MODE</item>
+        <item>VIBRATE</item>
+        <item>SILENT</item>
+        <item>TORCH</item>
+        <item>SYNC</item>
+    </string-array>
+    <string-array name="available_toggles_values">
+        <item>@string/toggle_auto_rotate</item>
+        <item>@string/toggle_bluetooth</item>
+        <item>@string/toggle_gps</item>
+        <item>@string/toggle_wifi</item>
+        <item>@string/toggle_airplane_mode</item>
+        <item>@string/toggle_vibrate</item>
+        <item>@string/toggle_silent</item>
+        <item>@string/toggle_torch</item>
+        <item>@string/toggle_sync</item>
+    </string-array>
+ 
+    <!-- Battery styles -->
+    <string-array name="battery_icon_entries">
+	<item>Icon only</item>
+	<item>Text only</item>
+	
+	<item>Icon with centered text</item>
+	<item>Turn on Batery Mods</item>
+	<item>Vanish</item>
+    </string-array>
+
+    <string-array name="battery_icon_values" translatable="false">
+	<item>0</item>
+	<item>1</item>
+	
+	<item>3</item>
+	<item>4</item>
+	<item>5</item>
+    </string-array>
+ 
+    <string-array name="battery_bar_entries">
+		<item>Vanish</item>
+		<item>Statusbar</item>
+		<item>Navbar Top</item>
+		<item>Navbar Bottom</item>
+	</string-array>
+
+	<string-array name="battery_bar_values">
+		<item>0</item>
+		<item>1</item>
+		<item>2</item>
+		<item>3</item>
+	</string-array>
+
+       <string-array name="battery_bar_style_entries">
+		<item>Regular</item>
+		<item>Center</item>
+	</string-array>
+
+	<string-array name="battery_bar_style_values">
+		<item>0</item>
+		<item>1</item>
+	</string-array>
+
+	<string-array name="battery_bar_thickness_entries">
+		<item>1 dp</item>
+		<item>2 dp</item>
+		<item>3 dp</item>
+		<item>4 dp</item>
+	</string-array>
+
+	<string-array name="battery_bar_thickness_values">
+		<item>1</item>
+		<item>2</item>
+		<item>3</item>
+		<item>4</item>
+	</string-array>
+     
+        <!-- NavBar -->
+    <string-array name="pref_navigation_menu_entries">
+		<item>Right</item>
+		<item>Left</item>
+		<item>Both</item>
+		<item>Vanish</item>
+	</string-array>
+
+	<!-- right is the default, easier to keep 0 as first index -->
+	<string-array name="pref_navigation_menu_values"
+		translatable="false">
+		<item>0</item>
+		<item>1</item>
+		<item>2</item>
+		<item>4</item>
+	</string-array>
+    
+	<string-array name="pref_navigation_menu_display_entries">
+		<item>Default JB behavior</item>
+		<item>Always show invisible icons</item>
+		<item>Always show</item>
+		<item>Default JB with invisible icons when hidden</item>
+	</string-array>
+
+	<string-array name="pref_navigation_menu_display_values" translatable="false">
+		<item>0</item>
+		<item>1</item>
+		<item>2</item>
+		<item>3</item>
+	</string-array>
+	
+	<string-array name="navigation_bar_qty_entries">
+		<item>1</item>
+		<item>2</item>
+		<item>3</item>
+		<item>4</item>
+		<item>5</item>
+	</string-array>
+
+	<string-array name="navigation_bar_qty_values" translatable="false">
+		<item>1</item>
+		<item>2</item>
+		<item>3</item>
+		<item>4</item>
+		<item>5</item>
+	</string-array>
+
+	<string-array name="navbar_button_entries">
+		<item>Home</item>
+		<item>Back</item>
+		<item>Recents</item>
+		<item>Search</item>
+		<item>Menu</item>
+		<item>Toggle Widgets</item>
+		<item>Kill app</item>
+		<item>Power</item>
+                <item>Screenshot</item>
+		<item>Custom app</item>
+		<item>Blank</item>
+	</string-array>
+
+	<string-array name="navbar_button_values" translatable="false">
+		<item>**home**</item>
+		<item>**back**</item>
+		<item>**recents**</item>
+		<item>**search**</item>
+		<item>**menu**</item>
+		<item>**widgets**</item>
+		<item>**kill**</item>
+		<item>**power**</item>
+                <item>**screenshot**</item>
+		<item>**app**</item>
+		<item>**null**</item>
+	</string-array>
+
+    <string-array name="navigation_bar_width_entries">
+        <item>42 dp (default)</item>
+        <item>36 dp</item>
+        <item>30 dp</item>
+        <item>24 dp</item>
+    </string-array>
+
+    <string-array name="navigation_bar_width" translatable="false">
+        <item>42</item>
+        <item>36</item>
+        <item>30</item>
+        <item>24</item>
+    </string-array>
+
+    <string-array name="navigation_bar_height_entries">
+        <item>48 dp (default)</item>
+        <item>44 dp</item>
+        <item>40 dp</item>
+        <item>36 dp</item>
+        <item>30 dp</item>
+        <item>24 dp</item>
+    </string-array>
+
+    <string-array name="navigation_bar_height" translatable="false">
+        <item>48</item>
+        <item>44</item>
+        <item>40</item>
+        <item>36</item>
+        <item>30</item>
+        <item>24</item>
+    </string-array>
+
+    <string-array name="navigation_bar_height_landscape_entries">
+         <item>48 dp (default)</item>
+         <item>42 dp</item>
+         <item>36 dp</item>
+         <item>30 dp</item>
+         <item>24 dp</item>
+     </string-array>
+
+     <string-array name="navigation_bar_height_landscape" translatable="false">
+         <item>48</item>
+         <item>42</item>
+         <item>36</item>
+         <item>30</item>
+         <item>24</item>
+     </string-array>
+
+    <!-- LED Values -->
+    <string-array name="led_entries">
+        <item>.2 seconds</item>
+        <item>.5 seconds</item>
+        <item>1 second</item>
+        <item>1.5 seconds</item>
+        <item>2 seconds</item>
+        <item>2.5 seconds</item>
+        <item>3 seconds</item>
+        <item>3.5 seconds</item>
+        <item>4 seconds</item>
+        <item>4.5 seconds</item>
+        <item>5 seconds</item>
+        <item>5.5 seconds</item>
+        <item>6 seconds</item>
+        <item>7 seconds</item>
+        <item>8 seconds</item>
+        <item>9 seconds</item>
+        <item>10 seconds</item>
+    </string-array>
+
+    <!-- values must be in milliseconds!~@@#E!@ -->
+    <integer-array name="led_values" translatable="false">
+        <item>200</item>
+        <item>500</item>
+        <item>1000</item>
+        <item>1500</item>
+        <item>2000</item>
+        <item>2500</item>
+        <item>3000</item>
+        <item>3500</item>
+        <item>4000</item>
+        <item>4500</item>
+        <item>5000</item>
+        <item>5500</item>
+        <item>6000</item>
+        <item>7000</item>
+        <item>8000</item>
+        <item>9000</item>
+        <item>10000</item>
+    </integer-array>
+
+</resources>

@@ -1,0 +1,178 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">JB Control Center</string>
+
+    <!-- Header Strings -->
+    <string name="cancel">Cancel</string>
+    <string name="ok">OK</string>
+    <string name="menu_main_activity_change_locale">Blank!</string>
+    <string name="header_statusbar">Statusbar</string>
+    <string name="header_navbar">Navigation bar</string>
+    <string name="nav_bar">Navigation bar</string>
+    <string name="toggles_layout">Toggles</string>
+    <string name="power_menu_optons">Power menu options</string>
+    <string name="clock">Clock</string>
+    <string name="battery">Battery</string>
+    <string name="lockscreen_options">Lockscreen options</string>
+    <string name="led_options">LED options</string>
+
+    <!-- Header Summaries -->
+    <string name="header_summary_clock">Clock location, AM/PM style, color</string>
+    <string name="header_summary_navigation_bar">Navigation Bar Options</string>
+    <string name="header_summary_toggles">Customize toggles</string>
+    <string name="header_summary_general_ui">Boot animation, bug mailer, rotation, IME switcher, etc</string>
+    <string name="header_summary_lockscreens">Toggle lockscreen options</string>
+    <string name="header_summary_battery">Battery bar, battery mods, etc</string>
+    <string name="header_summary_power_menu">What to display in your power menu</string>
+    <string name="header_summary_led">Change default LED Settings</string>
+
+    <!-- Menu Strings -->
+    <string name="menu_nav_bar_reset">Reset nav bar</string>
+
+    <!-- General Strings -->
+    <string name="advanced_settings">Advanced settings</string>
+    <string name="misc_short">Misc</string>
+    <string name="custom_app_icon_successfully">"'s icon set successfully!"</string>
+    <string name="general_ui">Magic UI</string>
+
+    <!-- Shortcut picker -->
+    <string name="use_custom_app_title">Use custom application</string>
+    <string name="use_custom_app_summary">Use custom application instead of the recent applications dialog</string>
+    <string name="select_custom_app_title">Select custom application</string>
+    <string name="group_applications">Applications</string>
+
+   
+    <!-- Statusbar | Toggles -->
+    <string name="toggle_style_title">Toggle style</string>
+    <string name="toggle_style_summary">Whether to show icons or text on your toggles.</string>
+    <string name="toggles_layout_title">Toggle Layout</string>
+    <string name="enabled_toggles_title">Enabled toggles</string>
+    <string name="enabled_toggles_summary">Choose toggles to display</string>
+    <string name="toggles_display_dialog">Choose which toggles to use</string>
+    <string name="toggles_display_close">Close</string>
+    <string name="toggles_order_title">Toggle order</string>
+    <string name="toggles_order_summary">Choose the order which your toggles are displayed</string>
+    <string name="brightness_location_title">Brightness location</string>
+    <string name="reset_toggles_title">Reset toggles</string>
+    <string name="reset_toggles_summary">Reset all toggles and their order</string>
+
+       
+    <!-- Toggle Strings to be called from device overlays -->
+    <string name="toggle_airplane_mode">Airplane mode</string>
+    <string name="toggle_auto_rotate">Auto rotate</string>
+    <string name="toggle_bluetooth">Bluetooth</string>
+    <string name="toggle_fast_charge">Fast charge</string>
+    <string name="toggle_gps">GPS</string>
+    <string name="toggle_lte">LTE</string>
+    <string name="toggle_data">Data</string>
+    <string name="toggle_nfc">NFC</string>
+    <string name="toggle_silent">Silent</string>
+    <string name="toggle_sync">Sync</string>
+    <string name="toggle_torch">Torch</string>
+    <string name="toggle_2g">2G</string>
+    <string name="toggle_usb_tether">USB tether</string>
+    <string name="toggle_vibrate">Vibrate</string>
+    <string name="toggle_wifi_ap">Tether</string>
+    <string name="toggle_wifi">Wi-Fi</string>
+
+     <!-- Battery -->
+     <!-- Statusbar | Battery -->
+   <string name="battery_icon">Battery icon style</string>
+    <string name="battery_not_title">Battery icon in notifications</string>
+    <string name="battery_not_summary">Battery icon will show up where the clear all button shows up</string>
+    <string name="battery_bar">Battery bar location</string>
+    <string name="battery_bar_color">Battery bar color</string>
+    <string name="battery_bar_cat">Battery bar options</string>
+    <string name="battery_bar_style_title">Battery bar style</string>
+    <string name="battery_bar_thickness_title">Battery bar thickness</string>
+    <string name="battery_bar_animate_title">Charging animation</string>
+    <string name="battery_bar_animate_summary">May decrease performance.</string>
+    
+    <!-- Clock -->
+    <string name="statusbar_clock_title">Clock Style</string>
+    <string name="clock_title_enable">Clock Style</string>
+    <string name="title_clock_ampm_entries">AM/PM Style</string>
+    <string name="colors">Colors</string>
+    <string name="clock_color_title">Clock Color</string>
+    <string name="reset_color_title">Reset Color</string>
+    <string name="enable_clock_weekday">Current Weekday</string>
+    <string name="enable_clock_weekday_summary">Abbreviated current day of week</string>
+   
+     <!-- Colorpicker -->
+    <string name="dialog_color_picker">Color Picker</string>
+    <string name="press_color_to_apply">Press On color to apply</string>
+    <string name="arrow_right">→</string>
+    <string name="arrow_down">↓</string>
+    <string name="hex">Hex:</string>
+    <string name="hex_hint">#FF000000</string>
+    <string name="set">Set</string>
+    <string name="ics_color">Default</string>
+
+    <!-- Navigation Bar -->
+    <string name="navigation_bar">Navigation bar</string>
+    <string name="navbar_button_cat">Navigation bar buttons</string>
+    
+    <string name="title_pref_menu_display">Menu location</string>
+    <string name="summary_pref_menu_display">Remember to remove your menu buttons if you\'re using the big menu button!</string>
+
+    <string name="title_pref_navigation_menu_display">Menu visibility</string>
+    <string name="summary_pref_navigation_menu_display">How and when do you want the menu buttons to appear?</string>
+
+    <string name="navbar_qty_title">Navigation 1-5 Keys</string>
+    <string name="navbar_qty_summary">Choose the number of navigation buttons</string>
+    <string name="button_transparency_title">Nav button transparency</string>
+    <string name="navbar_action_title">Button %1$s action &amp; icon</string>
+    <string name="navbar_longpress_title">Button %1$s longpress action</string>
+
+    <string name="navbar_action_home">Home</string>
+    <string name="navbar_action_back">Back</string>
+    <string name="navbar_action_recents">Recents</string>
+    <string name="navbar_action_search">Search</string>
+    <string name="navbar_action_menu">Menu</string>
+    <string name="navbar_action_kill">Kill task</string>
+    <string name="navbar_action_power">Power</string>
+    <string name="navbar_action_screenshot">Screenshot</string>
+    <string name="navbar_action_none">Empty</string>  
+    <string name="navbar_widgets">Navigation Bar Widgets</string>
+    <string name="navbar_enable_bar">Enable bar</string>
+    <string name="navigation_bar_height_title">Navigation bar height</string>
+    <string name="navigation_bar_height_summary">Navigation Bar height while in portrait.</string>
+    <string name="navigation_bar_height_landscape_title">Navigation bar height landscape</string>
+    <string name="navigation_bar_height_landscape_summary">Navigation Bar height while in landscape.</string>
+    <string name="navigation_bar_width_title">Navigation bar width.</string>
+    <string name="navigation_bar_width_summary">Navigation Bar height if the bar is along a side.</string>
+    <string name="navbar_enable_dialog_title">Reboot required!</string>
+    <string name="navbar_enable_dialog_msg">Please reboot to enable/disable the navigation bar properly!</string>
+    <string name="navbar_enable_dialog_negative">I\'ll reboot later</string>
+    <string name="navbar_enable_dialog_Positive">Reboot now!</string>
+    <string name="navbar_height_dialog_title">Reboot required!</string>
+    <string name="navbar_height_dialog_summary">Please reboot for height change to be added properly!</string>
+    <string name="navbar_height_dialog_button_later">I\'ll reboot later</string>
+    <string name="navbar_height_dialog_button_reboot">Reboot now!</string>
+ 	 	
+    <string name="dpi">DPI</string>
+
+     <!-- General UI -->
+    <string name="enable_volume_options">Enable Volume Panel</string>
+
+     <!-- Power Menu -->
+   
+    <string name="title_show_screenshot">Show screenshot</string>
+    <string name="title_show_torch_toggle">Show torch toggle</string>
+    <string name="title_show_airplane_toggle">Show airplane toggle</string>
+    <string name="title_show_navbar_hide">Show navigation bar toggle</string>
+    
+
+    <string name="show_lock_before_unlock_title">Show lockscreen</string>
+    <string name="show_lock_before_unlock_summary">Show standard lockscreen before secure unlock</string>
+
+   <!-- LED -->
+    <string name="led_on">LED On</string>
+    <string name="led_time_on">Duration Light Is On</string>
+    <string name="led_off">LED Off</string>
+    <string name="led_time_off">Duration Light Is Off</string>
+    <string name="led_color_click">Press the LED to change the color</string>
+    <string name="title_led_screen_on">Flash LED while screen ON</string>
+ 
+ </resources>

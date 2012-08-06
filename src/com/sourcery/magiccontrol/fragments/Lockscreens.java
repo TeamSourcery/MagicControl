@@ -82,13 +82,13 @@ public class Lockscreens extends SettingsPreferenceFragment implements
 
     private static final String WALLPAPER_NAME = "lockscreen_wallpaper.jpg";
 
-    /*CheckBoxPreference menuButtonLocation;
-    CheckBoxPreference mLockScreenTimeoutUserOverride;
-    ListPreference mLockscreenOption;
+    CheckBoxPreference menuButtonLocation;
+    /*CheckBoxPreference mLockScreenTimeoutUserOverride;
+    ListPreference mLockscreenOption;*/
     CheckBoxPreference mVolumeWake;
     CheckBoxPreference mVolumeMusic;
-    CheckBoxPreference mLockscreenLandscape;
-    CheckBoxPreference mLockscreenBattery;*/
+    /*CheckBoxPreference mLockscreenLandscape;*/
+    CheckBoxPreference mLockscreenBattery;
     CheckBoxPreference mShowLockBeforeUnlock;
     /*ColorPickerPreference mLockscreenTextColor;*/
 
@@ -107,29 +107,29 @@ public class Lockscreens extends SettingsPreferenceFragment implements
         super.onCreate(savedInstanceState);
 
         /*keys.add(Settings.System.LOCKSCREEN_HIDE_NAV);
-        keys.add(Settings.System.LOCKSCREEN_LANDSCAPE);
+        keys.add(Settings.System.LOCKSCREEN_LANDSCAPE);*/
         keys.add(Settings.System.LOCKSCREEN_QUICK_UNLOCK_CONTROL);
-        keys.add(Settings.System.ENABLE_FAST_TORCH);*/
+        /*keys.add(Settings.System.ENABLE_FAST_TORCH);*/
 
         // Load the preferences from an XML resource
         addPreferencesFromResource(R.xml.prefs_lockscreens);
 
-        /*menuButtonLocation = (CheckBoxPreference) findPreference(PREF_MENU);
+        menuButtonLocation = (CheckBoxPreference) findPreference(PREF_MENU);
         menuButtonLocation.setChecked(Settings.System.getInt(getActivity().getContentResolver(),
-                Settings.System.MENU_UNLOCK_SCREEN, 1) == 1);
+                Settings.System.LOCKSCREEN_ENABLE_MENU_KEY, 1) == 1);
 
-        mLockScreenTimeoutUserOverride = (CheckBoxPreference) findPreference(PREF_USER_OVERRIDE);
+       /* mLockScreenTimeoutUserOverride = (CheckBoxPreference) findPreference(PREF_USER_OVERRIDE);
         mLockScreenTimeoutUserOverride.setChecked(Settings.Secure.getInt(getActivity()
                 .getContentResolver(), Settings.Secure.LOCK_SCREEN_LOCK_USER_OVERRIDE, 0) == 1);
 
         mLockscreenOption = (ListPreference) findPreference(PREF_LOCKSCREEN_LAYOUT);
         mLockscreenOption.setOnPreferenceChangeListener(this);
         mLockscreenOption.setValue(Settings.System.getInt(getActivity().getContentResolver(),
-                Settings.System.LOCKSCREEN_LAYOUT, 0) + "");
+                Settings.System.LOCKSCREEN_LAYOUT, 0) + "");*/
 
         mLockscreenBattery = (CheckBoxPreference) findPreference(PREF_LOCKSCREEN_BATTERY);
         mLockscreenBattery.setChecked(Settings.System.getInt(getActivity().getContentResolver(),
-                Settings.System.LOCKSCREEN_BATTERY, 0) == 1);*/
+                Settings.System.LOCKSCREEN_BATTERY, 0) == 1);
         
       
         
@@ -137,7 +137,7 @@ public class Lockscreens extends SettingsPreferenceFragment implements
         mShowLockBeforeUnlock.setChecked(Settings.System.getInt(getActivity().getContentResolver(),
                 Settings.System.SHOW_LOCK_BEFORE_UNLOCK, 0) == 1);
 
-        /*mVolumeWake = (CheckBoxPreference) findPreference(PREF_VOLUME_WAKE);
+        mVolumeWake = (CheckBoxPreference) findPreference(PREF_VOLUME_WAKE);
         mVolumeWake.setChecked(Settings.System.getInt(getActivity().getContentResolver(),
                 Settings.System.VOLUME_WAKE_SCREEN, 0) == 1);
 
@@ -145,9 +145,9 @@ public class Lockscreens extends SettingsPreferenceFragment implements
         mVolumeMusic.setChecked(Settings.System.getInt(getActivity().getContentResolver(),
                 Settings.System.VOLUME_MUSIC_CONTROLS, 0) == 1);
 
-        mLockscreenWallpaper = findPreference("wallpaper");
+       /* mLockscreenWallpaper = findPreference("wallpaper");
 
-        mPicker = new ShortcutPickerHelper(this, this);
+        mPicker = new ShortcutPickerHelper(this, this);*/
 
         for (String key : keys) {
             try {
@@ -157,7 +157,7 @@ public class Lockscreens extends SettingsPreferenceFragment implements
             }
         }
 
-        ((PreferenceGroup) findPreference("advanced_cat"))
+       /* ((PreferenceGroup) findPreference("advanced_cat"))
                 .removePreference(findPreference(Settings.System.LOCKSCREEN_HIDE_NAV));
         
         mLockscreenTextColor = (ColorPickerPreference) findPreference(PREF_LOCKSCREEN_TEXT_COLOR);
@@ -193,13 +193,13 @@ public class Lockscreens extends SettingsPreferenceFragment implements
             return true;
 	}
 
-        /*if (preference == menuButtonLocation) {
+        if (preference == menuButtonLocation) {
             Settings.System.putInt(getActivity().getContentResolver(),
-                    Settings.System.MENU_UNLOCK_SCREEN,
-                    ((CheckBoxPreference) preference).isChecked() ? 1 : 0);
+                    Settings.System.LOCKSCREEN_ENABLE_MENU_KEY,
+                    ((CheckBoxPreference)preference).isChecked() ? 1 : 0);
             return true;
             
-        } else if (preference == mLockScreenTimeoutUserOverride) {
+       /* } else if (preference == mLockScreenTimeoutUserOverride) {
             Settings.Secure.putInt(getActivity().getContentResolver(),
                     Settings.Secure.LOCK_SCREEN_LOCK_USER_OVERRIDE,
                     ((CheckBoxPreference) preference).isChecked() ? 1 : 0);
@@ -210,31 +210,29 @@ public class Lockscreens extends SettingsPreferenceFragment implements
             Settings.System.putInt(getActivity().getContentResolver(),
                     Settings.System.SHOW_LOCK_BEFORE_UNLOCK,
                     ((CheckBoxPreference) preference).isChecked() ? 1 : 0);
-            return true;
+            return true;*/
 
         } else if (preference == mLockscreenBattery) {
 
             Settings.System.putInt(getActivity().getContentResolver(),
                     Settings.System.LOCKSCREEN_BATTERY,
-                    ((CheckBoxPreference) preference).isChecked() ? 1 : 0);
+                    ((CheckBoxPreference)preference).isChecked() ? 1 : 0);
             return true;
 
-        
-
-        } else if (preference == mVolumeWake) {
+         } else if (preference == mVolumeWake) {
 
             Settings.System.putInt(getActivity().getContentResolver(),
                     Settings.System.VOLUME_WAKE_SCREEN,
                     ((CheckBoxPreference) preference).isChecked() ? 1 : 0);
             return true;
-        } else if (preference == mVolumeMusic) {
+       } else if (preference == mVolumeMusic) {
 
             Settings.System.putInt(getActivity().getContentResolver(),
                     Settings.System.VOLUME_MUSIC_CONTROLS,
                     ((CheckBoxPreference) preference).isChecked() ? 1 : 0);
             return true;
 
-        } else if (preference == mLockscreenWallpaper) {
+       /* } else if (preference == mLockscreenWallpaper) {
 
             int width = getActivity().getWallpaperDesiredMinimumWidth();
             int height = getActivity().getWallpaperDesiredMinimumHeight();
@@ -257,19 +255,19 @@ public class Lockscreens extends SettingsPreferenceFragment implements
             intent.putExtra("outputFormat", Bitmap.CompressFormat.JPEG.toString());
 
             startActivityForResult(intent, REQUEST_PICK_WALLPAPER);
-            return true;
+            return true;*/
 
         } else if (keys.contains(preference.getKey())) {
             Log.e("RC_Lockscreens", "key: " + preference.getKey());
             return Settings.System.putInt(getActivity().getContentResolver(), preference.getKey(),
                     ((CheckBoxPreference) preference).isChecked() ? 1 : 0);
-        } else if (preference.getKey().startsWith("lockscreen_icon")) {
+      /*  } else if (preference.getKey().startsWith("lockscreen_icon")) {
  	 	 	
             return true;
  	} else if (preference.getKey().startsWith("lockscreen_target")) {
  	 	
         }*/
-
+}
         return super.onPreferenceTreeClick(preferenceScreen, preference);
     }
 

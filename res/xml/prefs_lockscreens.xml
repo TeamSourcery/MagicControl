@@ -17,17 +17,17 @@
 		android:entryValues="@array/pref_lockscreen_options_values"
 		android:key="pref_lockscreen_layout"
 		android:title="@string/pref_lockscreen_layout_title"
-		android:summary="@string/pref_lockscreen_layout_summary" />
+		android:summary="@string/pref_lockscreen_layout_summary" /> -->
 
 	<CheckBoxPreference
 		android:key="pref_lockscreen_menu_unlock"
 		android:title="@string/title_pref_lockscreen_menu_unlock"
 		android:summary="@string/summary_pref_lockscreen_menu_unlock" />
 
-	<CheckBoxPreference
+	<!--<CheckBoxPreference
 		android:key="lockscreen_user_timeout_override"
 		android:title="@string/title_lockscreen_user_timeout_override"
-		android:summary="@string/summary_lockscreen_user_timeout_override" />	
+		android:summary="@string/summary_lockscreen_user_timeout_override" />-->	
 
 	<CheckBoxPreference
 		android:key="lockscreen_battery"
@@ -37,12 +37,13 @@
 	<CheckBoxPreference
 		android:key="volume_wake"
 		android:title="@string/volume_wake_title"
-		android:summary="@string/volume_wake_summary" />
+		android:summary="@string/volume_wake_summary"
+                android:defaultValue="false" />
 
 	<CheckBoxPreference
 		android:key="volume_music_controls"
 		android:title="@string/volume_music_controls_title"
-		android:summary="@string/volume_music_controls_summary" />-->
+		android:summary="@string/volume_music_controls_summary" />
 
 	<PreferenceCategory
 		android:key="advanced_cat"
@@ -61,12 +62,12 @@
 		<CheckBoxPreference
 			android:key="lockscreen_landscape"
 			android:title="@string/lockscreen_landscape_title"
-			android:summary="@string/lockscreen_landscape_summary" />
+			android:summary="@string/lockscreen_landscape_summary" /> -->
 
 		<CheckBoxPreference
 			android:key="lockscreen_quick_unlock_control"
 			android:title="@string/lockscreen_quick_unlock_control_title"
-			android:summary="@string/lockscreen_quick_unlock_control_summary" />-->
+			android:summary="@string/lockscreen_quick_unlock_control_summary" />
 
 		<CheckBoxPreference
 			android:key="show_lock_before_unlock"

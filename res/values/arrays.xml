@@ -307,4 +307,13 @@
         <item>10000</item>
     </integer-array>
 
-</resources>
+    <!-- boot animation stuff -->
+    <string-array name="disable_bootanimation_insults">
+        <item>Chizzele will get you!</item>
+        <item>Again?</item>
+        <item>The wrath of Sourcery</item>
+        <item>Eagle1967 Likes boot animations</item>
+        <item>OK its off now what</item>
+    </string-array>
+
+ </resources>

@@ -14,4 +14,10 @@
 
     <!-- Whether can use color tuning -->
     <bool name="has_color_tuning">true</bool>
+
+    <!-- Volume Rocker Wake Support. Some devices do not support (PMU) this.
+         Setting to false will disable Volume Rocker Wake support -->
+    <bool name="config_show_volumeRockerWake">true</bool>
+ 		
+
 </resources>

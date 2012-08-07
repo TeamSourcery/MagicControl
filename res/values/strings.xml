@@ -187,17 +187,13 @@
     <string name="title_led_screen_on">Flash LED while screen ON</string>
 
    <!-- Display : Rotation  -->
-    <string name="display_rotation_title">Rotation</string>
-    <string name="display_rotation_enabled">Enabled.</string>
-    <string name="display_rotation_disabled">Disabled.</string>
-    <string name="display_rotation_unit">degrees</string>
-    <string name="display_rotation_category_title">Rotation modes</string>
-    <string name="display_rotation_0_title">0 degrees</string>
-    <string name="display_rotation_90_title">90 degrees</string>
-    <string name="display_rotation_180_title">180 degrees</string>
-    <string name="display_rotation_270_title">270 degrees</string>
-    <string name="accelerometer_title">Accelerometer</string>
- 
+    <string name="rotate_180_title">Allow 180° rotation</string>
+    <string name="rotate_180_summary">Allow your device to rotate upside down!</string>
+
+    <string name="ime_switcher_title">Show IME Switcher</string>
+    <string name="ime_switcher_summary">In statusbar, while typing.</string>
+
+
    <string name="volume_music_controls_title">Volume rocker music controls</string>
    <string name="volume_music_controls_summary">When screen off, long-pressing the volume rockers will seek music tracks</string>
  </resources>

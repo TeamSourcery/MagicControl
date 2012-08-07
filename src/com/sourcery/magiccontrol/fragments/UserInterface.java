@@ -33,10 +33,14 @@ public class UserInterface extends SettingsPreferenceFragment {
 
     private static final String PREF_ENABLE_VOLUME_OPTIONS = "enable_volume_options";
     private static final String PREF_STATUS_BAR_NOTIF_COUNT = "status_bar_notif_count";
+    private static final String PREF_180 = "rotate_180";
+    private static final String PREF_IME_SWITCHER = "ime_switcher";
 
     CheckBoxPreference mEnableVolumeOptions;
     CheckBoxPreference mDisableBootAnimation;
     CheckBoxPreference mStatusBarNotifCount;
+    CheckBoxPreference mAllow180Rotation;
+    CheckBoxPreference mShowImeSwitcher;
 
      Random randomGenerator = new Random();
 
@@ -54,6 +58,15 @@ public class UserInterface extends SettingsPreferenceFragment {
         mStatusBarNotifCount.setChecked(Settings.System.getInt(mContext
                 .getContentResolver(), Settings.System.STATUS_BAR_NOTIF_COUNT,
                  0) == 1);
+
+        mShowImeSwitcher = (CheckBoxPreference) findPreference(PREF_IME_SWITCHER);
+        mShowImeSwitcher.setChecked(Settings.System.getInt(getActivity().getContentResolver(),
+                Settings.System.STATUS_BAR_IME_SWITCHER, 1) == 1);
+
+        mAllow180Rotation = (CheckBoxPreference) findPreference(PREF_180);
+        mAllow180Rotation.setChecked(Settings.System.getInt(getActivity().getContentResolver(),
+                Settings.System.ACCELEROMETER_ROTATION_ANGLES, (1 | 2 | 8)) == (1 | 2 | 4 | 8));
+
 
         mDisableBootAnimation = (CheckBoxPreference) findPreference("disable_bootanimation");
         mDisableBootAnimation.setChecked(!new File("/system/media/bootanimation.zip").exists());
@@ -80,6 +93,21 @@ public class UserInterface extends SettingsPreferenceFragment {
  	     Settings.System.putInt(mContext.getContentResolver(),
                      Settings.System.STATUS_BAR_NOTIF_COUNT,
  	             ((CheckBoxPreference) preference).isChecked() ? 1 : 0);
+            return true;
+
+          } else if (preference == mShowImeSwitcher) {
+
+            boolean checked = ((CheckBoxPreference) preference).isChecked();
+            Settings.System.putInt(getActivity().getContentResolver(),
+                    Settings.System.STATUS_BAR_IME_SWITCHER, checked ? 1 : 0);
+            return true;
+
+          } else if (preference == mAllow180Rotation) {
+
+            boolean checked = ((CheckBoxPreference) preference).isChecked();
+            Settings.System.putInt(getActivity().getContentResolver(),
+                    Settings.System.ACCELEROMETER_ROTATION_ANGLES, checked ? (1 | 2 | 4 | 8)
+                            : (1 | 2 | 8));
             return true;
 
           } else if (preference == mDisableBootAnimation) {

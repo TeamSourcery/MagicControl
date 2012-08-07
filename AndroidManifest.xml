@@ -91,16 +91,6 @@
         </activity>
 
         <activity
-            android:name=".fragments.DisplayRotation"
-            android:label="DisplayRotation" >
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="com.sourcery.magiccontrol.SHORTCUT" />
-            </intent-filter>
-        </activity>
-
-       <activity
             android:name=".fragments.LEDControl"
             android:label="LED Control" >
             <intent-filter>

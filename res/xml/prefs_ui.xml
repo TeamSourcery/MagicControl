@@ -20,10 +20,15 @@
 	    android:key="enable_volume_options"
 	    android:title="@string/enable_volume_options" />
 
-         <PreferenceScreen
- 	    android:key="display_rotation"
- 	    android:fragment="com.sourcery.magiccontrol.fragments.DisplayRotation"
- 	    android:title="@string/display_rotation_title" />
+         <CheckBoxPreference
+		android:key="rotate_180"
+		android:title="@string/rotate_180_title"
+		android:summary="@string/rotate_180_summary" />
+        
+          <CheckBoxPreference
+			android:key="ime_switcher"
+			android:title="@string/ime_switcher_title"
+			android:summary="@string/ime_switcher_summary" />
         
 	</PreferenceCategory>
 

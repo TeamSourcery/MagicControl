@@ -35,6 +35,8 @@ import android.widget.ListAdapter;
 import android.widget.Switch;
 import android.widget.TextView;
 
+import com.sourcery.magiccontrol.service.BootService;
+
 public class MagicControlActivity extends PreferenceActivity implements ButtonBarHandler {
 
     private static final String TAG = "Magic_Control";
@@ -77,17 +79,21 @@ public class MagicControlActivity extends PreferenceActivity implements ButtonBa
             setTitle(R.string.app_name);
         }
 
-        if (getIntent().getAction().equals("com.sourcery.magiccontrol.START_NEW_FRAGMENT")) {
+        if ("com.sourcery.magiccontrol.START_NEW_FRAGMENT".equals(getIntent().getAction())) {
             String className = getIntent().getStringExtra("sourcery_fragment_name").toString();
             if (!className.equals("com.sourcery.magiccontrol.magiccontrolActivity")) {
                 Bundle b = new Bundle();
                 b.putBoolean("started_from_shortcut", true);
-                // startPreferencePanel(className, b, 0, null, null, 0);
                 isShortcut = true;
-                startWithFragment(className, null, null, 0);
+                startWithFragment(className, b, null, 0);
                 finish(); // close current activity
             }
         }
+
+         if (!BootService.servicesStarted) {
+ 	     getApplicationContext().startService(
+ 	         new Intent(getApplicationContext(), BootService.class));
+         }
     }
 
     @Override
@@ -126,6 +132,11 @@ public class MagicControlActivity extends PreferenceActivity implements ButtonBa
                 p.edit().putBoolean(KEY_USE_ENGLISH_LOCALE, !useEnglishLocale).apply();
                 recreate();
                 return true;
+            case android.R.id.home:
+ 	        Intent intent = new Intent(this, MagicControlActivity.class);
+ 	        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+ 	        startActivity(intent);
+ 	        return true;
             default:
                 return super.onContextItemSelected(item);
         }

@@ -50,6 +50,13 @@
 	android:icon="@drawable/ic_ics_control_lockscreens"
 	android:summary="@string/header_summary_lockscreens" />
 
+    <header
+ 	android:id="@+id/weather"
+ 	android:fragment="com.sourcery.magiccontrol.fragments.Weather"
+        android:title="@string/weather"
+        android:summary="@string/header_summary_weather"
+        android:icon="@drawable/ic_ics_control_weather" />
+
      <header
         android:id="@+id/led"
  	android:fragment="com.sourcery.magiccontrol.fragments.LEDControl"

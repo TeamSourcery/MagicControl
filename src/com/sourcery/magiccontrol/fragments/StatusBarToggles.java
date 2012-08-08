@@ -15,7 +15,6 @@ import android.os.Bundle;
 import android.preference.ListPreference;
 import android.preference.Preference;
 import android.preference.Preference.OnPreferenceChangeListener;
-import android.preference.PreferenceFragment;
 import android.preference.PreferenceScreen;
 import android.provider.Settings;
 import android.util.Log;
@@ -26,11 +25,12 @@ import android.widget.BaseAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.sourcery.magiccontrol.SettingsPreferenceFragment;
 import com.sourcery.magiccontrol.R;
 import com.sourcery.magiccontrol.widgets.TouchInterceptor;
 import com.scheffsblend.smw.Preferences.ImageListPreference;
 
-public class StatusBarToggles extends PreferenceFragment implements OnPreferenceChangeListener {
+public class StatusBarToggles extends SettingsPreferenceFragment implements OnPreferenceChangeListener {
 
     private static final String TAG = "TogglesLayout";
 

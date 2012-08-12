@@ -28,7 +28,10 @@ import android.widget.TextView;
 import com.sourcery.magiccontrol.SettingsPreferenceFragment;
 import com.sourcery.magiccontrol.R;
 import com.sourcery.magiccontrol.widgets.TouchInterceptor;
+import com.sourcery.magiccontrol.widgets.SeekBarPreference;
 import com.scheffsblend.smw.Preferences.ImageListPreference;
+import net.margaritov.preference.colorpicker.ColorPickerPreference;
+
 
 public class StatusBarToggles extends SettingsPreferenceFragment implements OnPreferenceChangeListener {
 
@@ -38,6 +41,9 @@ public class StatusBarToggles extends SettingsPreferenceFragment implements OnPr
     private static final String PREF_BRIGHTNESS_LOC = "brightness_location";
     private static final String PREF_TOGGLES_STYLE = "toggle_style";
     private static final String PREF_ALT_BUTTON_LAYOUT = "toggles_layout_preference";
+    private static final String PREF_TOGGLE_BTN_ENABLED_COLOR = "toggle_btn_enabled_color";
+    private static final String PREF_TOGGLE_BTN_DISABLED_COLOR = "toggle_btn_disabled_color";
+    private static final String PREF_TOGGLE_BTN_ALPHA = "toggle_btn_alpha";
 
     Preference mEnabledToggles;
     Preference mLayout;
@@ -45,6 +51,9 @@ public class StatusBarToggles extends SettingsPreferenceFragment implements OnPr
     ImageListPreference mTogglesLayout;
     ListPreference mToggleStyle;
     Preference mResetToggles;
+    SeekBarPreference mToggleBtnAlpha;
+    ColorPickerPreference mBtnEnabledColor;
+    ColorPickerPreference mBtnDisabledColor;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -69,6 +78,21 @@ public class StatusBarToggles extends SettingsPreferenceFragment implements OnPr
 
         mTogglesLayout = (ImageListPreference) findPreference(PREF_ALT_BUTTON_LAYOUT);
         mTogglesLayout.setOnPreferenceChangeListener(this);
+
+        mBtnEnabledColor = (ColorPickerPreference) findPreference(
+ 	       PREF_TOGGLE_BTN_ENABLED_COLOR);
+        mBtnEnabledColor.setOnPreferenceChangeListener(this);
+ 	 	
+        mBtnDisabledColor = (ColorPickerPreference) findPreference(
+               PREF_TOGGLE_BTN_DISABLED_COLOR);
+        mBtnDisabledColor.setOnPreferenceChangeListener(this);
+ 	 	
+        float btnAlpha = Settings.System.getFloat(getActivity()
+                .getContentResolver(),
+                Settings.System.STATUSBAR_TOGGLES_ALPHA, 0.7f);
+        mToggleBtnAlpha = (SeekBarPreference) findPreference(PREF_TOGGLE_BTN_ALPHA);
+        mToggleBtnAlpha.setInitValue((int) (btnAlpha * 100));
+        mToggleBtnAlpha.setOnPreferenceChangeListener(this);
 
         mLayout = findPreference("toggles");
 
@@ -161,10 +185,29 @@ public class StatusBarToggles extends SettingsPreferenceFragment implements OnPr
             result = Settings.System.putInt(getActivity().getContentResolver(),
                     Settings.System.STATUSBAR_TOGGLES_USE_BUTTONS,
                     val);
+        } else if (preference == mBtnEnabledColor) {
+            String hex = ColorPickerPreference.convertToARGB(
+                    Integer.valueOf(String.valueOf(newValue)));
+            preference.setSummary(hex);
+
+            int intHex = ColorPickerPreference.convertToColorInt(hex);
+            result = Settings.System.putInt(getActivity().getContentResolver(),
+                    Settings.System.STATUSBAR_TOGGLES_ENABLED_COLOR, intHex);
+        } else if (preference == mBtnDisabledColor) {
+            String hex = ColorPickerPreference.convertToARGB(
+                    Integer.valueOf(String.valueOf(newValue)));
+            preference.setSummary(hex);
+
+            int intHex = ColorPickerPreference.convertToColorInt(hex);
+            result = Settings.System.putInt(getActivity().getContentResolver(),
+                    Settings.System.STATUSBAR_TOGGLES_DISABLED_COLOR, intHex);
+        } else if (preference == mToggleBtnAlpha) {
+            float val = Float.parseFloat((String) newValue);
+            result = Settings.System.putFloat(getActivity().getContentResolver(),
+                    Settings.System.STATUSBAR_TOGGLES_ALPHA, val / 100);
         }
         return result;
     }
-
     public static void addToggle(Context context, String key) {
         ArrayList<String> enabledToggles = getTogglesStringArray(context);
         enabledToggles.add(key);

@@ -307,4 +307,9 @@
 
      <!-- Share to clipboard -->
     <string name="clipboard_notification">Copied to clipboard.</string>
+
+     <!-- Toggle color selection and alpha -->
+    <string name="toggle_button_alpha_title">Toggle indicator alpha</string>
+    <string name="toggle_btn_enabled_color_title">Enabled indicator color</string>
+    <string name="toggle_btn_disabled_color_title">Disabled indicator color</string>
  </resources>

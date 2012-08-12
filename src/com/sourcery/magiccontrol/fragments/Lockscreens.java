@@ -19,14 +19,13 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.DialogInterface.OnMultiChoiceClickListener;
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.content.pm.PackageManager;
 import android.content.pm.PackageManager.NameNotFoundException;
 import android.content.res.Resources;
-import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.graphics.drawable.BitmapDrawable;
-import android.graphics.drawable.Drawable;
+import android.graphics.Rect;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
@@ -46,6 +45,7 @@ import android.view.Display;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.Window;
 import android.view.View;
 import android.widget.AdapterView.AdapterContextMenuInfo;
 import android.widget.Toast;
@@ -219,44 +219,54 @@ public class Lockscreens extends SettingsPreferenceFragment implements
                     Settings.System.VOLUME_MUSIC_CONTROLS,
                     ((CheckBoxPreference) preference).isChecked() ? 1 : 0);
             return true;
-
-        } else if (keys.contains(preference.getKey())) {
-            Log.e("RC_Lockscreens", "key: " + preference.getKey());
-            return Settings.System.putInt(getActivity().getContentResolver(), preference.getKey(),
-                    ((CheckBoxPreference)preference).isChecked() ? 1 : 0);
-        } else if (preference == mLockscreenWallpaper) {
-
-            int width = getActivity().getWallpaperDesiredMinimumWidth();
-            int height = getActivity().getWallpaperDesiredMinimumHeight();
+       } else if (preference == mLockscreenWallpaper) {
             Display display = getActivity().getWindowManager().getDefaultDisplay();
-            float spotlightX = (float)display.getWidth() / width;
-            float spotlightY = (float)display.getHeight() / height;
+            int width = display.getWidth();
+            int height = display.getHeight();
+            Rect rect = new Rect();
+            Window window = getActivity().getWindow();
+            window.getDecorView().getWindowVisibleDisplayFrame(rect);
+            int statusBarHeight = rect.top;
+            int contentViewTop = window.findViewById(Window.ID_ANDROID_CONTENT).getTop();
+            int titleBarHeight = contentViewTop - statusBarHeight;
 
             Intent intent = new Intent(Intent.ACTION_GET_CONTENT, null);
             intent.setType("image/*");
             intent.putExtra("crop", "true");
-            intent.putExtra("aspectX", width);
-            intent.putExtra("aspectY", height);
-            intent.putExtra("outputX", width);
-            intent.putExtra("outputY", height);
             intent.putExtra("scale", true);
-            // intent.putExtra("return-data", false);
-            intent.putExtra("spotlightX", spotlightX);
-            intent.putExtra("spotlightY", spotlightY);
+            intent.putExtra("scaleUpIfNeeded", true);
+            intent.putExtra("outputFormat", Bitmap.CompressFormat.PNG.toString());
             intent.putExtra(MediaStore.EXTRA_OUTPUT, getLockscreenExternalUri());
-            intent.putExtra("outputFormat", Bitmap.CompressFormat.JPEG.toString());
+
+            if (mTablet) {
+                width = getActivity().getWallpaperDesiredMinimumWidth();
+                height = getActivity().getWallpaperDesiredMinimumHeight();
+                float spotlightX = (float)display.getWidth() / width;
+                float spotlightY = (float)display.getHeight() / height;
+                intent.putExtra("aspectX", width);
+                intent.putExtra("aspectY", height);
+                intent.putExtra("outputX", width);
+                intent.putExtra("outputY", height);
+                intent.putExtra("spotlightX", spotlightX);
+                intent.putExtra("spotlightY", spotlightY);
+            } else {
+                boolean isPortrait = getResources()
+                        .getConfiguration().orientation ==
+                        Configuration.ORIENTATION_PORTRAIT;
+                intent.putExtra("aspectX", isPortrait ? width : height - titleBarHeight);
+                intent.putExtra("aspectY", isPortrait ? height - titleBarHeight : width);
+            }
 
             startActivityForResult(intent, REQUEST_PICK_WALLPAPER);
             return true;
-         } else if (keys.contains(preference.getKey())) {
+        } else if (keys.contains(preference.getKey())) {
             Log.e("RC_Lockscreens", "key: " + preference.getKey());
             return Settings.System.putInt(getActivity().getContentResolver(), preference.getKey(),
                     ((CheckBoxPreference)preference).isChecked() ? 1 : 0);
         }
-        
+
         return super.onPreferenceTreeClick(preferenceScreen, preference);
     }
-
 
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
@@ -278,23 +288,23 @@ public class Lockscreens extends SettingsPreferenceFragment implements
         }
     }
 
-   private Uri getLockscreenExternalUri() {
+    private Uri getLockscreenExternalUri() {
         File dir = mContext.getExternalCacheDir();
         File wallpaper = new File(dir, WALLPAPER_NAME);
 
         return Uri.fromFile(wallpaper);
     }
-     @Override
+
+    @Override
     public boolean onPreferenceChange(Preference preference, Object newValue) {
         return false;
     }
 
-  
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (resultCode == Activity.RESULT_OK) {
             if (requestCode == REQUEST_PICK_WALLPAPER) {
-   
-               FileOutputStream wallpaperStream = null;
+
+                FileOutputStream wallpaperStream = null;
                 try {
                     wallpaperStream = mContext.openFileOutput(WALLPAPER_NAME,
                             Context.MODE_WORLD_READABLE);
@@ -303,13 +313,13 @@ public class Lockscreens extends SettingsPreferenceFragment implements
                 }
 
                 Uri selectedImageUri = getLockscreenExternalUri();
-		Bitmap bitmap = BitmapFactory.decodeFile(selectedImageUri.getPath());
+                Bitmap bitmap = BitmapFactory.decodeFile(selectedImageUri.getPath());
 
-                bitmap.compress(Bitmap.CompressFormat.JPEG, 100, wallpaperStream);
-                }
-         }
+                bitmap.compress(Bitmap.CompressFormat.PNG, 100, wallpaperStream);
+            }
+        }
     }
-            
+
     public void copy(File src, File dst) throws IOException {
         InputStream in = new FileInputStream(src);
         FileOutputStream out = new FileOutputStream(dst);
@@ -323,6 +333,4 @@ public class Lockscreens extends SettingsPreferenceFragment implements
         in.close();
         out.close();
     }
-
 }
-

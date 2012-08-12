@@ -1,4 +1,3 @@
-
 package com.sourcery.magiccontrol;
 
 import java.util.ArrayList;
@@ -81,7 +80,7 @@ public class MagicControlActivity extends PreferenceActivity implements ButtonBa
 
         if ("com.sourcery.magiccontrol.START_NEW_FRAGMENT".equals(getIntent().getAction())) {
             String className = getIntent().getStringExtra("sourcery_fragment_name").toString();
-            if (!className.equals("com.sourcery.magiccontrol.magiccontrolActivity")) {
+            if (!className.equals("com.sourcery.magiccontrol.MagicControlActivity")) {
                 Bundle b = new Bundle();
                 b.putBoolean("started_from_shortcut", true);
                 isShortcut = true;
@@ -133,9 +132,7 @@ public class MagicControlActivity extends PreferenceActivity implements ButtonBa
                 recreate();
                 return true;
             case android.R.id.home:
- 	        Intent intent = new Intent(this, MagicControlActivity.class);
- 	        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
- 	        startActivity(intent);
+ 	        onBackPressed();
  	        return true;
             default:
                 return super.onContextItemSelected(item);

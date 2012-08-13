@@ -137,6 +137,7 @@
     <string name="navbar_action_menu">Menu</string>
     <string name="navbar_action_kill">Kill task</string>
     <string name="navbar_action_power">Power</string>
+    <string name="navbar_action_notifications">Notifications</string>
     <string name="navbar_action_screenshot">Screenshot</string>
     <string name="navbar_action_none">Empty</string>  
     <string name="navbar_widgets">Navigation Bar Widgets</string>

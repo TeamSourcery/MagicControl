@@ -652,6 +652,9 @@ public class Navbar extends SettingsPreferenceFragment implements
             } else if (uri.equals("**power**")) {
 
                 return getResources().getDrawable(R.drawable.ic_sysbar_power);
+            } else if (uri.equals("**notifications**")) {
+ 	 	
+                return getResources().getDrawable(R.drawable.ic_sysbar_notifications);
             } else if (uri.equals("**screenshot**")) {
  	 	
            return getResources().getDrawable(R.drawable.ic_sysbar_screenshot);
@@ -695,6 +698,8 @@ public class Navbar extends SettingsPreferenceFragment implements
                 return getResources().getString(R.string.navbar_action_kill);
             else if (uri.equals("**power**"))
                 return getResources().getString(R.string.navbar_action_power);
+             else if (uri.equals("**notifications**"))
+ 	        return getResources().getString(R.string.navbar_action_notifications);
              else if (uri.equals("**screenshot**"))
  	         return getResources().getString(R.string.navbar_action_screenshot);
             else if (uri.equals("**null**"))

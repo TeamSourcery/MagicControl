@@ -94,6 +94,26 @@
                 <category android:name="com.sourcery.magiccontrol.SHORTCUT" />
             </intent-filter>
         </activity>
+       
+        <activity
+            android:name=".fragments.LockscreenTargets"
+            android:label="Lockscreen Targets" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="com.sourcery.magiccontrol.SHORTCUT" />
+            </intent-filter>
+        </activity>
+
+        <activity
+            android:name=".fragments.IconPicker"
+            android:label="Icon Picker" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="com.sourcery.magiccontrol.SHORTCUT" />
+            </intent-filter>
+        </activity>
 
         <activity
             android:name=".fragments.LEDControl"

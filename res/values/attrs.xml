@@ -9,5 +9,8 @@
          <attr name="summaryImage" format="reference" />
          <attr name="entryImages" format="reference" />
      </declare-styleable>
+    <declare-styleable name="IconPreferenceScreen">
+         <attr name="icon" format="reference" />
+     </declare-styleable>
        
 </resources>

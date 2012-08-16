@@ -55,6 +55,7 @@ import android.widget.Toast;
 
 import com.sourcery.magiccontrol.SettingsPreferenceFragment;
 import com.sourcery.magiccontrol.R;
+import com.sourcery.magiccontrol.util.Helpers;
 import com.sourcery.magiccontrol.util.ShortcutPickerHelper;
 import com.sourcery.magiccontrol.widgets.NavBarItemPreference;
 import com.sourcery.magiccontrol.widgets.SeekBarPreference;
@@ -64,7 +65,7 @@ import net.margaritov.preference.colorpicker.ColorPickerPreference;
 public class Navbar extends SettingsPreferenceFragment implements
         OnPreferenceChangeListener, ShortcutPickerHelper.OnPickListener {
 
-    // move these later
+   // move these later
     private static final String PREF_MENU_UNLOCK = "pref_menu_display";
     private static final String PREF_NAVBAR_MENU_DISPLAY = "navbar_menu_display";
     private static final String PREF_NAV_COLOR = "nav_button_color";
@@ -78,7 +79,6 @@ public class Navbar extends SettingsPreferenceFragment implements
 
     public static final int REQUEST_PICK_CUSTOM_ICON = 200;
     public static final int REQUEST_PICK_LANDSCAPE_ICON = 201;
-    private static final int DIALOG_NAVBAR_ENABLE = 203;
     private static final int DIALOG_NAVBAR_HEIGHT_REBOOT = 204;
 
     public static final String PREFS_NAV_BAR = "navbar";
@@ -114,6 +114,7 @@ public class Navbar extends SettingsPreferenceFragment implements
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setTitle(R.string.title_navbar);
         // Load the preferences from an XML resource
         addPreferencesFromResource(R.xml.prefs_navbar);
 
@@ -161,8 +162,6 @@ public class Navbar extends SettingsPreferenceFragment implements
         mButtonAlpha = (SeekBarPreference) findPreference("button_transparency");
         mButtonAlpha.setInitValue((int) (defaultAlpha * 100));
         mButtonAlpha.setOnPreferenceChangeListener(this);
-
-
 
         // don't allow devices that must use a navigation bar to disable it
         if (hasNavBarByDefault || mTablet) {
@@ -230,7 +229,7 @@ public class Navbar extends SettingsPreferenceFragment implements
         }
     }
 
-     @Override
+    @Override
     public boolean onPreferenceTreeClick(PreferenceScreen preferenceScreen,
             Preference preference) {
         if (preference == mEnableNavigationBar) {
@@ -238,13 +237,13 @@ public class Navbar extends SettingsPreferenceFragment implements
             Settings.System.putInt(getActivity().getContentResolver(),
                     Settings.System.NAVIGATION_BAR_SHOW,
                     ((CheckBoxPreference) preference).isChecked() ? 1 : 0);
-              showDialog(DIALOG_NAVBAR_ENABLE);
-             return true;
+            Helpers.restartSystemUI();
+            return true;
         }
         return super.onPreferenceTreeClick(preferenceScreen, preference);
     }
 
-     @Override
+    @Override
     public boolean onPreferenceChange(Preference preference, Object newValue) {
 
         if (preference == menuDisplayLocation) {
@@ -281,12 +280,13 @@ public class Navbar extends SettingsPreferenceFragment implements
             String newVal = (String) newValue;
             int dp = Integer.parseInt(newVal);
             int height = mapChosenDpToPixels(dp);
-            Settings.System.putInt(getContentResolver(), Settings.System.NAVIGATION_BAR_HEIGHT_LANDSCAPE,
+            Settings.System.putInt(getContentResolver(),
+                    Settings.System.NAVIGATION_BAR_HEIGHT_LANDSCAPE,
                     height);
             showDialog(DIALOG_NAVBAR_HEIGHT_REBOOT);
-            return true;    
+            return true;
 
-        }  else if ((preference.getKey().startsWith("navbar_action"))
+        } else if ((preference.getKey().startsWith("navbar_action"))
                 || (preference.getKey().startsWith("navbar_longpress"))) {
             boolean longpress = preference.getKey().startsWith("navbar_longpress_");
             int index = Integer.parseInt(preference.getKey().substring(
@@ -356,69 +356,40 @@ public class Navbar extends SettingsPreferenceFragment implements
             return true;
 
         }
-	return false;
-    }
-
-    public void toggleBar() {
-        boolean isBarOn = Settings.System.getInt(getContentResolver(),
-                Settings.System.NAVIGATION_BAR_SHOW, 1) == 1;
-        Settings.System.putInt(mContext.getContentResolver(),
-                Settings.System.NAVIGATION_BAR_SHOW, isBarOn ? 0 : 1);
-        Settings.System.putInt(mContext.getContentResolver(),
-                Settings.System.NAVIGATION_BAR_SHOW, isBarOn ? 1 : 0);
+        return false;
     }
 
     @Override
     public Dialog onCreateDialog(int dialogId) {
-        LayoutInflater factory = LayoutInflater.from(mContext);
-
         switch (dialogId) {
-            case DIALOG_NAVBAR_ENABLE:
-                final View textEntryView = factory.inflate(
-                        R.layout.alert_dialog_text_entry, null);
-                return new AlertDialog.Builder(getActivity())
-                    .setTitle(getResources().getString(R.string.navbar_enable_dialog_title))
-                    .setMessage(getResources().getString(R.string.navbar_enable_dialog_msg))
-                    .setCancelable(false)
-                    .setPositiveButton(
-                            getResources().getString(R.string.navbar_enable_dialog_Positive),
-                            new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialog, int which) {
-                                    PowerManager pm = (PowerManager) getActivity()
-                                            .getSystemService(Context.POWER_SERVICE);
-                                    pm.reboot("New navbar");
-                            }
-                        })
-                    .setNegativeButton(
-                            getResources().getString(R.string.navbar_enable_dialog_negative), new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int whichButton) {
-
-                                dialog.dismiss();
-                            }
-                        }).create();
             case DIALOG_NAVBAR_HEIGHT_REBOOT:
                 return new AlertDialog.Builder(getActivity())
                         .setTitle(getResources().getString(R.string.navbar_height_dialog_title))
                         .setMessage(
                                 getResources().getString(R.string.navbar_height_dialog_summary))
                         .setCancelable(false)
-                        .setNeutralButton(getResources().getString(R.string.navbar_height_dialog_button_later), new DialogInterface.OnClickListener() {
+                        .setNeutralButton(
+                                getResources()
+                                        .getString(R.string.navbar_height_dialog_button_later),
+                                new DialogInterface.OnClickListener() {
 
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                dialog.dismiss();
-                            }
-                        })
-                        .setPositiveButton(getResources().getString(R.string.navbar_height_dialog_button_reboot), new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        dialog.dismiss();
+                                    }
+                                })
+                        .setPositiveButton(
+                                getResources().getString(
+                                        R.string.navbar_height_dialog_button_reboot),
+                                new DialogInterface.OnClickListener() {
 
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                PowerManager pm = (PowerManager) getActivity()
-                                        .getSystemService(Context.POWER_SERVICE);
-                                pm.reboot("Rebooting with new bar height");
-                            }
-                        })
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        PowerManager pm = (PowerManager) getActivity()
+                                                .getSystemService(Context.POWER_SERVICE);
+                                        pm.reboot("Rebooting with new bar height");
+                                    }
+                                })
                         .create();
         }
         return null;
@@ -429,7 +400,7 @@ public class Navbar extends SettingsPreferenceFragment implements
         String combinedTime = Settings.System.getString(getContentResolver(),
                 Settings.System.NAVIGATION_BAR_GLOW_DURATION[1]) + "|" +
                 Settings.System.getString(getContentResolver(),
-                Settings.System.NAVIGATION_BAR_GLOW_DURATION[0]);
+                        Settings.System.NAVIGATION_BAR_GLOW_DURATION[0]);
 
         String[] glowArray = getResources().getStringArray(R.array.glow_times_values);
 
@@ -448,7 +419,6 @@ public class Navbar extends SettingsPreferenceFragment implements
         }
         mGlowTimes.setSummary(getResources().getString(resId));
     }
-
 
     public int mapChosenDpToPixels(int dp) {
         switch (dp) {
@@ -469,7 +439,7 @@ public class Navbar extends SettingsPreferenceFragment implements
         }
         return -1;
     }
-    
+
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (resultCode == Activity.RESULT_OK) {
             if (requestCode == ShortcutPickerHelper.REQUEST_PICK_SHORTCUT
@@ -626,40 +596,29 @@ public class Navbar extends SettingsPreferenceFragment implements
     private Drawable getNavbarIconImage(int index, boolean landscape) {
         String uri = Settings.System.getString(getActivity().getContentResolver(),
                 Settings.System.NAVIGATION_CUSTOM_ACTIVITIES[index]);
-        
+
         if (uri == null)
             return getResources().getDrawable(R.drawable.ic_sysbar_null);
 
         if (uri.startsWith("**")) {
             if (uri.equals("**home**")) {
-
                 return getResources().getDrawable(R.drawable.ic_sysbar_home);
             } else if (uri.equals("**back**")) {
-
                 return getResources().getDrawable(R.drawable.ic_sysbar_back);
             } else if (uri.equals("**recents**")) {
-
                 return getResources().getDrawable(R.drawable.ic_sysbar_recent);
             } else if (uri.equals("**search**")) {
-
                 return getResources().getDrawable(R.drawable.ic_sysbar_search);
             } else if (uri.equals("**menu**")) {
-
                 return getResources().getDrawable(R.drawable.ic_sysbar_menu_big);
             } else if (uri.equals("**kill**")) {
-
                 return getResources().getDrawable(R.drawable.ic_sysbar_killtask);
             } else if (uri.equals("**power**")) {
-
                 return getResources().getDrawable(R.drawable.ic_sysbar_power);
             } else if (uri.equals("**notifications**")) {
- 		
                 return getResources().getDrawable(R.drawable.ic_sysbar_notifications);
-            } else if (uri.equals("**screenshot**")) {
- 	 	
-           return getResources().getDrawable(R.drawable.ic_sysbar_screenshot);
             }
-         } else {
+        } else {
             try {
                 return mContext.getPackageManager().getActivityIcon(Intent.parseUri(uri, 0));
             } catch (NameNotFoundException e) {
@@ -672,7 +631,7 @@ public class Navbar extends SettingsPreferenceFragment implements
         return getResources().getDrawable(R.drawable.ic_sysbar_null);
     }
 
-     private String getProperSummary(int i, boolean longpress) {
+    private String getProperSummary(int i, boolean longpress) {
         String uri = "";
         if (longpress)
             uri = Settings.System.getString(getActivity().getContentResolver(),
@@ -699,9 +658,7 @@ public class Navbar extends SettingsPreferenceFragment implements
             else if (uri.equals("**power**"))
                 return getResources().getString(R.string.navbar_action_power);
             else if (uri.equals("**notifications**"))
- 	        return getResources().getString(R.string.navbar_action_notifications);
-            else if (uri.equals("**screenshot**"))
- 	         return getResources().getString(R.string.navbar_action_screenshot);
+                return getResources().getString(R.string.navbar_action_notifications);
             else if (uri.equals("**null**"))
                 return getResources().getString(R.string.navbar_action_none);
             else if (uri.equals("**widgets**"))
@@ -788,3 +745,4 @@ public class Navbar extends SettingsPreferenceFragment implements
     }
 
 }
+

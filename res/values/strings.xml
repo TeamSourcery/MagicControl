@@ -321,6 +321,9 @@
     <string name="toggle_button_alpha_title">Toggle indicator alpha</string>
     <string name="toggle_btn_enabled_color_title">Enabled indicator color</string>
     <string name="toggle_btn_disabled_color_title">Disabled indicator color</string>
+    <!-- BG-wallpaper for toggles -->
+    <string name="toggle_btn_background_title">Toggle background alpha</string>
+    <string name="toggle_text_color_title">Toggle text color</string>
 
     <!-- Lock Screen Shortcuts -->
     <string name="lockscreen_target_info">Drag the slider to targets to assign shortcuts</string>

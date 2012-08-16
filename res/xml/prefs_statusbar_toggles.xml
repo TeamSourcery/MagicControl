@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android" 
-    xmlns:sourcery="http://schemas.android.com/apk/res/com.sourcery.magiccontrol">
+    xmlns:aokp="http://schemas.android.com/apk/res/com.sourcery.magiccontrol">
 
     <Preference
         android:key="enable_toggles"
@@ -14,8 +14,8 @@
     <com.scheffsblend.smw.Preferences.ImageListPreference
         android:entries="@array/toggles_layout_entries"
         android:entryValues="@array/toggles_layout_entries"
-         sourcery:entryImages="@array/toggles_layout_images"
-         sourcery:summaryImage="@drawable/toggle_layout_summary"
+        aokp:entryImages="@array/toggles_layout_images"
+        aokp:summaryImage="@drawable/toggle_layout_summary"
         android:key="toggles_layout_preference"
         android:title="@string/toggles_layout_title" />
 
@@ -29,7 +29,12 @@
             android:summary="@string/toggle_style_summary"
             android:title="@string/toggle_style_title" />
 
-      <net.margaritov.preference.colorpicker.ColorPickerPreference
+        <net.margaritov.preference.colorpicker.ColorPickerPreference
+            android:key="toggle_text_color"
+            android:title="@string/toggle_text_color_title"
+            android:defaultValue="#33B5E5" />
+
+        <net.margaritov.preference.colorpicker.ColorPickerPreference
             android:key="toggle_btn_enabled_color"
             android:title="@string/toggle_btn_enabled_color_title"
             android:defaultValue="#33B5E5" />
@@ -40,13 +45,17 @@
             android:defaultValue="#4C4C4C" />
 
         <com.sourcery.magiccontrol.widgets.SeekBarPreference
+            android:key="toggle_btn_background"
+            android:title="@string/toggle_btn_background_title" />
+
+        <com.sourcery.magiccontrol.widgets.SeekBarPreference
             android:key="toggle_btn_alpha"
             android:title="@string/toggle_button_alpha_title" />
-  
+
         <ListPreference
             android:entries="@array/brightness_location_entries"
             android:entryValues="@array/brightness_location_values"
- 	    android:key="brightness_location"
+            android:key="brightness_location"
             android:title="@string/brightness_location_title" />
 
         <Preference

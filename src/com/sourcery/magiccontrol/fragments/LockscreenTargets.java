@@ -252,7 +252,19 @@ public class LockscreenTargets extends Fragment implements ShortcutPickHelper.On
         }
     }
 
-    
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        menu.add(0, MENU_RESET, 0, "Reset")
+            //.setIcon(R.drawable.ic_settings_backup) // use the backup icon
+            .setAlphabeticShortcut('r')
+            .setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM |
+                MenuItem.SHOW_AS_ACTION_WITH_TEXT);
+        menu.add(0, MENU_SAVE, 0, "Save")
+            //.setIcon(R.drawable.ic_settings_backup)
+            .setAlphabeticShortcut('s')
+            .setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM |
+                MenuItem.SHOW_AS_ACTION_WITH_TEXT);
+    }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {

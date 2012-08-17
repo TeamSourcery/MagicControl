@@ -10,7 +10,7 @@ import java.io.InputStream;
 import java.net.URISyntaxException;
 import java.util.ArrayList;
 
-/*import net.margaritov.preference.colorpicker.ColorPickerPreference;*/
+import net.margaritov.preference.colorpicker.ColorPickerPreference;
 
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -52,8 +52,7 @@ import android.widget.Toast;
 
 import com.sourcery.magiccontrol.SettingsPreferenceFragment;
 import com.sourcery.magiccontrol.R;
-/*import com.sourcery.magiccontrol.util.ShortcutPickerHelper;
-import com.sourcery.magiccontrol.widgets.LockscreenItemPreference;*/
+
 
 
 
@@ -66,7 +65,7 @@ public class Lockscreens extends SettingsPreferenceFragment implements
     private static final String PREF_MENU = "pref_lockscreen_menu_unlock";
     private static final String PREF_USER_OVERRIDE = "lockscreen_user_timeout_override";
     private static final String PREF_LOCKSCREEN_LAYOUT = "pref_lockscreen_layout";
-
+    private static final String PREF_LOCKSCREEN_TEXT_COLOR = "lockscreen_text_color";
     private static final String PREF_VOLUME_WAKE = "volume_wake";
     private static final String PREF_VOLUME_MUSIC = "volume_music_controls";
 
@@ -90,7 +89,7 @@ public class Lockscreens extends SettingsPreferenceFragment implements
     /*CheckBoxPreference mLockscreenLandscape;*/
     CheckBoxPreference mLockscreenBattery;
     CheckBoxPreference mShowLockBeforeUnlock;
-    /*ColorPickerPreference mLockscreenTextColor;*/
+    ColorPickerPreference mLockscreenTextColor;
 
     Preference mLockscreenWallpaper;
 
@@ -158,10 +157,10 @@ public class Lockscreens extends SettingsPreferenceFragment implements
         }
 
        /* ((PreferenceGroup) findPreference("advanced_cat"))
-                .removePreference(findPreference(Settings.System.LOCKSCREEN_HIDE_NAV));
+                .removePreference(findPreference(Settings.System.LOCKSCREEN_HIDE_NAV));*/
         
         mLockscreenTextColor = (ColorPickerPreference) findPreference(PREF_LOCKSCREEN_TEXT_COLOR);
-        mLockscreenTextColor.setOnPreferenceChangeListener(this);*/
+        mLockscreenTextColor.setOnPreferenceChangeListener(this);
 
         
         setHasOptionsMenu(true);
@@ -297,8 +296,19 @@ public class Lockscreens extends SettingsPreferenceFragment implements
 
     @Override
     public boolean onPreferenceChange(Preference preference, Object newValue) {
+        boolean handled = false;
+        if (preference == mLockscreenTextColor) {
+            String hex = ColorPickerPreference.convertToARGB(Integer.valueOf(String.valueOf(newValue)));
+            preference.setSummary(hex);
+            int intHex = ColorPickerPreference.convertToColorInt(hex);
+            Settings.System.putInt(getActivity().getContentResolver(),
+                    Settings.System.LOCKSCREEN_CUSTOM_TEXT_COLOR, intHex);
+            if (DEBUG) Log.d(TAG, String.format("new color hex value: %d", intHex));
+            return true;
+        }
         return false;
     }
+
 
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (resultCode == Activity.RESULT_OK) {

@@ -201,6 +201,7 @@
     <string name="show_lock_before_unlock_summary">Show standard lockscreen before secure unlock</string>
     <string name="lockscreen_battery_title">Lockscreen Battery Percentage</string>
     <string name="lockscreen_battery_summary">Always show battery percentage on the lockscreen</string>
+    <string name="lockscreen_text_color_title">Lockscreen text color</string>
     <string name="volume_wake_title">Volume rocker wake</string>
     <string name="volume_wake_summary">Wake screen with volume rockers</string>
     <string name="lockscreen_wallpaper_title">Choose lockscreen wallpaper</string>

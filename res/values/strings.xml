@@ -400,4 +400,9 @@
 
     <!-- Spoken description for IME settings image button [CHAR LIMIT=NONE] -->
     <string name="input_method_settings_button">Settings</string>
+
+   <!-- Custom Carrier Label -->
+    <string name="custom_carrier_label_title">Custom carrier label</string>
+    <string name="custom_carrier_label_explain">Please enter a new label. Enter an empty label to revert to stock label.</string>
+    <string name="custom_carrier_label_notset">JBSourcery</string>
  </resources>

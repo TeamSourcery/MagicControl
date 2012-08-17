@@ -29,6 +29,10 @@
 			android:key="ime_switcher"
 			android:title="@string/ime_switcher_title"
 			android:summary="@string/ime_switcher_summary" />
+
+          <Preference
+             android:key="custom_carrier_label"
+             android:title="@string/custom_carrier_label_title" />
         
 	</PreferenceCategory>
 

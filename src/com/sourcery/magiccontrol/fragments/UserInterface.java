@@ -35,14 +35,18 @@ public class UserInterface extends SettingsPreferenceFragment {
     private static final String PREF_STATUS_BAR_NOTIF_COUNT = "status_bar_notif_count";
     private static final String PREF_180 = "rotate_180";
     private static final String PREF_IME_SWITCHER = "ime_switcher";
+    private static final String PREF_CUSTOM_CARRIER_LABEL = "custom_carrier_label";
 
     CheckBoxPreference mEnableVolumeOptions;
     CheckBoxPreference mDisableBootAnimation;
     CheckBoxPreference mStatusBarNotifCount;
     CheckBoxPreference mAllow180Rotation;
     CheckBoxPreference mShowImeSwitcher;
+    Preference mCustomLabel;
 
      Random randomGenerator = new Random();
+
+     String mCustomLabelText = null;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -76,7 +80,19 @@ public class UserInterface extends SettingsPreferenceFragment {
                     int randomInt = randomGenerator.nextInt(insults.length);
                     mDisableBootAnimation.setSummary(insults[randomInt]);
                  }
-	    
+         mCustomLabel = findPreference(PREF_CUSTOM_CARRIER_LABEL);
+         updateCustomLabelTextSummary();
+ 	    
+     }
+
+    private void updateCustomLabelTextSummary() {
+        mCustomLabelText = Settings.System.getString(getActivity().getContentResolver(),
+                Settings.System.CUSTOM_CARRIER_LABEL);
+        if (mCustomLabelText == null || mCustomLabelText.length() == 0) {
+            mCustomLabel.setSummary(R.string.custom_carrier_label_notset);
+        } else {
+            mCustomLabel.setSummary(mCustomLabelText);
+        }
     }
 
     @Override
@@ -129,6 +145,35 @@ public class UserInterface extends SettingsPreferenceFragment {
                 preference.setSummary("");
             }
             return true;
+            } else if (preference == mCustomLabel) {
+            AlertDialog.Builder alert = new AlertDialog.Builder(getActivity());
+
+            alert.setTitle(R.string.custom_carrier_label_title);
+            alert.setMessage(R.string.custom_carrier_label_explain);
+
+            // Set an EditText view to get user input
+            final EditText input = new EditText(getActivity());
+            input.setText(mCustomLabelText != null ? mCustomLabelText : "");
+            alert.setView(input);
+
+            alert.setPositiveButton(getResources().getString(R.string.ok), new DialogInterface.OnClickListener() {
+                public void onClick(DialogInterface dialog, int whichButton) {
+                    String value = ((Spannable) input.getText()).toString();
+                    Settings.System.putString(getActivity().getContentResolver(),
+                            Settings.System.CUSTOM_CARRIER_LABEL, value);
+                    updateCustomLabelTextSummary();
+                    Intent i = new Intent();
+                    i.setAction("com.aokp.romcontrol.LABEL_CHANGED");
+                    mContext.sendBroadcast(i);
+                }
+            });
+            alert.setNegativeButton(getResources().getString(R.string.cancel), new DialogInterface.OnClickListener() {
+                public void onClick(DialogInterface dialog, int whichButton) {
+                    // Canceled.
+                }
+            });
+
+            alert.show();
             }
         return super.onPreferenceTreeClick(preferenceScreen, preference);
     }

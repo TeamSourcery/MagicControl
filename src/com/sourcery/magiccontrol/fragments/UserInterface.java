@@ -8,6 +8,7 @@ import java.util.Random;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.res.Resources;
 import android.os.Bundle;
 import android.os.SystemProperties;
@@ -163,7 +164,7 @@ public class UserInterface extends SettingsPreferenceFragment {
                             Settings.System.CUSTOM_CARRIER_LABEL, value);
                     updateCustomLabelTextSummary();
                     Intent i = new Intent();
-                    i.setAction("com.aokp.romcontrol.LABEL_CHANGED");
+                    i.setAction("com.sourcery.magiccontrol.LABEL_CHANGED");
                     mContext.sendBroadcast(i);
                 }
             });

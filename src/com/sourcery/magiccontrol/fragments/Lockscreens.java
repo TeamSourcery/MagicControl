@@ -70,7 +70,7 @@ public class Lockscreens extends SettingsPreferenceFragment implements
     private static final String PREF_VOLUME_MUSIC = "volume_music_controls";
 
     private static final String PREF_LOCKSCREEN_BATTERY = "lockscreen_battery";
-    private static final String PREF_LOCKSCREEN_TEXT_COLOR = "lockscreen_text_color";
+    
     
     private static final String PREF_SHOW_LOCK_BEFORE_UNLOCK = "show_lock_before_unlock";
 

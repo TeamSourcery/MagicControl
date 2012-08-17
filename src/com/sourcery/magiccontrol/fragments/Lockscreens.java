@@ -191,14 +191,14 @@ public class Lockscreens extends SettingsPreferenceFragment implements
             Settings.Secure.putInt(getActivity().getContentResolver(),
                     Settings.Secure.LOCK_SCREEN_LOCK_USER_OVERRIDE,
                     ((CheckBoxPreference) preference).isChecked() ? 1 : 0);
-            return true;
+            return true;*/
             
         } else if (preference == mShowLockBeforeUnlock) {
 
             Settings.System.putInt(getActivity().getContentResolver(),
                     Settings.System.SHOW_LOCK_BEFORE_UNLOCK,
                     ((CheckBoxPreference) preference).isChecked() ? 1 : 0);
-            return true;*/
+            return true;
 
         } else if (preference == mLockscreenBattery) {
 

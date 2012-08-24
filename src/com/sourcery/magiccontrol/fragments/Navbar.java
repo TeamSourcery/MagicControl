@@ -458,7 +458,9 @@ public class Navbar extends SettingsPreferenceFragment implements
                     return; // NOOOOO
                 }
 
-                Uri selectedImageUri = getTempFileUri();
+		Uri selectedImageUri = data.getData();
+		if (selectedImageUri == null)
+			selectedImageUri = getTempFileUri();
                 Log.e(TAG, "Selected image path: " + selectedImageUri.getPath());
                 Bitmap bitmap = BitmapFactory.decodeFile(selectedImageUri.getPath());
                 bitmap.compress(Bitmap.CompressFormat.PNG, 100, iconStream);

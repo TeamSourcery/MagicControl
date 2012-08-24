@@ -515,7 +515,7 @@ public class LockscreenTargets extends Fragment implements ShortcutPickHelper.On
                 if (mImageTmp.exists()) {
                     mImageTmp.renameTo(mImage);
                 }
-                mImage.setReadOnly();
+                mImage.setReadable(true, false);
                 iconType = GlowPadView.ICON_FILE;
                 iconSource = mImage.toString();
                 ic = new BitmapDrawable(getResources(), BitmapFactory.decodeFile(mImage.toString()));

@@ -160,7 +160,7 @@
             </intent-filter>
         </receiver>
         <receiver
-            android:name=".service.WeatherReceiver"
+            android:name=".weather.WeatherReceiver"
             android:enabled="true" >
             <intent-filter>
                 <action android:name="com.sourcery.magiccontrol.INTENT_WEATHER_REQUEST" />

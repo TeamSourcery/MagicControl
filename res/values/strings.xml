@@ -19,7 +19,7 @@
     <string name="weather">LockScreen Weather</string>
 
      <!-- Activity titles defined in AndroidManifest.xml -->
-    <string name="title_about">About AOKP</string>
+    <string name="title_about">About sourcery</string>
     <string name="title_ui">General User Interface</string>
     <string name="title_statusbar_clock">Statusbar Clock</string>
     <string name="title_statusbar_toggles">Statusbar Toggles</string>
@@ -349,20 +349,13 @@
     <string name="toggle_btn_background_title">Toggle background alpha</string>
     <string name="toggle_text_color_title">Toggle text color</string>
 
-    <!-- Lock Screen Shortcuts -->
-    <string name="lockscreen_target_info">Drag the slider to targets to assign shortcuts</string>
-    <string name="lockscreen_target_title">Slider shortcuts</string>
+    <!-- Lockscreen Targets-->
+    <string name="custom_targets">Custom ockscreen targets</string>
+    <string name="lockscreen_target_info">Drag the unlock icon to targets to assign targets</string>
+    <string name="lockscreen_target_title">Lockscreen targets</string>
     <string name="lockscreen_target_summary">View or change custom lock screen shortcuts</string>
-    <string name="lockscreen_target_reset">Lock screen shortcuts reset to default</string>
-    <string name="lockscreen_target_save">Lock screen shortcuts saved</string>
-    <string name="lockscreen_target_reset_title">Reset</string>
-    <string name="lockscreen_target_reset_message">Delete all user created lock screen shortcuts and restore to default?</string>
-    <string name="lockscreen_target_empty">Empty</string>
-    <string name="lockscreen_target_edit_title">Edit shortcut and icon</string>
-    <string name="lockscreen_target_edit_msg">Select or change the desired application or activity and the associated icon</string>
- 	 	
-    <!-- Lock screen shortcuts -->
- 	 	
+    <string name="number_of_targets_title">Lockscreen targets amount</string>
+    <string name="number_of_targets_summary">How many targets do you want?</string>
     <string name="picker_activities">Activities</string>
     <string name="select_custom_activity_title">Select custom activity</string>
     <string name="icon_picker_choose_icon_title">Choose icon</string>
@@ -370,12 +363,9 @@
     <string name="icon_picker_browser">Browser</string>
     <string name="icon_picker_calendar">Calendar</string>
     <string name="icon_picker_camera">Camera</string>
-    <string name="icon_picker_chrome">Chrome</string>
     <string name="icon_picker_email">Email</string>
-    <string name="icon_picker_email2">Email Holo</string>
     <string name="icon_picker_facebook">Facebook</string>
     <string name="icon_picker_gallery">Gallery</string>
-    <string name="icon_picker_google_small">Google (small)</string>
     <string name="icon_picker_googleplus">Google Plus</string>
     <string name="icon_picker_googletalk">Google Talk</string>
     <string name="icon_picker_maps">Maps</string>
@@ -388,6 +378,46 @@
     <string name="icon_picker_search">Search</string>
     <string name="icon_picker_sms">Messaging</string>
     <string name="icon_picker_twitter">Twitter</string>
+    <string name="icon_picker_title">Choose icon source</string>
+    <string name="icon_picker_system_icons_title">System icons</string>
+    <string name="icon_picker_sourcery_icons_title">sourcery icons</string>
+    <string name="icon_picker_gallery_title">Gallery</string>
+
+    <string name="sourcery_icon_picker_sourcery">sourcery Now</string>
+    <string name="sourcery_icon_picker_browser">Browser</string>
+    <string name="sourcery_icon_picker_calendar">Calendar</string>
+    <string name="sourcery_icon_picker_camera">Camera</string>
+    <string name="sourcery_icon_picker_clock">Clock</string>
+    <string name="sourcery_icon_picker_email">Email</string>
+    <string name="sourcery_icon_picker_facebook">Facebook</string>
+    <string name="sourcery_icon_picker_gallery">Gallery</string>
+    <string name="sourcery_icon_picker_googleplus">Google Plus</string>
+    <string name="sourcery_icon_picker_googletalk">Google Talk</string>
+    <string name="sourcery_icon_picker_maps">Maps</string>
+    <string name="sourcery_icon_picker_movie">Movie</string>
+    <string name="sourcery_icon_picker_music">Music</string>
+    <string name="sourcery_icon_picker_navigation">Navigation</string>
+    <string name="sourcery_icon_picker_phone">Phone</string>
+    <string name="sourcery_icon_picker_podcast">Podcast</string>
+    <string name="sourcery_icon_picker_rss">Rss</string>
+    <string name="sourcery_icon_picker_sms">Messaging</string>
+    <string name="sourcery_icon_picker_unlock">Unlock</string>
+    <string name="sourcery_icon_picker_video">Video</string>
+    <string name="sourcery_icon_picker_title">Choose icon source</string>
+    <string name="sourcery_icon_picker_system_icons_title">System icons</string>
+    <string name="sourcery_icon_picker_gallery_title">Gallery</string>
+
+    <string name="icon_picker_pack_title">Icon pack</string>
+    <string name="lockscreen_target_empty">Empty</string>
+    <string name="profile_reset_title">Reset</string>
+    <string name="wifi_save">Save</string>
+    <string name="lockscreen_target_reset">Lockscreen shortcuts reset to default</string>
+    <string name="lockscreen_target_save">Lockscreen targets saved</string>
+    <string name="lockscreen_target_reset_title">Reset</string>
+    <string name="lockscreen_target_reset_message">Delete all user created lockscreen target and restore to default?</string>
+    <string name="lockscreen_target_edit_title">Edit target and icon</string>
+    <string name="lockscreen_target_edit_msg">Select or change the desired application or activity and the associated icon</string>
+
 
      <!-- Title for application group setting screen -->
     <string name="profile_appgroups_title">Application groups</string>
@@ -400,12 +430,7 @@
     <string name="profile_delete_app">Remove application</string>
 
   	 	
-    <!-- String for IconPicker -->
-    <string name="icon_picker_title">Choose icon source</string>
-    <string name="icon_picker_system_icons_title">System icons</string>
-    <string name="icon_picker_gallery_title">Gallery</string>
-    <string name="icon_picker_pack_title">Icon pack</string>
-
+   
     <!-- Spoken description for IME settings image button [CHAR LIMIT=NONE] -->
     <string name="input_method_settings_button">Settings</string>
 

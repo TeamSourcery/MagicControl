@@ -30,6 +30,7 @@
 
    <!-- For Lock Screen -->
     <dimen name="shortcut_picker_left_padding">70dip</dimen>
+    <dimen name="target_icon_size">40dip</dimen>
     <item type="dimen" name="setup_title_height">15%</item>
     <item type="dimen" name="setup_border_width">5%</item>
     <dimen name="setup_margin_bottom">0dip</dimen>

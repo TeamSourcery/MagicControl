@@ -1,3 +1,4 @@
+
 package com.sourcery.magiccontrol.fragments;
 
 import android.app.Activity;
@@ -42,10 +43,11 @@ public class Weather extends SettingsPreferenceFragment implements
     CheckBoxPreference mUseCustomLoc;
     CheckBoxPreference mShowLoc;
     CheckBoxPreference mUseCelcius;
+    ListPreference mStatusBarLocation;
     ListPreference mWeatherSyncInterval;
     EditTextPreference mCustomWeatherLoc;
-    // CheckBoxPreference mUseCustomApp;
-    // Preference mCustomWeatherApp;
+    CheckBoxPreference mUseCustomApp;
+    Preference mCustomWeatherApp;
 
     private ShortcutPickerHelper mPicker;
 
@@ -56,6 +58,7 @@ public class Weather extends SettingsPreferenceFragment implements
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setTitle(R.string.title_weather);
         addPreferencesFromResource(R.xml.prefs_weather);
 
         prefs = getActivity().getSharedPreferences("weather", Context.MODE_WORLD_WRITEABLE);
@@ -67,7 +70,11 @@ public class Weather extends SettingsPreferenceFragment implements
         mWeatherSyncInterval.setSummary(Integer.toString(WeatherPrefs.getRefreshInterval(mContext))
                 + getResources().getString(R.string.weather_refresh_interval_minutes));
 
-        
+        mStatusBarLocation = (ListPreference) findPreference("statusbar_location");
+        mStatusBarLocation.setOnPreferenceChangeListener(this);
+        mStatusBarLocation.setValue(Settings.System.getInt(getContentResolver(),
+                Settings.System.STATUSBAR_WEATHER_STYLE, 2) + "");
+
         mCustomWeatherLoc = (EditTextPreference) findPreference("custom_location");
         mCustomWeatherLoc.setOnPreferenceChangeListener(this);
         mCustomWeatherLoc
@@ -87,14 +94,12 @@ public class Weather extends SettingsPreferenceFragment implements
         mUseCelcius = (CheckBoxPreference) findPreference(WeatherPrefs.KEY_USE_CELCIUS);
         mUseCelcius.setChecked(WeatherPrefs.getUseCelcius(mContext));
 
-        // mUseCustomApp = (CheckBoxPreference)
-        // findPreference(WeatherPrefs.KEY_USE_CUSTOM_APP);
-        // mUseCustomApp.setChecked(WeatherPrefs.getUseCustomApp(mContext));
+        mUseCustomApp = (CheckBoxPreference) findPreference(WeatherPrefs.KEY_USE_CUSTOM_APP);
+        mUseCustomApp.setChecked(WeatherPrefs.getUseCustomApp(mContext));
 
-        // mCustomWeatherApp = (Preference)
-        // findPreference(WeatherPrefs.KEY_CUSTOM_APP);
-        // mCustomWeatherApp.setOnPreferenceChangeListener(this);
-        // mCustomWeatherApp.setSummary(mPicker.getFriendlyNameForUri(WeatherPrefs.getCustomApp(mContext)));
+        mCustomWeatherApp = (Preference) findPreference(WeatherPrefs.KEY_CUSTOM_APP);
+        mCustomWeatherApp.setOnPreferenceChangeListener(this);
+        mCustomWeatherApp.setSummary(mPicker.getFriendlyNameForUri(WeatherPrefs.getCustomApp(mContext)));
 
         setHasOptionsMenu(true);
 
@@ -192,13 +197,12 @@ public class Weather extends SettingsPreferenceFragment implements
         } else if (preference == mUseCelcius) {
             return WeatherPrefs.setUseCelcius(mContext,
                     ((CheckBoxPreference) preference).isChecked());
-            // } else if (preference == mUseCustomApp) {
-            // return WeatherPrefs.setUseCustomApp(mContext,
-            // ((CheckBoxPreference) preference).isChecked());
-            // } else if (preference == mCustomWeatherApp) {
-            // mPicker.pickShortcut();
-            // return true;
-            //
+        } else if (preference == mUseCustomApp) {
+            return WeatherPrefs.setUseCustomApp(mContext,
+                    ((CheckBoxPreference) preference).isChecked());
+        } else if (preference == mCustomWeatherApp) {
+            mPicker.pickShortcut();
+            return true;
         }
         return super.onPreferenceTreeClick(preferenceScreen, preference);
     }
@@ -222,19 +226,22 @@ public class Weather extends SettingsPreferenceFragment implements
             preference.setSummary(newVal);
             return WeatherPrefs.setCustomLocation(mContext, newVal);
 
-            
-        }
-        return false;
+         } else if (preference == mStatusBarLocation) {
+
+             String newVal = (String) newValue;
+             return Settings.System.putInt(getActivity().getContentResolver(),
+                     Settings.System.STATUSBAR_WEATHER_STYLE,
+                     Integer.parseInt(newVal));
+         }
+         return false;
     }
 
     @Override
     public void shortcutPicked(String uri, String friendlyName, Bitmap bmp, boolean isApplication) {
 
-        // if (WeatherPrefs.setCustomApp(mContext, uri)) {
-        //
-        // mCustomWeatherApp.setSummary(friendlyName);
-        //
-        // }
+        if (WeatherPrefs.setCustomApp(mContext, uri)) {
+            mCustomWeatherApp.setSummary(friendlyName);
+        }
     }
 
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -249,4 +256,3 @@ public class Weather extends SettingsPreferenceFragment implements
     }
 
 }
-

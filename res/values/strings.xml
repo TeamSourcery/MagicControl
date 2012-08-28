@@ -370,7 +370,7 @@
     <string name="toggle_text_color_title">Toggle text color</string>
 
     <!-- Lockscreen Targets-->
-    <string name="custom_targets">Custom ockscreen targets</string>
+    <string name="custom_targets">Custom lockscreen targets</string>
     <string name="lockscreen_target_info">Drag the unlock icon to targets to assign targets</string>
     <string name="lockscreen_target_title">Lockscreen targets</string>
     <string name="lockscreen_target_summary">View or change custom lock screen shortcuts</string>

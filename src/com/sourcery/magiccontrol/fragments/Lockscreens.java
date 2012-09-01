@@ -24,7 +24,6 @@ import android.content.res.Resources;
 import android.database.Cursor;
 import android.content.pm.PackageManager;
 import android.content.pm.PackageManager.NameNotFoundException;
-import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
@@ -57,8 +56,7 @@ import android.widget.Toast;
 
 import com.sourcery.magiccontrol.SettingsPreferenceFragment;
 import com.sourcery.magiccontrol.R;
-import com.sourcery.magiccontrol.MagicControlActivity;
-import com.sourcery.magiccontrol.fragments.LockscreenTargets;
+import com.sourcery.magiccontrol.util.Utils;
 import com.sourcery.magiccontrol.weather.WeatherRefreshService;
 import com.sourcery.magiccontrol.weather.WeatherService;
 	
@@ -77,7 +75,6 @@ public class Lockscreens extends SettingsPreferenceFragment implements
     private static final String PREF_LOCKSCREEN_TEXT_COLOR = "lockscreen_text_color";
     private static final String PREF_VOLUME_WAKE = "volume_wake";
     private static final String PREF_VOLUME_MUSIC = "volume_music_controls"; 
-    private static final String PREF_NUMBER_OF_TARGETS = "number_of_targets";
     private static final String PREF_LOCKSCREEN_WEATHER = "lockscreen_weather";
     private static final String PREF_LOCKSCREEN_WEATHER_TYPE = "lockscreen_weather_type";
     private static final String PREF_LOCKSCREEN_CALENDAR = "enable_calendar";
@@ -87,7 +84,7 @@ public class Lockscreens extends SettingsPreferenceFragment implements
     private static final String PREF_LOCKSCREEN_CALENDAR_HIDE_ONGOING = "lockscreen_calendar_hide_ongoing";
     private static final String PREF_LOCKSCREEN_CALENDAR_USE_COLORS = "lockscreen_calendar_use_colors";
     private static final String PREF_LOCKSCREEN_CALENDAR_INTERVAL = "lockscreen_calendar_interval";
-
+   
 
     private static final String PREF_LOCKSCREEN_BATTERY = "lockscreen_battery";
     
@@ -102,8 +99,7 @@ public class Lockscreens extends SettingsPreferenceFragment implements
     private static final String WALLPAPER_NAME = "lockscreen_wallpaper.jpg";
 
     Preference mLockscreenWallpaper;
-    Preference mLockscreenTargets;
-
+    
 
     CheckBoxPreference menuButtonLocation;
     /*CheckBoxPreference mLockScreenTimeoutUserOverride;
@@ -114,7 +110,6 @@ public class Lockscreens extends SettingsPreferenceFragment implements
     CheckBoxPreference mLockscreenBattery;
     CheckBoxPreference mShowLockBeforeUnlock;
     ColorPickerPreference mLockscreenTextColor;
-    ListPreference mTargetNumber;
     CheckBoxPreference mLockscreenWeather;
     ListPreference mLockscreenWeatherType;
     CheckBoxPreference mLockscreenCalendar;
@@ -124,13 +119,14 @@ public class Lockscreens extends SettingsPreferenceFragment implements
     ListPreference mCalendarRange;
     CheckBoxPreference mLockscreenCalendarHideOngoing;
     CheckBoxPreference mLockscreenCalendarUseColors;
+    
 
     
     private int currentIconIndex;
     private Preference mCurrentCustomActivityPreference;
     private String mCurrentCustomActivityString;
 
-    /*private ShortcutPickerHelper mPicker;*/
+   /*private ShortcutPickerHelper mPicker;*/
 
     ArrayList<String> keys = new ArrayList<String>();
 
@@ -153,8 +149,7 @@ public class Lockscreens extends SettingsPreferenceFragment implements
         mLockscreenBattery.setChecked(Settings.System.getBoolean(getActivity().getContentResolver(),
                 Settings.System.LOCKSCREEN_BATTERY, false));
         
-      
-        
+                
         mShowLockBeforeUnlock = (CheckBoxPreference) findPreference(PREF_SHOW_LOCK_BEFORE_UNLOCK);
         mShowLockBeforeUnlock.setChecked(Settings.System.getInt(getActivity().getContentResolver(),
                 Settings.System.SHOW_LOCK_BEFORE_UNLOCK, 0) == 1);
@@ -208,15 +203,7 @@ public class Lockscreens extends SettingsPreferenceFragment implements
                 Settings.System.LOCKSCREEN_CALENDAR_RANGE, 86400000) + "");
 
 
-        mTargetNumber = (ListPreference) findPreference(PREF_NUMBER_OF_TARGETS);
-        mTargetNumber.setOnPreferenceChangeListener(this);
-        mTargetNumber.setValue(Integer.toString(Settings.System.getInt(getActivity()
-                .getContentResolver(), Settings.System.LOCKSCREEN_TARGET_AMOUNT,
-                2)));
-
-        mLockscreenTargets = findPreference("lockscreen_targets");
-        
-        mLockscreenWallpaper = findPreference("wallpaper");
+       mLockscreenWallpaper = findPreference("wallpaper");
 
        
         for (String key : keys) {
@@ -264,26 +251,13 @@ public class Lockscreens extends SettingsPreferenceFragment implements
                     Settings.System.LOCKSCREEN_BATTERY,
                     ((CheckBoxPreference)preference).isChecked() ? 1 : 0);
             return true;
-
-         } else if (preference == mVolumeWake) {
+       } else if (preference == mVolumeWake) {
 
             Settings.System.putInt(getActivity().getContentResolver(),
                     Settings.System.VOLUME_WAKE_SCREEN,
                     ((CheckBoxPreference) preference).isChecked() ? 1 : 0);
             return true;
-
-         } else if (preference == mLockscreenTargets) {
-            Intent i = new Intent(getActivity(), MagicControlActivity.class)
-                    .setAction("com.sourcery.magiccontrol.START_NEW_FRAGMENT")
-                    .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-                    .putExtra("sourcery_fragment_name", LockscreenTargets.class.getName());
-            getActivity().startActivity(i);
-            Intent w = new Intent(getActivity().getApplicationContext(),
-                        WeatherRefreshService.class);
-                w.setAction(WeatherService.INTENT_WEATHER_REQUEST);
-                w.putExtra(WeatherService.INTENT_EXTRA_ISMANUAL, true);
-                getActivity().getApplicationContext().startService(w);
-            return true;
+           
        } else if (preference == mVolumeMusic) {
 
             Settings.System.putInt(getActivity().getContentResolver(),
@@ -472,11 +446,6 @@ public class Lockscreens extends SettingsPreferenceFragment implements
             long val = Long.parseLong((String) newValue);
             Settings.System.putLong(getActivity().getContentResolver(),
                     Settings.System.LOCKSCREEN_CALENDAR_RANGE, val);
-            return true;
-         } else if (preference == mTargetNumber) {
-            int val = Integer.parseInt((String) newValue);
-            Settings.System.putInt(getActivity().getContentResolver(),
-                Settings.System.LOCKSCREEN_TARGET_AMOUNT, val);
             return true;
         }
         return false;

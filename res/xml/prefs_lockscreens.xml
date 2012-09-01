@@ -15,43 +15,20 @@
 	<PreferenceCategory
         android:key="targets"
         android:title="@string/custom_targets"/>
-    <ListPreference
-        android:entries="@array/lockscreen_target_amount_entries"
-        android:entryValues="@array/lockscreen_target_amount_values"
-        android:key="number_of_targets"
-        android:title="@string/number_of_targets_title"
-        android:summary="@string/number_of_targets_summary" />
     <Preference
+        android:fragment="com.sourcery.magiccontrol.fragments.LockscreenTargets"
         android:key="lockscreen_targets"
         android:summary="@string/lockscreen_target_summary"
         android:title="@string/lockscreen_target_title" />
-
-	<CheckBoxPreference
-		android:key="pref_lockscreen_menu_unlock"
-		android:title="@string/title_pref_lockscreen_menu_unlock"
-		android:summary="@string/summary_pref_lockscreen_menu_unlock" />
+   
+	
 
 	<!--<CheckBoxPreference
 		android:key="lockscreen_user_timeout_override"
 		android:title="@string/title_lockscreen_user_timeout_override"
 		android:summary="@string/summary_lockscreen_user_timeout_override" />-->	
 
-	<CheckBoxPreference
-		android:key="lockscreen_battery"
-		android:title="@string/lockscreen_battery_title"
-		android:summary="@string/lockscreen_battery_summary" />
 	
-	<CheckBoxPreference
-		android:key="volume_wake"
-		android:title="@string/volume_wake_title"
-		android:summary="@string/volume_wake_summary"
-                android:defaultValue="false" />
-
-	<CheckBoxPreference
-		android:key="volume_music_controls"
-		android:title="@string/volume_music_controls_title"
-		android:summary="@string/volume_music_controls_summary" />
-
        <PreferenceCategory
         android:key="weather_cat"
         android:title="@string/lockscreen_weather_cat">
@@ -60,6 +37,12 @@
             android:key="lockscreen_weather"
             android:title="@string/lockscreen_weather_title"
             android:summary="@string/lockscreen_weather_summary" />
+        
+       <Preference
+ 	android:fragment="com.sourcery.magiccontrol.fragments.Weather"
+        android:title="@string/weather"
+        android:summary="@string/header_summary_weather"
+         />
 
         <ListPreference
 	        android:key="lockscreen_weather_type"
@@ -141,6 +124,28 @@
 			android:title="@string/lockscreen_landscape_title"
 			android:summary="@string/lockscreen_landscape_summary" /> -->
 
+              <CheckBoxPreference
+		android:key="pref_lockscreen_menu_unlock"
+		android:title="@string/title_pref_lockscreen_menu_unlock"
+		android:summary="@string/summary_pref_lockscreen_menu_unlock" />
+
+               <CheckBoxPreference
+		android:key="lockscreen_battery"
+		android:title="@string/lockscreen_battery_title"
+		android:summary="@string/lockscreen_battery_summary" />
+	
+	<CheckBoxPreference
+		android:key="volume_wake"
+		android:title="@string/volume_wake_title"
+		android:summary="@string/volume_wake_summary"
+                android:defaultValue="false" />
+
+	<CheckBoxPreference
+		android:key="volume_music_controls"
+		android:title="@string/volume_music_controls_title"
+		android:summary="@string/volume_music_controls_summary" />
+
+
 		<CheckBoxPreference
 			android:key="lockscreen_quick_unlock_control"
 			android:title="@string/lockscreen_quick_unlock_control_title"
@@ -153,11 +158,7 @@
 
 	</PreferenceCategory>
 
-	<!--<PreferenceCategory
-		android:key="lockscreen_targets"
-		android:title="@string/lockscreen_targets">
-
-	</PreferenceCategory>-->
+	
 
 </PreferenceScreen>
 

@@ -38,49 +38,15 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.android.internal.widget.LockPatternUtils;
 import com.android.internal.widget.multiwaveview.GlowPadView;
 import com.android.internal.widget.multiwaveview.TargetDrawable;
 import com.sourcery.magiccontrol.R;
-import com.sourcery.magiccontrol.util.ShortcutPickerHelper;
-import com.sourcery.magiccontrol.SettingsPreferenceFragment;
-import com.sourcery.magiccontrol.util.IconPicker;
-import com.sourcery.magiccontrol.util.IconPicker.OnIconPickListener;
+import com.sourcery.magiccontrol.util.Utils;
+import com.sourcery.magiccontrol.fragments.IconPicker.OnIconPickListener;
+import com.sourcery.magiccontrol.fragments.ShortcutPickerHelper;
 
-import java.lang.reflect.*;
-
-public class LockscreenTargets extends SettingsPreferenceFragment implements ShortcutPickerHelper.OnPickListener,
+public class LockscreenTargets extends Fragment implements ShortcutPickerHelper.OnPickListener,
     GlowPadView.OnTriggerListener, OnIconPickListener {
-
-    /**
-     * Default stock configuration for three lockscreen targets
-     * @hide
-     */
-    public final static String DEFAULT_TRI =
-            "#Intent;action=android.intent.action.MAIN;category=android.intent.category.LAUNCHER;" +
-            "component=com.google.android.googlequicksearchbox/.SearchActivity;S.icon_resource=ic_lockscreen_google_normal;" +
-            "end|#Intent;action=android.intent.action.MAIN;category=android.intent.category.LAUNCHER;" +
-            "component=com.android.gallery3d/com.android.camera.CameraLauncher;S.icon_resource=ic_lockscreen_camera_normal;end";
-
-
-    /**
-     * Default stock configuration for lockscreen targets with Google now at left
-     * @hide
-     */
-    public final static String DEFAULT_LEFT =
-            "empty|empty|#Intent;action=android.intent.action.MAIN;category=android.intent.category.LAUNCHER;" +
-            "component=com.google.android.googlequicksearchbox/.SearchActivity;S.icon_resource=ic_lockscreen_google_normal;" +
-            "end";
-
-    /**
-     * Default stock configuration for lockscreen targets with Google now at left
-     * @hide
-     */
-    public final static String DEFAULT_NORMAL =
-            "empty|#Intent;action=android.intent.action.MAIN;category=android.intent.category.LAUNCHER;" +
-            "component=com.google.android.googlequicksearchbox/.SearchActivity;S.icon_resource=ic_lockscreen_google_normal;" +
-            "end|empty|#Intent;action=android.intent.action.MAIN;category=android.intent.category.LAUNCHER;" +
-            "component=com.android.gallery3d/com.android.camera.CameraLauncher;S.icon_resource=ic_lockscreen_camera_normal;end";
 
     private GlowPadView mWaveView;
     private ImageButton mDialogIcon;
@@ -88,7 +54,6 @@ public class LockscreenTargets extends SettingsPreferenceFragment implements Sho
     private ShortcutPickerHelper mPicker;
     private IconPicker mIconPicker;
     private ArrayList<TargetInfo> mTargetStore = new ArrayList<TargetInfo>();
-    private int mTargetOffset;
     private int mTargetInset;
     private boolean mIsLandscape;
     private boolean mIsScreenLarge;
@@ -100,7 +65,6 @@ public class LockscreenTargets extends SettingsPreferenceFragment implements Sho
     private static final int MENU_RESET = Menu.FIRST;
     private static final int MENU_SAVE = Menu.FIRST + 1;
     private static String EMPTY_LABEL;
-    private int maxTargets;
 
     class TargetInfo {
         String uri, pkgName;
@@ -126,52 +90,21 @@ public class LockscreenTargets extends SettingsPreferenceFragment implements Sho
         mContainer = container;
         setHasOptionsMenu(true);
         mActivity = getActivity();
-        mIsScreenLarge = mTablet;
+        
         mResources = getResources();
         mIsLandscape = mResources.getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE;
-        mTargetOffset = mIsLandscape && !mIsScreenLarge ? 2 : 0;
         mTargetInset = mResources.getDimensionPixelSize(com.android.internal.R.dimen.lockscreen_target_inset);
         mIconPicker = new IconPicker(mActivity, this);
-        mPicker = new ShortcutPickerHelper(this, this);
+        mPicker = new ShortcutPickerHelper(mActivity, this);
         mImageTmp = new File(mActivity.getCacheDir() + "/target.tmp");
         EMPTY_LABEL = mActivity.getResources().getString(R.string.lockscreen_target_empty);
-        maxTargets = Settings.System.getInt(mActivity.getContentResolver(), Settings.System.LOCKSCREEN_TARGET_AMOUNT, 2);
-
-        ViewGroup view = (ViewGroup) inflater.inflate(R.layout.lockscreen_targets, container, false);
-        Configuration config = mResources.getConfiguration();
-        try {
-            Class kscClass = Class.forName("com.android.internal.policy.impl.KeyguardScreenCallback");
-            Object ksc = Proxy.newProxyInstance(getClass().getClassLoader(), new Class[]{kscClass}, new InvocationHandler() {
-                @Override
-                public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
-                    return false;
-                }
-            });
-            Class kumClass = Class.forName("com.android.internal.policy.impl.KeyguardUpdateMonitor");
-            Constructor kumConstructor = kumClass.getConstructor(Context.class);
-            kumConstructor.setAccessible(true);
-            Object kum = kumConstructor.newInstance(mActivity);
-            Class lpuClass = Class.forName("com.android.internal.widget.LockPatternUtils");
-            Constructor lpuConstructor = lpuClass.getConstructor(Context.class);
-            lpuConstructor.setAccessible(true);
-            Object lpu = lpuConstructor.newInstance(mActivity);
-            Class lockscreenClass = Class.forName("com.android.internal.policy.impl.LockScreen");
-            Constructor lockscreenConstructor = lockscreenClass.getDeclaredConstructors()[0];
-            lockscreenConstructor.setAccessible(true);
-            View lockscreen = (View) lockscreenConstructor.newInstance(mActivity, config, lpu, kum, ksc);
-            view.addView(lockscreen);
-            //return lockscreen;
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-        return view;
+        return inflater.inflate(R.layout.lockscreen_targets, container, false);
     }
 
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        mWaveView = ((GlowPadView) mActivity.findViewById(com.android.internal.R.id.unlock_widget));
+        mWaveView = ((GlowPadView) mActivity.findViewById(R.id.lock_target));
         mWaveView.setOnTriggerListener(this);
         initializeView(Settings.System.getString(mActivity.getContentResolver(), Settings.System.LOCKSCREEN_TARGETS));
     }
@@ -210,29 +143,18 @@ public class LockscreenTargets extends SettingsPreferenceFragment implements Sho
 
     private void initializeView(String input) {
         if (input == null) {
-            input = DEFAULT_TRI;
+            input = GlowPadView.DEFAULT_TARGETS;
         }
         mTargetStore.clear();
         final PackageManager packMan = mActivity.getPackageManager();
         final Drawable activeBack = mResources.getDrawable(com.android.internal.R.drawable.ic_lockscreen_target_activated);
         final String[] targetStore = input.split("\\|");
-
-
+       
         //Add the unlock icon
         Drawable unlockFront = mResources.getDrawable(com.android.internal.R.drawable.ic_lockscreen_unlock_normal);
         Drawable unlockBack = mResources.getDrawable(com.android.internal.R.drawable.ic_lockscreen_unlock_activated);
         mTargetStore.add(new TargetInfo(getLayeredDrawable(unlockBack, unlockFront, 0, true)));
-
-        int total = 0;
-        if (maxTargets == 2) {
-            total = 4;
-        } else if (maxTargets == 3 || maxTargets == 5) {
-            total = 6;
-        } else if (maxTargets == 4 || maxTargets == 7) {
-            total = 8;
-        }
-
-        for (int cc = 0; cc < total - mTargetOffset - 1; cc++) {
+        for (int cc = 0; cc < 7; cc++) {
             String uri = GlowPadView.EMPTY_TARGET;
             Drawable front = null;
             Drawable back = activeBack;
@@ -240,7 +162,7 @@ public class LockscreenTargets extends SettingsPreferenceFragment implements Sho
             String iconType = null;
             String iconSource = null;
             int tmpInset = mTargetInset;
-            if (cc < targetStore.length && cc < maxTargets) {
+            if (cc < targetStore.length && cc < 7) {
                 uri = targetStore[cc];
                 if (!uri.equals(GlowPadView.EMPTY_TARGET)) {
                     try {
@@ -292,7 +214,7 @@ public class LockscreenTargets extends SettingsPreferenceFragment implements Sho
                     } catch (Exception e) {
                     }
                 }
-            } else if (cc >= maxTargets) {
+            } else if (cc >= 7) {
                 mTargetStore.add(new TargetInfo(null));
                 continue;
             }
@@ -325,13 +247,13 @@ public class LockscreenTargets extends SettingsPreferenceFragment implements Sho
 
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-        menu.add(0, MENU_RESET, 0, R.string.profile_reset_title)
-            .setIcon(R.drawable.ic_settings_backup) // use the backup icon
+        menu.add(0, MENU_RESET, 0, "Reset")
+            //.setIcon(R.drawable.ic_settings_backup) // use the backup icon
             .setAlphabeticShortcut('r')
             .setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM |
                 MenuItem.SHOW_AS_ACTION_WITH_TEXT);
-        menu.add(0, MENU_SAVE, 0, R.string.wifi_save)
-            .setIcon(R.drawable.ic_menu_save)
+        menu.add(0, MENU_SAVE, 0, "Save")
+            //.setIcon(R.drawable.ic_settings_backup)
             .setAlphabeticShortcut('s')
             .setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM |
                 MenuItem.SHOW_AS_ACTION_WITH_TEXT);
@@ -358,19 +280,14 @@ public class LockscreenTargets extends SettingsPreferenceFragment implements Sho
     private void resetAll() {
         new AlertDialog.Builder(mActivity)
         .setTitle(R.string.lockscreen_target_reset_title)
-        .setIconAttribute(android.R.attr.alertDialogIcon)
+        .setIcon(android.R.drawable.ic_dialog_alert)
         .setMessage(R.string.lockscreen_target_reset_message)
         .setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int id) {
-               String targets = DEFAULT_TRI;
-                  if (maxTargets == 2) {
-                     targets = DEFAULT_TRI;
-                } else if (maxTargets == 3 || maxTargets == 5) {
-                     targets = DEFAULT_LEFT;
-                } else if (maxTargets == 4 || maxTargets == 7) {
-                     targets = DEFAULT_NORMAL;
-                }
-                initializeView(targets);
+                initializeView("empty|#Intent;action=android.intent.action.MAIN;category=android.intent.category.LAUNCHER;" +
+                        "component=com.google.android.googlequicksearchbox/.SearchActivity;S.icon_resource=ic_lockscreen_google_normal;" +
+                        "end|empty|#Intent;action=android.intent.action.MAIN;category=android.intent.category.LAUNCHER;" +
+                        "component=com.android.gallery3d/com.android.camera.CameraLauncher;S.icon_resource=ic_lockscreen_camera_normal;end");
                 saveAll();
                 Toast.makeText(mActivity, R.string.lockscreen_target_reset, Toast.LENGTH_LONG).show();
             }
@@ -384,9 +301,7 @@ public class LockscreenTargets extends SettingsPreferenceFragment implements Sho
     private void saveAll() {
         StringBuilder targetLayout = new StringBuilder();
         ArrayList<String> existingImages = new ArrayList<String>();
-        int maxTargets = Settings.System.getInt(mActivity.getContentResolver(), Settings.System.LOCKSCREEN_TARGET_AMOUNT, 2);
-
-        for (int i = mTargetOffset + 1; i <= mTargetOffset + maxTargets; i++) {
+        for (int i = 1; i <= 7; i++) {
             String uri = mTargetStore.get(i).uri;
             String type = mTargetStore.get(i).iconType;
             String source = mTargetStore.get(i).iconSource;
@@ -451,7 +366,8 @@ public class LockscreenTargets extends SettingsPreferenceFragment implements Sho
         item.pkgName = pkgName;
     }
 
-    public void shortcutPicked(String uri, String friendlyName, Bitmap bmp, boolean isApplication) {
+    @Override
+    public void shortcutPicked(String uri, String friendlyName, boolean isApplication) {
         try {
             Intent i = Intent.parseUri(uri, 0);
             PackageManager pm = mActivity.getPackageManager();
@@ -471,7 +387,7 @@ public class LockscreenTargets extends SettingsPreferenceFragment implements Sho
     }
 
     private Drawable resizeForDialog(Drawable image) {
-        int size = (int) mResources.getDimension(R.dimen.target_icon_size);
+        int size = (int) mResources.getDimension(android.R.dimen.app_icon_size);
         Bitmap d = ((BitmapDrawable)image).getBitmap();
         Bitmap bitmapOrig = Bitmap.createScaledBitmap(d, size, size, false);
         return new BitmapDrawable(mResources, bitmapOrig);
@@ -487,7 +403,7 @@ public class LockscreenTargets extends SettingsPreferenceFragment implements Sho
             mDialogLabel.setText(EMPTY_LABEL);
             mDialogLabel.setTag(GlowPadView.EMPTY_TARGET);
             mDialogIcon.setImageResource(R.drawable.ic_empty);
-        } else if (requestCode == IconPicker.REQUEST_PICK_SYSTEM || requestCode == IconPicker.REQUEST_PICK_SOURCERY || requestCode == IconPicker.REQUEST_PICK_GALLERY
+        } else if (requestCode == IconPicker.REQUEST_PICK_SYSTEM || requestCode == IconPicker.REQUEST_PICK_GALLERY
                 || requestCode == IconPicker.REQUEST_PICK_ICON_PACK) {
             mIconPicker.onActivityResult(requestCode, resultCode, data);
         } else if (requestCode != Activity.RESULT_CANCELED && resultCode != Activity.RESULT_CANCELED) {
@@ -527,7 +443,8 @@ public class LockscreenTargets extends SettingsPreferenceFragment implements Sho
             view.findViewById(R.id.label).setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    mPicker.pickShortcut();
+                    mPicker.pickShortcut(new String[] {EMPTY_LABEL}, new ShortcutIconResource[] {
+                            ShortcutIconResource.fromContext(mActivity, android.R.drawable.ic_delete) }, getId());
                 }
             });
             mDialogIcon = ((ImageButton) view.findViewById(R.id.icon));
@@ -601,11 +518,6 @@ public class LockscreenTargets extends SettingsPreferenceFragment implements Sho
                 return;
             }
         } else if (requestCode == IconPicker.REQUEST_PICK_SYSTEM) {
-            String resourceName = in.getStringExtra(IconPicker.RESOURCE_NAME);
-            ic = mResources.getDrawable(mResources.getIdentifier(resourceName, "drawable", "android")).mutate();
-            iconType = GlowPadView.ICON_RESOURCE;
-            iconSource = resourceName;
-        } else if (requestCode == IconPicker.REQUEST_PICK_SOURCERY) {
             String resourceName = in.getStringExtra(IconPicker.RESOURCE_NAME);
             ic = mResources.getDrawable(mResources.getIdentifier(resourceName, "drawable", "android")).mutate();
             iconType = GlowPadView.ICON_RESOURCE;

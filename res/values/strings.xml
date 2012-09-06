@@ -58,7 +58,6 @@
     <string name="status_bar_notif_count_summary">Display number of pending notifications on the status bar</string>
 
    <!-- Power Menu -->
-    <string name="title_show_power_saver">Show power saver</string>
     <string name="title_show_screenshot">Show screenshot</string>
     <string name="title_show_torch_toggle">Show torch toggle</string>
     <string name="title_show_airplane_toggle">Show airplane toggle</string>
@@ -193,14 +192,7 @@
      <!-- General UI -->
     <string name="enable_volume_options">Enable Volume Panel</string>
 
-     <!-- Power Menu -->
-   
-    <string name="title_show_screenshot">Show screenshot</string>
-    <string name="title_show_torch_toggle">Show torch toggle</string>
-    <string name="title_show_airplane_toggle">Show airplane toggle</string>
-    <string name="title_show_navbar_hide">Show navigation bar toggle</string>
-    
-<!-- Lockscreen -->
+    <!-- Lockscreen -->
     <string name="title_pref_lockscreen_menu_unlock">Menu unlock</string>
     <string name="summary_pref_lockscreen_menu_unlock">Legacy menu icon unlocks screen (requires reboot)</string>
     <string name="lockscreen_quick_unlock_control_title">Quick pin unlock</string>

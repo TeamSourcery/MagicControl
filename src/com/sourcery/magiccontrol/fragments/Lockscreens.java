@@ -71,7 +71,7 @@ public class Lockscreens extends SettingsPreferenceFragment implements
 
     private static final String PREF_MENU = "pref_lockscreen_menu_unlock";
     private static final String PREF_USER_OVERRIDE = "lockscreen_user_timeout_override";
-    private static final String PREF_LOCKSCREEN_LAYOUT = "pref_lockscreen_layout";
+    private static final String PREF_LOCKSCREEN_LAYOUT = "lockscreen_layout";
     private static final String PREF_LOCKSCREEN_TEXT_COLOR = "lockscreen_text_color";
     private static final String PREF_VOLUME_WAKE = "volume_wake";
     private static final String PREF_VOLUME_MUSIC = "volume_music_controls"; 
@@ -112,6 +112,7 @@ public class Lockscreens extends SettingsPreferenceFragment implements
     ColorPickerPreference mLockscreenTextColor;
     CheckBoxPreference mLockscreenWeather;
     ListPreference mLockscreenWeatherType;
+    ListPreference mLockscreenLayout;
     CheckBoxPreference mLockscreenCalendar;
     CheckBoxPreference mLockscreenCalendarFlip;
     Preference mCalendarSources;
@@ -173,6 +174,11 @@ public class Lockscreens extends SettingsPreferenceFragment implements
         mLockscreenWeatherType.setOnPreferenceChangeListener(this);
         mLockscreenWeatherType.setValue(Settings.System.getInt(getActivity().getContentResolver(),
                 Settings.System.LOCKSCREEN_WEATHER_TYPE, 0) + "");
+
+	mLockscreenLayout = (ListPreference) findPreference(PREF_LOCKSCREEN_LAYOUT);
+	mLockscreenLayout.setOnPreferenceChangeListener(this);
+	mLockscreenLayout.setValue(Settings.System.getInt(getActivity().getContentResolver(),
+		Settings.System.LOCKSCREEN_LAYOUT, 0) + "");
 
         mLockscreenCalendar = (CheckBoxPreference) findPreference(PREF_LOCKSCREEN_CALENDAR);
         mLockscreenCalendar.setChecked(Settings.System.getBoolean(getActivity().getContentResolver(),
@@ -436,6 +442,11 @@ public class Lockscreens extends SettingsPreferenceFragment implements
             int val = Integer.parseInt((String) newValue);
             Settings.System.putInt(getActivity().getContentResolver(),
                     Settings.System.LOCKSCREEN_WEATHER_TYPE, val);
+            return true;
+        } else if (preference == mLockscreenLayout) {
+            int val = Integer.parseInt((String) newValue);
+            Settings.System.putInt(getActivity().getContentResolver(),
+                    Settings.System.LOCKSCREEN_LAYOUT, val);
             return true;
         } else if (preference == mCalendarInterval) {
             int val = Integer.parseInt((String) newValue);

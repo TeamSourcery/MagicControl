@@ -15,6 +15,16 @@
 	<PreferenceCategory
         android:key="targets"
         android:title="@string/custom_targets"/>
+
+<ListPreference
+            android:key="lockscreen_layout"
+            android:persistent="false"
+            android:dialogTitle="@string/lockscreen_widgets_title"
+            android:title="@string/lockscreen_widgets_title"
+            android:entries="@array/lockscreen_widgets_entries"
+            android:entryValues="@array/lockscreen_widgets_values"
+            android:summary="@string/lockscreen_widgets_summary" />
+
     <Preference
         android:fragment="com.sourcery.magiccontrol.fragments.LockscreenTargets"
         android:key="lockscreen_targets"

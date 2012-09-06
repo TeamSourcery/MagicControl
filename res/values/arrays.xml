@@ -421,10 +421,10 @@
     </string-array>
     
     <string-array name="lockscreen_widgets_entries">
-        <item>One-Five</item>
-        <item>One-Five Centered</item>
-        <item>Six-Eight</item>  
-        <item>Six-Eight Centered</item>
+        <item>Low Lock Ring</item>
+        <item>Low Lock Ring Centered</item>
+        <item>High Lock Ring</item>  
+        <item>High Lock Ring Centered</item>
     </string-array>
 
          <!-- Brightness slider -->

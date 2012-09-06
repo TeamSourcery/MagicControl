@@ -37,6 +37,7 @@ public class UserInterface extends SettingsPreferenceFragment {
     private static final String PREF_180 = "rotate_180";
     private static final String PREF_IME_SWITCHER = "ime_switcher";
     private static final String PREF_CUSTOM_CARRIER_LABEL = "custom_carrier_label";
+    private static final String PREF_RECENT_KILL_ALL = "recent_kill_all";
 
     CheckBoxPreference mEnableVolumeOptions;
     CheckBoxPreference mDisableBootAnimation;
@@ -44,6 +45,7 @@ public class UserInterface extends SettingsPreferenceFragment {
     CheckBoxPreference mAllow180Rotation;
     CheckBoxPreference mShowImeSwitcher;
     Preference mCustomLabel;
+    CheckBoxPreference mRecentKillAll;
 
      Random randomGenerator = new Random();
 
@@ -67,6 +69,10 @@ public class UserInterface extends SettingsPreferenceFragment {
         mShowImeSwitcher = (CheckBoxPreference) findPreference(PREF_IME_SWITCHER);
         mShowImeSwitcher.setChecked(Settings.System.getInt(getActivity().getContentResolver(),
                 Settings.System.STATUS_BAR_IME_SWITCHER, 1) == 1);
+
+        mRecentKillAll = (CheckBoxPreference) findPreference(PREF_RECENT_KILL_ALL);
+        mRecentKillAll.setChecked(Settings.System.getInt(getActivity  ().getContentResolver(),
+                Settings.System.RECENT_KILL_ALL_BUTTON, 0) == 1);
 
         mAllow180Rotation = (CheckBoxPreference) findPreference(PREF_180);
         mAllow180Rotation.setChecked(Settings.System.getInt(getActivity().getContentResolver(),
@@ -117,6 +123,13 @@ public class UserInterface extends SettingsPreferenceFragment {
             boolean checked = ((CheckBoxPreference) preference).isChecked();
             Settings.System.putInt(getActivity().getContentResolver(),
                     Settings.System.STATUS_BAR_IME_SWITCHER, checked ? 1 : 0);
+            return true;
+
+          } else if (preference == mRecentKillAll) {
+	      boolean checked = ((CheckBoxPreference)preference).isChecked();
+              Settings.System.putInt(getActivity().getContentResolver(),
+                       Settings.System.RECENT_KILL_ALL_BUTTON, checked ? 1 : 0);
+              Helpers.restartSystemUI();
             return true;
 
           } else if (preference == mAllow180Rotation) {

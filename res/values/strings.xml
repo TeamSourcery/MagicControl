@@ -11,7 +11,7 @@
     <string name="header_navbar">Navigation bar</string>
     <string name="nav_bar">Navigation bar</string>
     <string name="toggles_layout">Toggles</string>
-    <string name="power_menu_optons">Power menu options</string>
+    <string name="power_menu">Power menu options</string>
     <string name="clock">Clock</string>
     <string name="battery">Battery</string>
     <string name="lockscreen_options">Lockscreen options</string>
@@ -25,6 +25,7 @@
     <string name="title_statusbar_toggles">Statusbar Toggles</string>
     <string name="title_statusbar_battery">Statusbar Battery</string>
     <string name="title_navbar">Navigation Bar</string>
+    <string name="title_power_menu">Power Menu</string>
     <string name="title_led">LED Control</string>
     <string name="title_lockscreens">Lockscreen Options</string>
     <string name="title_sound">Sound Settings</string>
@@ -54,7 +55,14 @@
     <string name="general_ui">Magic UI</string>
     <string name="disable_bootanimation_title">Disable Boot Animation</string>
     <string name="status_bar_notif_count_title">Show notification count</string>
-     <string name="status_bar_notif_count_summary">Display number of pending notifications on the status bar</string>
+    <string name="status_bar_notif_count_summary">Display number of pending notifications on the status bar</string>
+
+   <!-- Power Menu -->
+    <string name="title_show_power_saver">Show power saver</string>
+    <string name="title_show_screenshot">Show screenshot</string>
+    <string name="title_show_torch_toggle">Show torch toggle</string>
+    <string name="title_show_airplane_toggle">Show airplane toggle</string>
+    <string name="title_show_navbar_hide">Show navigation bar toggle</string>
 
     <!-- Shortcut picker -->
     <string name="use_custom_app_title">Use custom application</string>

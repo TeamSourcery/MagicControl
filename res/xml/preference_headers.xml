@@ -7,22 +7,19 @@
         android:id="@+id/statusbar_battery"
         android:title="@string/battery"
         android:fragment="com.sourcery.magiccontrol.fragments.StatusBarBattery"
-        android:icon="@drawable/ic_ics_control_battery"
         android:summary="@string/header_summary_battery" />
     
     <header
         android:id="@+id/statusbar_clock"
         android:fragment="com.sourcery.magiccontrol.fragments.StatusBarClock"
         android:summary="@string/header_summary_clock"
-        android:icon="@drawable/ic_ics_control_clock"
         android:title="@string/clock" />
 
     <header
         android:id="@+id/user_interface"
 	android:fragment="com.sourcery.magiccontrol.fragments.UserInterface"
         android:title="@string/general_ui"
-        android:icon="@drawable/ic_ics_control_general_ui"
-	android:summary="@string/header_summary_general_ui" />
+        android:summary="@string/header_summary_general_ui" />
     
     <header
         android:id="@+id/navbar"
@@ -32,14 +29,12 @@
         android:id="@+id/nav_bar"
         android:fragment="com.sourcery.magiccontrol.fragments.Navbar"
         android:title="@string/nav_bar"
-        android:icon="@drawable/ic_ics_control_navigation_bar"
         android:summary="@string/header_summary_navigation_bar" />
 
      <header
         android:id="@+id/power_menu"
         android:fragment="com.sourcery.magiccontrol.fragments.PowerMenu"
         android:title="@string/power_menu"
-        android:icon="@drawable/ic_ics_control_power_menu"
         android:summary="@string/header_summary_power_menu" />
 
     <header
@@ -48,7 +43,6 @@
     <header
         android:id="@+id/statusbar_toggles"
         android:fragment="com.sourcery.magiccontrol.fragments.StatusBarToggles"
-        android:icon="@drawable/ic_ics_control_toggles"
         android:summary="@string/header_summary_toggles"
         android:title="@string/toggles_layout" />
 
@@ -58,7 +52,6 @@
 	android:id="@+id/lockscreens"
 	android:fragment="com.sourcery.magiccontrol.fragments.Lockscreens"
 	android:title="@string/lockscreen_options"
-	android:icon="@drawable/ic_ics_control_lockscreens"
 	android:summary="@string/header_summary_lockscreens" />
 
     <header android:title="@string/led_options" />
@@ -67,7 +60,6 @@
         android:id="@+id/led"
  	android:fragment="com.sourcery.magiccontrol.fragments.LEDControl"
  	android:title="@string/led_options"
- 	android:icon="@drawable/ic_ics_control_led"
  	android:summary="@string/header_summary_led" />
 
 </preference-headers>

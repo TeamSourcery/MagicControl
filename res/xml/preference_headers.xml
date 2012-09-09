@@ -16,6 +16,12 @@
         android:title="@string/clock" />
 
     <header
+        android:id="@+id/statusbar_signal"
+        android:title="@string/signal"
+        android:fragment="com.sourcery.magiccontrol.fragments.StatusBarSignal"
+        android:summary="@string/header_summary_signal" />
+
+    <header
         android:id="@+id/user_interface"
 	android:fragment="com.sourcery.magiccontrol.fragments.UserInterface"
         android:title="@string/general_ui"

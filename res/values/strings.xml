@@ -14,6 +14,7 @@
     <string name="power_menu">Power menu options</string>
     <string name="clock">Clock</string>
     <string name="battery">Battery</string>
+    <string name="signal">Signal</string>
     <string name="lockscreen_options">Lockscreen options</string>
     <string name="led_options">LED options</string>
     <string name="weather">LockScreen Weather</string>
@@ -41,6 +42,7 @@
     <string name="header_summary_general_ui">Boot animation, rotation, IME switcher, etc</string>
     <string name="header_summary_lockscreens">Toggle lockscreen options</string>
     <string name="header_summary_battery">Battery bar, battery mods, etc</string>
+    <string name="header_summary_signal">Signal Styles</string>
     <string name="header_summary_power_menu">What to display in your power menu</string>
     <string name="header_summary_led">Change default LED Settings</string>
     <string name="header_summary_weather">Enable/disable, set custom location or network, and interval</string>
@@ -105,7 +107,7 @@
 
      <!-- Battery -->
      <!-- Statusbar | Battery -->
-   <string name="battery_icon">Battery icon style</string>
+    <string name="battery_icon">Battery icon style</string>
     <string name="battery_not_title">Battery icon in notifications</string>
     <string name="battery_not_summary">Battery icon will show up where the clear all button shows up</string>
     <string name="battery_bar">Battery bar location</string>
@@ -115,6 +117,14 @@
     <string name="battery_bar_thickness_title">Battery bar thickness</string>
     <string name="battery_bar_animate_title">Charging animation</string>
     <string name="battery_bar_animate_summary">May decrease performance.</string>
+
+     <!-- Statusbar | Signal -->
+    <string name="signal_style">Signal Text Style</string>
+    <string name="signal_color_title">Signal Color</string>
+    <string name="hide_signal_title">Hide Signal Bars</string>
+    <string name="hide_signal_summary">Updates When Signal Strength Changes</string>
+    <string name="wifi_signal_style">WiFi Signal Text Style</string>
+    <string name="wifi_signal_color_title">WiFi Signal color</string>
     
     <!-- Clock -->
     <string name="statusbar_clock_title">Clock Style</string>

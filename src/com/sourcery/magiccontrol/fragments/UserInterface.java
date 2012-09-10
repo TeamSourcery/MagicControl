@@ -38,6 +38,8 @@ public class UserInterface extends SettingsPreferenceFragment {
     private static final String PREF_IME_SWITCHER = "ime_switcher";
     private static final String PREF_CUSTOM_CARRIER_LABEL = "custom_carrier_label";
     private static final String PREF_RECENT_KILL_ALL = "recent_kill_all";
+    private static final String PREF_ALARM_ENABLE = "alarm";
+    private static final String PREF_KILL_APP_LONGPRESS_BACK = "kill_app_longpress_back";
 
     CheckBoxPreference mEnableVolumeOptions;
     CheckBoxPreference mDisableBootAnimation;
@@ -46,6 +48,8 @@ public class UserInterface extends SettingsPreferenceFragment {
     CheckBoxPreference mShowImeSwitcher;
     Preference mCustomLabel;
     CheckBoxPreference mRecentKillAll;
+    CheckBoxPreference mKillAppLongpressBack;
+    CheckBoxPreference mAlarm;
 
      Random randomGenerator = new Random();
 
@@ -70,9 +74,23 @@ public class UserInterface extends SettingsPreferenceFragment {
         mShowImeSwitcher.setChecked(Settings.System.getInt(getActivity().getContentResolver(),
                 Settings.System.STATUS_BAR_IME_SWITCHER, 1) == 1);
 
+         mAlarm = (CheckBoxPreference) findPreference(PREF_ALARM_ENABLE);
+ 	 mAlarm.setChecked(Settings.System.getInt(getActivity().getContentResolver(),
+ 	        Settings.System.STATUSBAR_SHOW_ALARM, 1) == 1);
+
         mRecentKillAll = (CheckBoxPreference) findPreference(PREF_RECENT_KILL_ALL);
         mRecentKillAll.setChecked(Settings.System.getInt(getActivity  ().getContentResolver(),
                 Settings.System.RECENT_KILL_ALL_BUTTON, 0) == 1);
+
+        mKillAppLongpressBack = (CheckBoxPreference) findPreference(PREF_KILL_APP_LONGPRESS_BACK);
+                updateKillAppLongpressBackOptions();
+ 	
+        boolean hasNavBarByDefault = mContext.getResources().getBoolean(
+                com.android.internal.R.bool.config_showNavigationBar);
+ 
+         if (hasNavBarByDefault || mTablet) {
+            ((PreferenceGroup) findPreference("misc")).removePreference(mKillAppLongpressBack);
+         }
 
         mAllow180Rotation = (CheckBoxPreference) findPreference(PREF_180);
         mAllow180Rotation.setChecked(Settings.System.getInt(getActivity().getContentResolver(),
@@ -91,6 +109,16 @@ public class UserInterface extends SettingsPreferenceFragment {
          updateCustomLabelTextSummary();
  	    
      }
+
+    private void writeKillAppLongpressBackOptions() {
+        Settings.System.putInt(getActivity().getContentResolver(),
+                Settings.System.KILL_APP_LONGPRESS_BACK, mKillAppLongpressBack.isChecked() ? 1 : 0);
+    }
+
+    private void updateKillAppLongpressBackOptions() {
+        mKillAppLongpressBack.setChecked(Settings.System.getInt(getActivity().getContentResolver(),
+                Settings.System.KILL_APP_LONGPRESS_BACK, 0) != 0);
+    }
 
     private void updateCustomLabelTextSummary() {
         mCustomLabelText = Settings.System.getString(getActivity().getContentResolver(),
@@ -159,6 +187,12 @@ public class UserInterface extends SettingsPreferenceFragment {
                 preference.setSummary("");
             }
             return true;
+            } else if (preference == mKillAppLongpressBack) {
+            writeKillAppLongpressBackOptions();
+            } else if (preference == mAlarm) {
+            boolean checked = ((CheckBoxPreference) preference).isChecked();
+            Settings.System.putInt(getActivity().getContentResolver(),
+                    Settings.System.STATUSBAR_SHOW_ALARM, checked ? 1 : 0);
             } else if (preference == mCustomLabel) {
             AlertDialog.Builder alert = new AlertDialog.Builder(getActivity());
 

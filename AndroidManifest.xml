@@ -96,6 +96,16 @@
             </intent-filter>
         </activity>
        
+       <activity
+            android:name=".fragments.PowerWidget"
+            android:label="PowerWidget" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="com.sourcery.magiccontrol.SHORTCUT" />
+            </intent-filter>
+        </activity>
+
         <activity
             android:name=".fragments.LockscreenTargets"
             android:label="Lockscreen Targets" >
@@ -136,6 +146,7 @@
         </activity>
         <activity
  	    android:name=".ShareToClipboard"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar"
  	    android:label="Share To Clipboard" >
             <intent-filter>
  	         <action android:name="android.intent.action.SEND"/>

@@ -52,6 +52,13 @@
         android:summary="@string/header_summary_toggles"
         android:title="@string/toggles_layout" />
 
+     <header
+        android:id="@+id/power_widgets"
+        android:fragment="com.sourcery.magiccontrol.fragments.PowerWidget"
+        android:summary="@string/power_widget_title"
+        android:title="@string/toggles_layout" />
+
+
     <header android:title="@string/lockscreen_options" />
 
     <header

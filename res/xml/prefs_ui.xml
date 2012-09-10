@@ -21,19 +21,29 @@
 	    android:title="@string/enable_volume_options" />
 
          <CheckBoxPreference
-		android:key="rotate_180"
-		android:title="@string/rotate_180_title"
-		android:summary="@string/rotate_180_summary" />
+	      android:key="rotate_180"
+	      android:title="@string/rotate_180_title"
+	      android:summary="@string/rotate_180_summary" />
         
           <CheckBoxPreference
-			android:key="ime_switcher"
-			android:title="@string/ime_switcher_title"
-			android:summary="@string/ime_switcher_summary" />
+	      android:key="ime_switcher"
+	      android:title="@string/ime_switcher_title"
+	      android:summary="@string/ime_switcher_summary" />
+
+         <CheckBoxPreference
+ 	      android:key="alarm"
+              android:title="@string/enable_alarm_icon_title"
+ 	      android:summary="@string/enable_alarm_icon__summary" />
 
          <CheckBoxPreference
  	     android:key="recent_kill_all"
  	     android:title="@string/recent_kill_all"
              android:summary="@string/recent_kill_all_summary" />
+   
+         <CheckBoxPreference
+             android:key="kill_app_longpress_back"
+             android:title="@string/kill_app_longpress_back"
+             android:summary="@string/kill_app_longpress_back_summary"/>
 
           <Preference
              android:key="custom_carrier_label"

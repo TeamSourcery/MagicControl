@@ -61,9 +61,10 @@ import com.sourcery.magiccontrol.widgets.NavBarItemPreference;
 import com.sourcery.magiccontrol.widgets.SeekBarPreference;
 
 import net.margaritov.preference.colorpicker.ColorPickerPreference;
+import com.sourcery.magiccontrol.fragments.ColorPreference;
 
 public class Navbar extends SettingsPreferenceFragment implements
-        OnPreferenceChangeListener, ShortcutPickerHelper.OnPickListener {
+        OnPreferenceChangeListener, ShortcutPickerHelper.OnPickListener, Preference.OnPreferenceClickListener {
 
    // move these later
     private static final String PREF_MENU_UNLOCK = "pref_menu_display";
@@ -95,6 +96,8 @@ public class Navbar extends SettingsPreferenceFragment implements
     ListPreference mNavigationBarHeightLandscape;
     ListPreference mNavigationBarWidth;
     SeekBarPreference mButtonAlpha;
+    ColorPreference mNavBar;
+    Preference mStockColor;
 
     private int mPendingIconIndex = -1;
     private int mPendingWidgetDrawer = -1;
@@ -176,6 +179,13 @@ public class Navbar extends SettingsPreferenceFragment implements
 
         mNavigationBarWidth = (ListPreference) findPreference("navigation_bar_width");
         mNavigationBarWidth.setOnPreferenceChangeListener(this);
+
+        mNavBar = (ColorPreference) findPreference("interface_navbar_color");
+        mNavBar.setProviderTarget(Settings.System.SYSTEMUI_NAVBAR_COLOR,
+                                  Settings.System.SYSTEMUI_NAVBAR_COLOR_DEF);
+ 	
+        mStockColor = (Preference) findPreference("interface_navbar_color_default");
+        mStockColor.setOnPreferenceClickListener(this);
 
         if (mTablet) {
             prefs.removePreference(mNavBarMenuDisplay);
@@ -357,6 +367,16 @@ public class Navbar extends SettingsPreferenceFragment implements
 
         }
         return false;
+    }
+
+    @Override
+    public boolean onPreferenceClick(Preference pref) {
+        // TODO Auto-generated method stub
+        if (pref.equals(mStockColor)) {
+            Settings.System.putInt(getActivity().getContentResolver(),
+                     Settings.System.SYSTEMUI_NAVBAR_COLOR, -1);
+         }
+         return false;
     }
 
     @Override

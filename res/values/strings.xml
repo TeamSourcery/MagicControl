@@ -196,6 +196,11 @@
     <string name="glow_times_superquick">Damn Fast</string>
     <string name="glow_times_quick">fast</string>
     <string name="glow_times_normal">Normal</string>
+
+    <!-- Navbar color -->
+    <string name="interface_navbar_appearance">Navigation Bar Appearance</string>
+    <string name="interface_navbar_color_title">Set Color</string>
+    <string name="interface_navbar_restore_stock_color">Restore stock color</string>
  	 	
     <string name="dpi">DPI</string>
 

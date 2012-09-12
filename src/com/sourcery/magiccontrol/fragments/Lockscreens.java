@@ -13,7 +13,9 @@ import java.util.ArrayList;
 import net.margaritov.preference.colorpicker.ColorPickerPreference;
 
 import android.app.Activity;
+import android.app.AlarmManager;
 import android.app.AlertDialog;
+import android.app.PendingIntent;
 import android.content.ContentResolver;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -266,9 +268,26 @@ public class Lockscreens extends SettingsPreferenceFragment implements
                     ((CheckBoxPreference) preference).isChecked() ? 1 : 0);
             return true;
        } else if (preference == mLockscreenWeather) {
+	    // _stop_ alarm or start service
+            boolean check = ((CheckBoxPreference) preference).isChecked();
+            Intent i = new Intent(getActivity().getApplicationContext(),
+                    WeatherRefreshService.class);
+            i.setAction(WeatherService.INTENT_WEATHER_REQUEST);
+            i.putExtra(WeatherService.INTENT_EXTRA_ISMANUAL, true);
+            PendingIntent weatherRefreshIntent = PendingIntent.getService(getActivity(), 0, i, 0);
+            if (!check) {
+                AlarmManager alarms = (AlarmManager) getActivity().getSystemService(
+                        Context.ALARM_SERVICE);
+                alarms.cancel(weatherRefreshIntent);
+            } else {
+                getActivity().startService(i);
+            }
+            Settings.System.putInt(getActivity().getContentResolver(),
+                    Settings.System.USE_WEATHER,
+                    check ? 1 : 0);
             Settings.System.putInt(getActivity().getContentResolver(),
                     Settings.System.LOCKSCREEN_WEATHER,
-                    ((CheckBoxPreference) preference).isChecked() ? 1 : 0);
+                    check ? 1 : 0);
             return true;
         } else if (preference == mLockscreenCalendar) {
             Settings.System.putInt(getActivity().getContentResolver(),

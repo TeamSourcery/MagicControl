@@ -43,13 +43,14 @@
         android:key="weather_cat"
         android:title="@string/lockscreen_weather_cat">
         
-        <CheckBoxPreference
+	<CheckBoxPreference
             android:key="lockscreen_weather"
             android:title="@string/lockscreen_weather_title"
             android:summary="@string/lockscreen_weather_summary" />
-        
+
        <Preference
  	android:fragment="com.sourcery.magiccontrol.fragments.Weather"
+	android:dependency="lockscreen_weather"
         android:title="@string/weather"
         android:summary="@string/header_summary_weather"
          />

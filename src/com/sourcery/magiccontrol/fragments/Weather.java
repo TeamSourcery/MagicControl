@@ -39,7 +39,6 @@ public class Weather extends SettingsPreferenceFragment implements
 
     public static final String TAG = "Weather";
 
-    CheckBoxPreference mEnableWeather;
     CheckBoxPreference mUseCustomLoc;
     CheckBoxPreference mShowLoc;
     CheckBoxPreference mUseCelcius;
@@ -79,10 +78,6 @@ public class Weather extends SettingsPreferenceFragment implements
         mCustomWeatherLoc.setOnPreferenceChangeListener(this);
         mCustomWeatherLoc
                 .setSummary(WeatherPrefs.getCustomLocation(mContext));
-
-        mEnableWeather = (CheckBoxPreference) findPreference("enable_weather");
-        mEnableWeather.setChecked(Settings.System.getInt(getContentResolver(),
-                Settings.System.USE_WEATHER, 0) == 1);
 
         mUseCustomLoc = (CheckBoxPreference) findPreference(WeatherPrefs.KEY_USE_CUSTOM_LOCATION);
         mUseCustomLoc.setChecked(WeatherPrefs.getUseCustomLocation(mContext));
@@ -167,26 +162,7 @@ public class Weather extends SettingsPreferenceFragment implements
 
     @Override
     public boolean onPreferenceTreeClick(PreferenceScreen preferenceScreen, Preference preference) {
-        if (preference == mEnableWeather) {
-            // _stop_ alarm or start service
-            boolean check = ((CheckBoxPreference) preference).isChecked();
-            Intent i = new Intent(getActivity().getApplicationContext(),
-                    WeatherRefreshService.class);
-            i.setAction(WeatherService.INTENT_WEATHER_REQUEST);
-            i.putExtra(WeatherService.INTENT_EXTRA_ISMANUAL, true);
-            PendingIntent weatherRefreshIntent = PendingIntent.getService(getActivity(), 0, i, 0);
-            if (!check) {
-                AlarmManager alarms = (AlarmManager) getActivity().getSystemService(
-                        Context.ALARM_SERVICE);
-                alarms.cancel(weatherRefreshIntent);
-            } else {
-                getActivity().startService(i);
-            }
-            Settings.System.putInt(getActivity().getContentResolver(),
-                    Settings.System.USE_WEATHER,
-                    check ? 1 : 0);
-            return true;
-        } else if (preference == mUseCustomLoc) {
+        if (preference == mUseCustomLoc) {
             return WeatherPrefs.setUseCustomLocation(mContext,
                     ((CheckBoxPreference) preference).isChecked());
         } else if (preference == mShowLoc) {

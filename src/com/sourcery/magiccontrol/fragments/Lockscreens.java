@@ -84,12 +84,9 @@ public class Lockscreens extends SettingsPreferenceFragment implements
     private static final String PREF_LOCKSCREEN_CALENDAR_HIDE_ONGOING = "lockscreen_calendar_hide_ongoing";
     private static final String PREF_LOCKSCREEN_CALENDAR_USE_COLORS = "lockscreen_calendar_use_colors";
     private static final String PREF_LOCKSCREEN_CALENDAR_INTERVAL = "lockscreen_calendar_interval";
-   
-
     private static final String PREF_LOCKSCREEN_BATTERY = "lockscreen_battery";
-    
-    
     private static final String PREF_SHOW_LOCK_BEFORE_UNLOCK = "show_lock_before_unlock";
+    private static final String PREF_LOCKSCREEN_AUTO_ROTATE = "lockscreen_auto_rotate";
 
     public static final int REQUEST_PICK_WALLPAPER = 199;
     public static final int REQUEST_PICK_CUSTOM_ICON = 200;
@@ -106,7 +103,7 @@ public class Lockscreens extends SettingsPreferenceFragment implements
     ListPreference mLockscreenOption;*/
     CheckBoxPreference mVolumeWake;
     CheckBoxPreference mVolumeMusic;
-    /*CheckBoxPreference mLockscreenLandscape;*/
+    CheckBoxPreference mLockscreenAutoRotate;
     CheckBoxPreference mLockscreenBattery;
     CheckBoxPreference mShowLockBeforeUnlock;
     ColorPickerPreference mLockscreenTextColor;
@@ -141,16 +138,18 @@ public class Lockscreens extends SettingsPreferenceFragment implements
         // Load the preferences from an XML resource
         addPreferencesFromResource(R.xml.prefs_lockscreens);
 
+        mLockscreenAutoRotate = (CheckBoxPreference)findPreference(PREF_LOCKSCREEN_AUTO_ROTATE);	
+        mLockscreenAutoRotate.setChecked(Settings.System.getBoolean(mContext
+                .getContentResolver(), Settings.System.LOCKSCREEN_AUTO_ROTATE, false));
+
         menuButtonLocation = (CheckBoxPreference) findPreference(PREF_MENU);
         menuButtonLocation.setChecked(Settings.System.getInt(getActivity().getContentResolver(),
                 Settings.System.LOCKSCREEN_ENABLE_MENU_KEY, 1) == 1);
-
        
         mLockscreenBattery = (CheckBoxPreference)findPreference(PREF_LOCKSCREEN_BATTERY);
         mLockscreenBattery.setChecked(Settings.System.getBoolean(getActivity().getContentResolver(),
                 Settings.System.LOCKSCREEN_BATTERY, false));
-        
-                
+                    
         mShowLockBeforeUnlock = (CheckBoxPreference) findPreference(PREF_SHOW_LOCK_BEFORE_UNLOCK);
         mShowLockBeforeUnlock.setChecked(Settings.System.getInt(getActivity().getContentResolver(),
                 Settings.System.SHOW_LOCK_BEFORE_UNLOCK, 0) == 1);
@@ -236,66 +235,57 @@ public class Lockscreens extends SettingsPreferenceFragment implements
                     ((CheckBoxPreference) preference).isChecked() ? 1 : 0);
             return true;
 	}
-
         if (preference == menuButtonLocation) {
             Settings.System.putInt(getActivity().getContentResolver(),
                     Settings.System.LOCKSCREEN_ENABLE_MENU_KEY,
                     ((CheckBoxPreference)preference).isChecked() ? 1 : 0);
             return true;
-            
-                 
         } else if (preference == mShowLockBeforeUnlock) {
-
             Settings.System.putInt(getActivity().getContentResolver(),
                     Settings.System.SHOW_LOCK_BEFORE_UNLOCK,
                     ((CheckBoxPreference) preference).isChecked() ? 1 : 0);
             return true;
-
         } else if (preference == mLockscreenBattery) {
-
             Settings.System.putInt(getActivity().getContentResolver(),
                     Settings.System.LOCKSCREEN_BATTERY,
                     ((CheckBoxPreference)preference).isChecked() ? 1 : 0);
             return true;
+       } else if (preference == mLockscreenAutoRotate) {
+            Settings.System.putBoolean(mContext.getContentResolver(),
+                    Settings.System.LOCKSCREEN_AUTO_ROTATE,
+                    ((CheckBoxPreference) preference).isChecked());
+            return true;
        } else if (preference == mVolumeWake) {
-
             Settings.System.putInt(getActivity().getContentResolver(),
                     Settings.System.VOLUME_WAKE_SCREEN,
                     ((CheckBoxPreference) preference).isChecked() ? 1 : 0);
             return true;
-           
        } else if (preference == mVolumeMusic) {
-
             Settings.System.putInt(getActivity().getContentResolver(),
                     Settings.System.VOLUME_MUSIC_CONTROLS,
                     ((CheckBoxPreference) preference).isChecked() ? 1 : 0);
             return true;
        } else if (preference == mLockscreenWeather) {
-
             Settings.System.putInt(getActivity().getContentResolver(),
                     Settings.System.LOCKSCREEN_WEATHER,
                     ((CheckBoxPreference) preference).isChecked() ? 1 : 0);
             return true;
         } else if (preference == mLockscreenCalendar) {
-
             Settings.System.putInt(getActivity().getContentResolver(),
                     Settings.System.LOCKSCREEN_CALENDAR,
                     ((CheckBoxPreference) preference).isChecked() ? 1 : 0);
             return true;
         } else if (preference == mLockscreenCalendarFlip) {
-
             Settings.System.putInt(getActivity().getContentResolver(),
                     Settings.System.LOCKSCREEN_CALENDAR_FLIP,
                     ((CheckBoxPreference) preference).isChecked() ? 1 : 0);
             return true;
         } else if (preference == mLockscreenCalendarHideOngoing) {
-
             Settings.System.putInt(getActivity().getContentResolver(),
                     Settings.System.LOCKSCREEN_CALENDAR_HIDE_ONGOING,
                     ((CheckBoxPreference) preference).isChecked() ? 1 : 0);
             return true;
         } else if (preference == mLockscreenCalendarUseColors) {
-
             Settings.System.putInt(getActivity().getContentResolver(),
                     Settings.System.LOCKSCREEN_CALENDAR_USE_COLORS,
                     ((CheckBoxPreference) preference).isChecked() ? 1 : 0);

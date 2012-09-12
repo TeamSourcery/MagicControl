@@ -127,12 +127,12 @@
 		<CheckBoxPreference
 			android:key="lockscreen_hide_nav"
 			android:title="@string/lockscreen_show_nav_title"
-			android:summary="@string/lockscreen_show_nav_summary" />
+			android:summary="@string/lockscreen_show_nav_summary" />-->
 
-		<CheckBoxPreference
-			android:key="lockscreen_landscape"
-			android:title="@string/lockscreen_landscape_title"
-			android:summary="@string/lockscreen_landscape_summary" /> -->
+		<CheckBoxPreference	
+      		  android:key="lockscreen_auto_rotate"
+      		  android:title="@string/lockscreen_auto_rotate_title"
+      		  android:summary="@string/lockscreen_auto_rotate_summary" />
 
               <CheckBoxPreference
 		android:key="pref_lockscreen_menu_unlock"

@@ -221,6 +221,8 @@
     <string name="volume_wake_summary">Wake screen with volume rockers</string>
     <string name="lockscreen_wallpaper_title">Choose lockscreen wallpaper</string>
     <string name="lockscreen_wallpaper_summary">Lock Screen Wallpaper can be reset from Menu</string>
+    <string name="lockscreen_auto_rotate_title">Allow lockscreen rotation</string>	
+    <string name="lockscreen_auto_rotate_summary">Allows LandScape Layout on lock screen.</string>
 
     <!-- LED -->
     <string name="led_on">LED On</string>

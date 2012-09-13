@@ -38,9 +38,11 @@
        <PreferenceCategory
             android:key="navbar_appearance"
             android:title="@string/interface_navbar_appearance" >
-       <com.sourcery.magiccontrol.fragments.ColorPreference
+
+       <net.margaritov.preference.colorpicker.ColorPickerPreference
             android:key="interface_navbar_color"
-            android:title="@string/interface_navbar_color_title" />
+            android:title="@string/interface_navbar_color_title"
+	    android:defaultValue="#000000" />
  	
         <Preference
             android:key="interface_navbar_color_default"

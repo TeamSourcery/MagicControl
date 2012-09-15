@@ -198,7 +198,7 @@
     <string name="glow_times_normal">Normal</string>
 
     <!-- Navbar color -->
-    <string name="interface_navbar_appearance">Navigation Bar Appearance</string>
+    <string name="interface_navbar_appearance">Navigation Bar Color</string>
     <string name="interface_navbar_color_title">Set Color</string>
     <string name="interface_navbar_restore_stock_color">Restore stock color</string>
  	 	
@@ -281,7 +281,7 @@
     <string name="menu_weather_get_weather">Get weather</string>
     <string name="lockscreen_weather_cat">Weather</string>
     <string name="lockscreen_weather_title">Enable</string>
-    <string name="lockscreen_weather_summary">Show Weather Information on Lockscreen. Must also enable in dialog below.</string>
+    <string name="lockscreen_weather_summary">Show Weather Information on Lockscreen. Set options for weather below.</string>
     <string name="lockscreen_weather_type_title">Lockscreen Weather style</string>
     <string name="lockscreen_weather_type_summary">Whether to show graphical or text weather information.</string>
     <string name="lockscreen_calendar_cat">Calendar</string>

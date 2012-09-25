@@ -528,12 +528,13 @@ public class Navbar extends SettingsPreferenceFragment implements
                 }
 
 		Uri selectedImageUri = data.getData();
-		if (selectedImageUri == null)
-			selectedImageUri = getTempFileUri();
                 Log.e(TAG, "Selected image path: " + selectedImageUri.getPath());
-                Bitmap bitmap = BitmapFactory.decodeFile(selectedImageUri.getPath());
-                bitmap.compress(Bitmap.CompressFormat.PNG, 100, iconStream);
-
+                try {
+                    Bitmap bitmap = BitmapFactory.decodeFile(selectedImageUri.getPath());
+                    bitmap.compress(Bitmap.CompressFormat.PNG, 100, iconStream);
+                } catch (NullPointerException npe) {
+                    Log.e(TAG, "SeletedImageUri was null.");
+                }
                 Settings.System.putString(
                         getContentResolver(),
                         Settings.System.NAVIGATION_CUSTOM_APP_ICONS[mPendingIconIndex],

@@ -41,6 +41,7 @@ public class UserInterface extends SettingsPreferenceFragment {
     private static final String PREF_ALARM_ENABLE = "alarm";
     private static final String PREF_KILL_APP_LONGPRESS_BACK = "kill_app_longpress_back";
     private static final String PREF_MODE_TABLET_UI = "mode_tabletui";
+    private static final String PREF_FORCE_DUAL_PANEL = "force_dualpanel";
 
     CheckBoxPreference mEnableVolumeOptions;
     CheckBoxPreference mDisableBootAnimation;
@@ -52,6 +53,7 @@ public class UserInterface extends SettingsPreferenceFragment {
     CheckBoxPreference mKillAppLongpressBack;
     CheckBoxPreference mAlarm;
     CheckBoxPreference mTabletui;
+    CheckBoxPreference mDualpane;
     Preference mLcdDensity;
 
      Random randomGenerator = new Random();
@@ -95,6 +97,12 @@ public class UserInterface extends SettingsPreferenceFragment {
         mTabletui = (CheckBoxPreference) findPreference(PREF_MODE_TABLET_UI);
         mTabletui.setChecked(Settings.System.getBoolean(mContext.getContentResolver(),
                        Settings.System.MODE_TABLET_UI, false));
+
+        mDualpane = (CheckBoxPreference) findPreference(PREF_FORCE_DUAL_PANEL);
+        mDualpane.setChecked(Settings.System.getBoolean(mContext.getContentResolver(),
+                        Settings.System.FORCE_DUAL_PANEL, getResources().getBoolean(
+                        com.android.internal.R.bool.preferences_prefer_dual_pane)));
+
  	
         boolean hasNavBarByDefault = mContext.getResources().getBoolean(
                 com.android.internal.R.bool.config_showNavigationBar);
@@ -214,6 +222,11 @@ public class UserInterface extends SettingsPreferenceFragment {
                      Settings.System.MODE_TABLET_UI,
                      ((CheckBoxPreference) preference).isChecked());
              return true;
+             else if (preference == mDualpane) {
+            Settings.System.putBoolean(mContext.getContentResolver(),
+                    Settings.System.FORCE_DUAL_PANEL,
+                    ((CheckBoxPreference) preference).isChecked());
+            return true;
             } else if (preference == mKillAppLongpressBack) {
             writeKillAppLongpressBackOptions();
             } else if (preference == mAlarm) {

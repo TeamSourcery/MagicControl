@@ -125,6 +125,8 @@
     <string name="hide_signal_summary">Updates When Signal Strength Changes</string>
     <string name="wifi_signal_style">WiFi Signal Text Style</string>
     <string name="wifi_signal_color_title">WiFi Signal color</string>
+    <string name="alt_signal_title">Alt signal layout</string>
+    <string name="alt_signal_summary">Use alternate (GB style) signal cluster</string>
     
     <!-- Clock -->
     <string name="statusbar_clock_title">Clock Style</string>

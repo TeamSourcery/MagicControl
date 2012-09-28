@@ -34,6 +34,9 @@ import com.sourcery.magiccontrol.weather.WeatherPrefs;
 import com.sourcery.magiccontrol.weather.WeatherRefreshService;
 import com.sourcery.magiccontrol.weather.WeatherService;
 
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 public class Weather extends SettingsPreferenceFragment implements
         ShortcutPickerHelper.OnPickListener, OnPreferenceChangeListener {
 
@@ -94,7 +97,13 @@ public class Weather extends SettingsPreferenceFragment implements
 
         mCustomWeatherApp = (Preference) findPreference(WeatherPrefs.KEY_CUSTOM_APP);
         mCustomWeatherApp.setOnPreferenceChangeListener(this);
-        mCustomWeatherApp.setSummary(mPicker.getFriendlyNameForUri(WeatherPrefs.getCustomApp(mContext)));
+        Pattern r = Pattern.compile("^#Intent");
+        Matcher m = r.matcher(mPicker.getFriendlyNameForUri(WeatherPrefs.getCustomApp(mContext)));
+        if(m.find( )) {
+           mCustomWeatherApp.setSummary("");
+        } else {
+           mCustomWeatherApp.setSummary(mPicker.getFriendlyNameForUri(WeatherPrefs.getCustomApp(mContext)));
+        }
 
         setHasOptionsMenu(true);
 

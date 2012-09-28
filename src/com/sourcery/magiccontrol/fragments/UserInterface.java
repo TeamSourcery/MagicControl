@@ -40,6 +40,7 @@ public class UserInterface extends SettingsPreferenceFragment {
     private static final String PREF_RECENT_KILL_ALL = "recent_kill_all";
     private static final String PREF_ALARM_ENABLE = "alarm";
     private static final String PREF_KILL_APP_LONGPRESS_BACK = "kill_app_longpress_back";
+    private static final String PREF_MODE_TABLET_UI = "mode_tabletui";
 
     CheckBoxPreference mEnableVolumeOptions;
     CheckBoxPreference mDisableBootAnimation;
@@ -50,10 +51,16 @@ public class UserInterface extends SettingsPreferenceFragment {
     CheckBoxPreference mRecentKillAll;
     CheckBoxPreference mKillAppLongpressBack;
     CheckBoxPreference mAlarm;
+    CheckBoxPreference mTabletui;
+    Preference mLcdDensity;
 
      Random randomGenerator = new Random();
 
      String mCustomLabelText = null;
+
+     int newDensityValue;
+ 
+     DensityChanger densityFragment;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -84,6 +91,10 @@ public class UserInterface extends SettingsPreferenceFragment {
 
         mKillAppLongpressBack = (CheckBoxPreference) findPreference(PREF_KILL_APP_LONGPRESS_BACK);
                 updateKillAppLongpressBackOptions();
+
+        mTabletui = (CheckBoxPreference) findPreference(PREF_MODE_TABLET_UI);
+        mTabletui.setChecked(Settings.System.getBoolean(mContext.getContentResolver(),
+                       Settings.System.MODE_TABLET_UI, false));
  	
         boolean hasNavBarByDefault = mContext.getResources().getBoolean(
                 com.android.internal.R.bool.config_showNavigationBar);
@@ -105,8 +116,19 @@ public class UserInterface extends SettingsPreferenceFragment {
                     int randomInt = randomGenerator.nextInt(insults.length);
                     mDisableBootAnimation.setSummary(insults[randomInt]);
                  }
-         mCustomLabel = findPreference(PREF_CUSTOM_CARRIER_LABEL);
-         updateCustomLabelTextSummary();
+
+        mLcdDensity = findPreference("lcd_density_setup");
+        String currentProperty = SystemProperties.get("ro.sf.lcd_density");
+        try {
+            newDensityValue = Integer.parseInt(currentProperty);
+        } catch (Exception e) {
+             getPreferenceScreen().removePreference(mLcdDensity);
+        }
+
+        mLcdDensity.setSummary(getResources().getString(R.string.current_lcd_density) + currentProperty);
+ 
+        mCustomLabel = findPreference(PREF_CUSTOM_CARRIER_LABEL);
+        updateCustomLabelTextSummary();
  	    
      }
 
@@ -187,6 +209,11 @@ public class UserInterface extends SettingsPreferenceFragment {
                 preference.setSummary("");
             }
             return true;
+            } else if (preference == mTabletui) {
+             Settings.System.putBoolean(mContext.getContentResolver(),
+                     Settings.System.MODE_TABLET_UI,
+                     ((CheckBoxPreference) preference).isChecked());
+             return true;
             } else if (preference == mKillAppLongpressBack) {
             writeKillAppLongpressBackOptions();
             } else if (preference == mAlarm) {
@@ -222,6 +249,10 @@ public class UserInterface extends SettingsPreferenceFragment {
             });
 
             alert.show();
+             } else if (preference == mLcdDensity) {
+             ((PreferenceActivity) getActivity())
+                     .startPreferenceFragment(new DensityChanger(), true);
+             return true;
             }
         return super.onPreferenceTreeClick(preferenceScreen, preference);
     }

@@ -222,7 +222,7 @@ public class UserInterface extends SettingsPreferenceFragment {
                      Settings.System.MODE_TABLET_UI,
                      ((CheckBoxPreference) preference).isChecked());
              return true;
-             else if (preference == mDualpane) {
+           } else if (preference == mDualpane) {
             Settings.System.putBoolean(mContext.getContentResolver(),
                     Settings.System.FORCE_DUAL_PANEL,
                     ((CheckBoxPreference) preference).isChecked());

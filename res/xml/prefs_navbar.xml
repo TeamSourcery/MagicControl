@@ -25,21 +25,30 @@
                 android:summary="@string/navbar_qty_summary" />
 
        <net.margaritov.preference.colorpicker.ColorPickerPreference
+                android:layout="?android:attr/preferenceLayoutChild"
                 android:key="nav_button_color"
                 android:title="@string/navigation_bar_tint_title"
-                android:defaultValue="#FFFFFF" />
+                android:defaultValue="#FFFFFF" 
+                alphaSlider="true" />
+
+        <com.sourcery.magiccontrol.widgets.SeekBarPreference
+ 	                android:key="button_transparency"
+ 	                android:title="@string/button_transparency_title" />
 
        <net.margaritov.preference.colorpicker.ColorPickerPreference
+                android:layout="?android:attr/preferenceLayoutChild"
                 android:key="nav_button_glow_color"
                 android:title="@string/navigation_bar_glow_tint_title"
                 android:summary="@string/navigation_bar_glow_tint_summary"
-                android:defaultValue="#FFFFFF" />
+                android:defaultValue="#FFFFFF" 
+                alphaSlider="true" />
 
        <PreferenceCategory
             android:key="navbar_appearance"
             android:title="@string/interface_navbar_appearance" >
 
        <net.margaritov.preference.colorpicker.ColorPickerPreference
+            android:layout="?android:attr/preferenceLayoutChild"
             android:key="interface_navbar_color"
             android:title="@string/interface_navbar_color_title"
 	    android:defaultValue="#000000" />
@@ -104,9 +113,7 @@
                         android:title="@string/navigation_bar_width_title"
                         android:summary="@string/navigation_bar_width_summary" />
 
-                <com.sourcery.magiccontrol.widgets.SeekBarPreference
- 	                android:key="button_transparency"
- 	                android:title="@string/button_transparency_title" />
+               
 
         </PreferenceCategory>
 

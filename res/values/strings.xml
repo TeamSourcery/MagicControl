@@ -159,8 +159,8 @@
     <string name="summary_pref_navigation_menu_display">How and when do you want the menu buttons to appear?</string>
 
     <string name="navbar_qty_title">Navigation 1-5 Keys</string>
-    <string name="navbar_qty_summary">Choose the number of navigation buttons</string>
-    <string name="button_transparency_title">Nav button transparency</string>
+    <string name="navbar_qty_summary">Choose the number of Softkeys</string>
+    <string name="button_transparency_title">Soft Key Brightness</string>
     <string name="navbar_action_title">Button %1$s action &amp; icon</string>
     <string name="navbar_longpress_title">Button %1$s longpress action</string>
 
@@ -190,7 +190,7 @@
     <string name="navbar_height_dialog_summary">Please reboot for height change to be added properly!</string>
     <string name="navbar_height_dialog_button_later">I\'ll reboot later</string>
     <string name="navbar_height_dialog_button_reboot">Reboot now!</string>
-    <string name="navigation_bar_tint_title">Navigation bar color</string>
+    <string name="navigation_bar_tint_title">Navigation SoftKey Color</string>
     <string name="navigation_bar_glow_tint_title">Navigation bar glow color</string>
     <string name="navigation_bar_glow_tint_summary">When you press on a button, there is a glow. Use this to change the color of the glow.</string>
     <string name="glow_times_title">Button glow animation</string>

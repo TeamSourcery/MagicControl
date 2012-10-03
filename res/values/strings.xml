@@ -575,4 +575,8 @@
     <string name="multipane_ui">Enable Dual panel</string>
     <string name="multipane_ui_summary">This will Enable/Disable Dual panel view (requires reboot)</string>
 
+    <string name="navigation_bar_transparency_title">Transparency</string>
+    <string name="navigation_bar_transparency_summary">Adjust navigation bar transparency</string>
+    <string name="status_bar_transparency_title">Transparency</string>
+    <string name="status_bar_transparency_summary">Adjust status bar transparency</string>
  </resources>

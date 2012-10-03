@@ -86,6 +86,16 @@
 	            </intent-filter>
 	        </activity>
 
+           <activity
+	            android:name=".fragments.StatusBar"
+	            android:label="Transparencies" >
+	            <intent-filter>
+	                <action android:name="android.intent.action.MAIN" />
+	
+	                <category android:name="com.sourcery.magiccontrol.SHORTCUT" />
+	            </intent-filter>
+	        </activity>
+
 	<activity
             android:name=".fragments.Lockscreens"
             android:label="Lockscreens" >

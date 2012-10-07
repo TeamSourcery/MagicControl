@@ -22,6 +22,7 @@ import android.preference.PreferenceScreen;
 import android.provider.Settings;
 import android.text.Spannable;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.sourcery.magiccontrol.SettingsPreferenceFragment;
 import com.sourcery.magiccontrol.R;
@@ -42,6 +43,7 @@ public class UserInterface extends SettingsPreferenceFragment {
     private static final String PREF_KILL_APP_LONGPRESS_BACK = "kill_app_longpress_back";
     private static final String PREF_MODE_TABLET_UI = "mode_tabletui";
     private static final String PREF_FORCE_DUAL_PANEL = "force_dualpanel";
+    private static final String PREF_SHOW_OVERFLOW = "show_overflow";
 
     CheckBoxPreference mEnableVolumeOptions;
     CheckBoxPreference mDisableBootAnimation;
@@ -55,6 +57,7 @@ public class UserInterface extends SettingsPreferenceFragment {
     CheckBoxPreference mTabletui;
     CheckBoxPreference mDualpane;
     Preference mLcdDensity;
+    CheckBoxPreference mShowActionOverflow;
 
      Random randomGenerator = new Random();
 
@@ -93,6 +96,11 @@ public class UserInterface extends SettingsPreferenceFragment {
 
         mKillAppLongpressBack = (CheckBoxPreference) findPreference(PREF_KILL_APP_LONGPRESS_BACK);
                 updateKillAppLongpressBackOptions();
+
+        mShowActionOverflow = (CheckBoxPreference) findPreference(PREF_SHOW_OVERFLOW);
+        mShowActionOverflow.setChecked((Settings.System.getInt(getActivity().
+                        getApplicationContext().getContentResolver(),
+                        Settings.System.UI_FORCE_OVERFLOW_BUTTON, 0) == 1));
 
         mTabletui = (CheckBoxPreference) findPreference(PREF_MODE_TABLET_UI);
         mTabletui.setChecked(Settings.System.getBoolean(mContext.getContentResolver(),
@@ -215,6 +223,19 @@ public class UserInterface extends SettingsPreferenceFragment {
                         .runWaitFor("mv /system/media/bootanimation.sourcery /system/media/bootanimation.zip");
                 Helpers.getMount("ro");
                 preference.setSummary("");
+            }
+            return true;
+             } else if (preference == mShowActionOverflow) {
+            boolean enabled = mShowActionOverflow.isChecked();
+            Settings.System.putInt(getContentResolver(), Settings.System.UI_FORCE_OVERFLOW_BUTTON,
+                    enabled ? 1 : 0);
+            // Show toast appropriately
+            if (enabled) {
+                Toast.makeText(getActivity(), R.string.show_overflow_toast_enable,
+                        Toast.LENGTH_LONG).show();
+            } else {
+                Toast.makeText(getActivity(), R.string.show_overflow_toast_disable,
+                        Toast.LENGTH_LONG).show();
             }
             return true;
             } else if (preference == mTabletui) {

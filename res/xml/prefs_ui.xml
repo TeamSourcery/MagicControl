@@ -16,6 +16,7 @@
             android:summary="@string/status_bar_notif_count_summary"
  	    android:defaultValue="false" />
 
+          
           <CheckBoxPreference
             android:key="show_overflow"
             android:title="@string/show_overflow_title"

@@ -85,7 +85,7 @@
     <string name="brightness_location_title">Brightness location</string>
     <string name="reset_toggles_title">Reset toggles</string>
     <string name="reset_toggles_summary">Reset all toggles and their order</string>
-
+    <string name="statusbar_background_color">Statusbar background color</string>
        
     <!-- Toggle Strings to be called from device overlays -->
     <string name="toggle_airplane_mode">Airplane mode</string>
@@ -203,7 +203,7 @@
     <string name="interface_navbar_appearance">Navigation Bar Color</string>
     <string name="interface_navbar_color_title">Set Color</string>
     <string name="interface_navbar_restore_stock_color">Restore stock color</string>
- 	 	
+    <string name="navbar_bg_color">Navbar Color</string> 	 	
     <string name="dpi">DPI</string>
 
  <!-- Nav Ring Targets -->
@@ -575,11 +575,7 @@
     <string name="multipane_ui">Enable Dual panel</string>
     <string name="multipane_ui_summary">This will Enable/Disable Dual panel view (requires reboot)</string>
 
-    <string name="navigation_bar_transparency_title">Transparency</string>
-    <string name="navigation_bar_transparency_summary">Adjust navigation bar transparency</string>
-    <string name="status_bar_transparency_title">Transparency</string>
-    <string name="status_bar_transparency_summary">Adjust status bar transparency</string>
-
+   
     <string name="show_overflow_title">Show Menu In apps when nav keys are off.</string>
     <string name="show_overflow_summary">Display the 3-dot overflow menu button within apps</string>
     <string name="show_overflow_toast_enable">The menu overflow button may not be visible until apps are restarted</string>

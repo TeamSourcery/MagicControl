@@ -66,7 +66,7 @@ import com.sourcery.magiccontrol.fragments.NavRingTargets;
 import net.margaritov.preference.colorpicker.ColorPickerPreference;
 
 public class Navbar extends SettingsPreferenceFragment implements
-        OnPreferenceChangeListener, ShortcutPickerHelper.OnPickListener, Preference.OnPreferenceClickListener {
+        OnPreferenceChangeListener, ShortcutPickerHelper.OnPickListener {
 
    // move these later
     private static final String PREF_MENU_UNLOCK = "pref_menu_display";
@@ -79,13 +79,14 @@ public class Navbar extends SettingsPreferenceFragment implements
     private static final String NAVIGATION_BAR_HEIGHT = "navigation_bar_height";
     private static final String NAVIGATION_BAR_HEIGHT_LANDSCAPE = "navigation_bar_height_landscape";
     private static final String NAVIGATION_BAR_WIDTH = "navigation_bar_width";
-    private static final String PREF_NAV_BAR_COLOR = "interface_navbar_color";
     private static final String PREF_NAV_BAR_COLOR_DEF = "interface_navbar_color_default";
     private static final String PREF_NAVRING_AMOUNT = "pref_navring_amount";
+    private static final String NAVIGATION_BAR_BACKGROUND_COLOR = "navigation_bar_background_color";
 
     public static final int REQUEST_PICK_CUSTOM_ICON = 200;
     public static final int REQUEST_PICK_LANDSCAPE_ICON = 201;
     private static final int DIALOG_NAVBAR_HEIGHT_REBOOT = 204;
+    private static final int DEFAULT_NAVBAR_BG_COLOR = 0xFF000000;
 
     public static final String PREFS_NAV_BAR = "navbar";
 
@@ -94,6 +95,7 @@ public class Navbar extends SettingsPreferenceFragment implements
     // move these later
     ColorPickerPreference mNavigationBarColor;
     ColorPickerPreference mNavigationBarGlowColor;
+    ColorPickerPreference mNavigationBarBgColor;
     ListPreference mGlowTimes;
     ListPreference menuDisplayLocation;
     ListPreference mNavBarMenuDisplay;
@@ -104,8 +106,8 @@ public class Navbar extends SettingsPreferenceFragment implements
     ListPreference mNavigationBarHeightLandscape;
     ListPreference mNavigationBarWidth;
     SeekBarPreference mButtonAlpha;
-    ColorPickerPreference mNavBar;
-    Preference mStockColor;
+    
+    
 
     private int mPendingIconIndex = -1;
     private int mPendingWidgetDrawer = -1;
@@ -165,9 +167,10 @@ public class Navbar extends SettingsPreferenceFragment implements
         mEnableNavigationBar.setChecked(Settings.System.getInt(getContentResolver(),
                 Settings.System.NAVIGATION_BAR_SHOW, hasNavBarByDefault ? 1 : 0) == 1);
 
-        mNavigationBarColor = (ColorPickerPreference) findPreference(PREF_NAV_COLOR);
-        mNavigationBarColor.setOnPreferenceChangeListener(this);
+        mNavigationBarBgColor = (ColorPickerPreference) findPreference(NAVIGATION_BAR_BACKGROUND_COLOR);
+        mNavigationBarBgColor.setOnPreferenceChangeListener(this);
 
+       
         mNavigationBarGlowColor = (ColorPickerPreference) findPreference(PREF_NAV_GLOW_COLOR);
         mNavigationBarGlowColor.setOnPreferenceChangeListener(this);
 
@@ -195,12 +198,7 @@ public class Navbar extends SettingsPreferenceFragment implements
         mNavigationBarWidth = (ListPreference) findPreference("navigation_bar_width");
         mNavigationBarWidth.setOnPreferenceChangeListener(this);
 
-        mNavBar = (ColorPickerPreference) findPreference(PREF_NAV_BAR_COLOR);
-        mNavBar.setOnPreferenceChangeListener(this);
- 	
-        mStockColor = (Preference) findPreference(PREF_NAV_BAR_COLOR_DEF);
-        mStockColor.setOnPreferenceClickListener(this);
-
+      
         if (mTablet) {
             prefs.removePreference(mNavBarMenuDisplay);
         }
@@ -246,6 +244,9 @@ public class Navbar extends SettingsPreferenceFragment implements
                         Settings.System.NAVIGATION_CUSTOM_APP_ICONS[1], "");
                 Settings.System.putString(getActivity().getContentResolver(),
                         Settings.System.NAVIGATION_CUSTOM_APP_ICONS[2], "");
+
+                Settings.System.putInt(getActivity().getContentResolver(),
+                         Settings.System.NAVIGATION_BAR_BACKGROUND_COLOR, DEFAULT_NAVBAR_BG_COLOR);
                 refreshSettings();
                 return true;
             default:
@@ -364,14 +365,7 @@ public class Navbar extends SettingsPreferenceFragment implements
             Settings.System.putInt(getActivity().getContentResolver(),
                     Settings.System.NAVIGATION_BAR_TINT, intHex);
             return true;
-        } else if (preference == mNavBar) {
-            String hex = ColorPickerPreference.convertToARGB(
-                    Integer.valueOf(String.valueOf(newValue)));
-            preference.setSummary(hex);
-            int intHex = ColorPickerPreference.convertToColorInt(hex);
-            Settings.System.putInt(getActivity().getContentResolver(),
-                    Settings.System.SYSTEMUI_NAVBAR_COLOR, intHex);
-            return true;
+        
         } else if (preference == mNavigationBarGlowColor) {
             String hex = ColorPickerPreference.convertToARGB(
                     Integer.valueOf(String.valueOf(newValue)));
@@ -380,6 +374,14 @@ public class Navbar extends SettingsPreferenceFragment implements
             Settings.System.putInt(getActivity().getContentResolver(),
                     Settings.System.NAVIGATION_BAR_GLOW_TINT, intHex);
             return true;
+        } else if (preference == mNavigationBarBgColor) {
+             String hex = ColorPickerPreference.convertToARGB(Integer.valueOf(String
+                     .valueOf(newValue)));
+             preference.setSummary(hex);
+             int intHex = ColorPickerPreference.convertToColorInt(hex);
+             Settings.System.putInt(getActivity().getContentResolver(),
+                     Settings.System.NAVIGATION_BAR_BACKGROUND_COLOR, intHex);
+             return true;
         } else if (preference == mGlowTimes) {
             // format is (on|off) both in MS
             String value = (String) newValue;
@@ -405,15 +407,7 @@ public class Navbar extends SettingsPreferenceFragment implements
         return false;
     }
 
-    @Override
-    public boolean onPreferenceClick(Preference pref) {
-        // TODO Auto-generated method stub
-        if (pref.equals(mStockColor)) {
-            Settings.System.putInt(getActivity().getContentResolver(),
-                     Settings.System.SYSTEMUI_NAVBAR_COLOR, Settings.System.SYSTEMUI_NAVBAR_COLOR_DEF);
-         }
-         return false;
-    }
+   
 
     public void resetNavRing() {
              Settings.System.putString(getActivity().getContentResolver(),

@@ -47,15 +47,14 @@
             android:key="navbar_appearance"
             android:title="@string/interface_navbar_appearance" >
 
+      
        <net.margaritov.preference.colorpicker.ColorPickerPreference
-            android:layout="?android:attr/preferenceLayoutChild"
-            android:key="interface_navbar_color"
-            android:title="@string/interface_navbar_color_title"
-	    android:defaultValue="#000000" />
+            android:key="navigation_bar_background_color"
+            android:title="@string/navbar_bg_color"
+            android:defaultValue="#000000"
+            alphaSlider="true" />
  	
-        <Preference
-            android:key="interface_navbar_color_default"
-            android:title="@string/interface_navbar_restore_stock_color" />
+       
      </PreferenceCategory>
 
         <PreferenceCategory

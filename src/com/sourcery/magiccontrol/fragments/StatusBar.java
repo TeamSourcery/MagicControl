@@ -31,16 +31,18 @@ import com.sourcery.magiccontrol.R;
 import com.sourcery.magiccontrol.SettingsPreferenceFragment;
 import com.sourcery.magiccontrol.util.Utils;
 
+import net.margaritov.preference.colorpicker.ColorPickerPreference;
+import net.margaritov.preference.colorpicker.ColorPickerView;
+
 public class StatusBar extends SettingsPreferenceFragment implements OnPreferenceChangeListener {
 
     
-    private static final String STATUS_BAR_TRANSPARENCY = "status_bar_transparency";
-    private static final String NAV_BAR_TRANSPARENCY = "nav_bar_transparency";
-
    
-    private ListPreference mStatusbarTransparency;
-    private ListPreference mNavigationBarTransparency;
-    
+    private static final String PREF_STATUSBAR_BACKGROUND_COLOR = "statusbar_background_color";
+   
+   
+    ColorPickerPreference mStatusbarBgColor;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -50,34 +52,24 @@ public class StatusBar extends SettingsPreferenceFragment implements OnPreferenc
         PreferenceScreen prefSet = getPreferenceScreen();
 
        
-        mStatusbarTransparency = (ListPreference) prefSet.findPreference(STATUS_BAR_TRANSPARENCY);
-        mNavigationBarTransparency = (ListPreference) prefSet.findPreference(NAV_BAR_TRANSPARENCY);
-
-  
-
-        int statusBarTransparency = Settings.System.getInt(getActivity().getApplicationContext().getContentResolver(),
-                Settings.System.STATUS_BAR_TRANSPARENCY, 100);
-        mStatusbarTransparency.setValue(String.valueOf(statusBarTransparency));
-        mStatusbarTransparency.setOnPreferenceChangeListener(this);
-
-       int navBarTransparency = Settings.System.getInt(getActivity().getApplicationContext().getContentResolver(),
- 	               Settings.System.NAV_BAR_TRANSPARENCY, 100);
-        mNavigationBarTransparency.setValue(String.valueOf(navBarTransparency));
-        mNavigationBarTransparency.setOnPreferenceChangeListener(this);
+       
+        mStatusbarBgColor = (ColorPickerPreference) findPreference(PREF_STATUSBAR_BACKGROUND_COLOR);
+        mStatusbarBgColor.setOnPreferenceChangeListener(this);
 
        
-       }
-
+       
+     
+}
     public boolean onPreferenceChange(Preference preference, Object newValue) {
-        if  (preference == mStatusbarTransparency) {
-            int statusBarTransparency = Integer.valueOf((String) newValue);
-            Settings.System.putInt(getActivity().getApplicationContext().getContentResolver(),
-                    Settings.System.STATUS_BAR_TRANSPARENCY, statusBarTransparency);
-            return true;
-    	} else if (preference == mNavigationBarTransparency) {
-            int navBarTransparency = Integer.valueOf((String) newValue);
-            Settings.System.putInt(getActivity().getApplicationContext().getContentResolver(),
-                    Settings.System.NAV_BAR_TRANSPARENCY, navBarTransparency);
+        if (preference == mStatusbarBgColor) {
+ 	           String hex = ColorPickerPreference.convertToARGB(Integer.valueOf(String
+                   .valueOf(newValue)));
+            preference.setSummary(hex);
+ 
+            int intHex = ColorPickerPreference.convertToColorInt(hex);
+            Settings.System.putInt(getActivity().getContentResolver(),
+                    Settings.System.STATUSBAR_BACKGROUND_COLOR, intHex);
+           Log.e("SOURCERY", intHex + "");
             return true;
         }
          return false;

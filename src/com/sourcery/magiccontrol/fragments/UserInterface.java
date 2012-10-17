@@ -43,6 +43,7 @@ public class UserInterface extends SettingsPreferenceFragment {
     private static final String PREF_KILL_APP_LONGPRESS_BACK = "kill_app_longpress_back";
     private static final String PREF_MODE_TABLET_UI = "mode_tabletui";
     private static final String PREF_FORCE_DUAL_PANEL = "force_dualpanel";
+    private static final String PREF_HIDE_EXTRAS = "hide_extras";
     private static final String PREF_SHOW_OVERFLOW = "show_overflow";
 
     CheckBoxPreference mEnableVolumeOptions;
@@ -56,6 +57,7 @@ public class UserInterface extends SettingsPreferenceFragment {
     CheckBoxPreference mAlarm;
     CheckBoxPreference mTabletui;
     CheckBoxPreference mDualpane;
+    CheckBoxPreference mHideExtras;
     Preference mLcdDensity;
     CheckBoxPreference mShowActionOverflow;
 
@@ -105,6 +107,10 @@ public class UserInterface extends SettingsPreferenceFragment {
         mTabletui = (CheckBoxPreference) findPreference(PREF_MODE_TABLET_UI);
         mTabletui.setChecked(Settings.System.getBoolean(mContext.getContentResolver(),
                        Settings.System.MODE_TABLET_UI, false));
+
+        mHideExtras = (CheckBoxPreference) findPreference(PREF_HIDE_EXTRAS);
+        mHideExtras.setChecked(Settings.System.getBoolean(mContext.getContentResolver(),
+                       Settings.System.HIDE_EXTRAS_SYSTEM_BAR, false));
 
         mDualpane = (CheckBoxPreference) findPreference(PREF_FORCE_DUAL_PANEL);
         mDualpane.setChecked(Settings.System.getBoolean(mContext.getContentResolver(),
@@ -242,6 +248,12 @@ public class UserInterface extends SettingsPreferenceFragment {
              Settings.System.putBoolean(mContext.getContentResolver(),
                      Settings.System.MODE_TABLET_UI,
                      ((CheckBoxPreference) preference).isChecked());
+             return true;
+           } else if (preference == mHideExtras) {
+             Settings.System.putBoolean(mContext.getContentResolver(),
+                     Settings.System.HIDE_EXTRAS_SYSTEM_BAR,
+                     ((CheckBoxPreference) preference).isChecked());
+             Helpers.restartSystemUI();
              return true;
            } else if (preference == mDualpane) {
             Settings.System.putBoolean(mContext.getContentResolver(),

@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
+import android.app.FragmentTransaction;
 import android.app.ListFragment;
 import android.appwidget.AppWidgetHost;
 import android.appwidget.AppWidgetManager;
@@ -82,9 +83,11 @@ public class Navbar extends SettingsPreferenceFragment implements
     private static final String PREF_NAV_BAR_COLOR_DEF = "interface_navbar_color_default";
     private static final String PREF_NAVRING_AMOUNT = "pref_navring_amount";
     private static final String NAVIGATION_BAR_BACKGROUND_COLOR = "navigation_bar_background_color";
+    private static final String NAVIGATION_BAR_WIDGETS = "navigation_bar_widgets";
 
     public static final int REQUEST_PICK_CUSTOM_ICON = 200;
     public static final int REQUEST_PICK_LANDSCAPE_ICON = 201;
+    private static final int DIALOG_NAVBAR_ENABLE = 203;
     private static final int DIALOG_NAVBAR_HEIGHT_REBOOT = 204;
     private static final int DEFAULT_NAVBAR_BG_COLOR = 0xFF000000;
 
@@ -106,7 +109,7 @@ public class Navbar extends SettingsPreferenceFragment implements
     ListPreference mNavigationBarHeightLandscape;
     ListPreference mNavigationBarWidth;
     SeekBarPreference mButtonAlpha;
-    
+    Preference mConfigureWidgets;
     
 
     private int mPendingIconIndex = -1;
@@ -200,7 +203,7 @@ public class Navbar extends SettingsPreferenceFragment implements
         mNavigationBarWidth = (ListPreference) findPreference("navigation_bar_width");
         mNavigationBarWidth.setOnPreferenceChangeListener(this);
 
-      
+        mConfigureWidgets = findPreference(NAVIGATION_BAR_WIDGETS);
         if (mTablet) {
             prefs.removePreference(mNavBarMenuDisplay);
         }
@@ -268,6 +271,13 @@ public class Navbar extends SettingsPreferenceFragment implements
                      .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
                      .putExtra("sourcery_fragment_name", NavRingTargets.class.getName());
                      getActivity().startActivity(i);
+       } else if (preference == mConfigureWidgets) {
+            FragmentTransaction ft = getFragmentManager().beginTransaction();
+            WidgetConfigurationFragment fragment = new WidgetConfigurationFragment();
+            ft.addToBackStack("config_widgets");
+            ft.replace(this.getId(), fragment);
+            ft.commit();
+            return true;
         }
         return super.onPreferenceTreeClick(preferenceScreen, preference);
     }
@@ -679,6 +689,8 @@ public class Navbar extends SettingsPreferenceFragment implements
                 return getResources().getDrawable(R.drawable.ic_sysbar_power);
             } else if (uri.equals("**notifications**")) {
                 return getResources().getDrawable(R.drawable.ic_sysbar_notifications);
+            } else if (uri.equals("**widgets**")) {
+                return getResources().getDrawable(R.drawable.ic_sysbar_widget);
             }
         } else {
             try {

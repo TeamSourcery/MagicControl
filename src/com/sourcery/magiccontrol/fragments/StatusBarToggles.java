@@ -10,11 +10,13 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.DialogInterface.OnMultiChoiceClickListener;
 import android.content.pm.PackageManager;
+import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.os.Bundle;
 import android.preference.CheckBoxPreference;
 import android.preference.ListPreference;
 import android.preference.Preference;
+import android.preference.PreferenceGroup;
 import android.preference.Preference.OnPreferenceChangeListener;
 import android.preference.PreferenceScreen;
 import android.provider.Settings;
@@ -72,7 +74,14 @@ public class StatusBarToggles extends SettingsPreferenceFragment implements OnPr
         mBrightnessLocation = (ListPreference) findPreference(PREF_BRIGHTNESS_LOC);
         mBrightnessLocation.setOnPreferenceChangeListener(this);
         mBrightnessLocation.setValue(Integer.toString(Settings.System.getInt(getActivity()
-                .getContentResolver(), Settings.System.STATUSBAR_TOGGLES_BRIGHTNESS_LOC, 1)));
+                .getContentResolver(), Settings.System.STATUSBAR_TOGGLES_BRIGHTNESS_LOC, 3)));
+ 
+        int mTabletui = Settings.System.getInt(mContext.getContentResolver(),
+                        Settings.System.TABLET_UI, 0);
+ 
+        if (mTabletui == 1) {
+           ((PreferenceGroup) findPreference("advanced_cat")).removePreference(mBrightnessLocation);
+        }
 
         mToggleStyle = (ListPreference) findPreference(PREF_TOGGLES_STYLE);
         mToggleStyle.setOnPreferenceChangeListener(this);

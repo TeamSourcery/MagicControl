@@ -5,10 +5,14 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.Random;
 
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.content.pm.ResolveInfo;
+import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.os.Bundle;
 import android.os.SystemProperties;
@@ -44,8 +48,10 @@ public class UserInterface extends SettingsPreferenceFragment {
     private static final String PREF_KILL_APP_LONGPRESS_BACK = "kill_app_longpress_back";
     private static final String PREF_MODE_TABLET_UI = "mode_tabletui";
     private static final String PREF_FORCE_DUAL_PANEL = "force_dualpanel";
+    private static final String PREF_USE_ALT_RESOLVER = "use_alt_resolver";
     private static final String PREF_HIDE_EXTRAS = "hide_extras";
     private static final String PREF_SHOW_OVERFLOW = "show_overflow";
+    private static final String PREF_VIBRATE_NOTIF_EXPAND = "vibrate_notif_expand";
 
     CheckBoxPreference mEnableVolumeOptions;
     CheckBoxPreference mDisableBootAnimation;
@@ -56,10 +62,12 @@ public class UserInterface extends SettingsPreferenceFragment {
     CheckBoxPreference mRecentKillAll;
     CheckBoxPreference mRamBar;
     CheckBoxPreference mKillAppLongpressBack;
+    CheckBoxPreference mUseAltResolver;
     CheckBoxPreference mAlarm;
     CheckBoxPreference mTabletui;
     CheckBoxPreference mDualpane;
     CheckBoxPreference mHideExtras;
+    CheckBoxPreference mVibrateOnExpand;
     Preference mLcdDensity;
     CheckBoxPreference mShowActionOverflow;
 
@@ -76,6 +84,8 @@ public class UserInterface extends SettingsPreferenceFragment {
         super.onCreate(savedInstanceState);
         // Load the preferences from an XML resource
         addPreferencesFromResource(R.xml.prefs_ui);
+
+       PreferenceScreen prefs = getPreferenceScreen();
 
         mEnableVolumeOptions = (CheckBoxPreference) findPreference(PREF_ENABLE_VOLUME_OPTIONS);
         mEnableVolumeOptions.setChecked(Settings.System.getInt(getActivity().getContentResolver(),
@@ -114,6 +124,14 @@ public class UserInterface extends SettingsPreferenceFragment {
         mTabletui.setChecked(Settings.System.getBoolean(mContext.getContentResolver(),
                        Settings.System.MODE_TABLET_UI, false));
 
+        mVibrateOnExpand = (CheckBoxPreference) findPreference(PREF_VIBRATE_NOTIF_EXPAND);
+        mVibrateOnExpand.setChecked(Settings.System.getBoolean(mContext.getContentResolver(),
+                 Settings.System.VIBRATE_NOTIF_EXPAND, true));
+
+        mUseAltResolver = (CheckBoxPreference) findPreference(PREF_USE_ALT_RESOLVER);
+        mUseAltResolver.setChecked(Settings.System.getBoolean(mContext.getContentResolver(),
+ 	         Settings.System.ACTIVITY_RESOLVER_USE_ALT, false));
+ 
         mHideExtras = (CheckBoxPreference) findPreference(PREF_HIDE_EXTRAS);
         mHideExtras.setChecked(Settings.System.getBoolean(mContext.getContentResolver(),
                        Settings.System.HIDE_EXTRAS_SYSTEM_BAR, false));
@@ -311,6 +329,17 @@ public class UserInterface extends SettingsPreferenceFragment {
              ((PreferenceActivity) getActivity())
                      .startPreferenceFragment(new DensityChanger(), true);
              return true;
+             } else if (preference == mUseAltResolver) {
+             Settings.System.putBoolean(getActivity().getContentResolver(),
+                     Settings.System.ACTIVITY_RESOLVER_USE_ALT,
+                     isCheckBoxPreferenceChecked(preference));
+             return true;
+             } else if (preference == mVibrateOnExpand) {
+             Settings.System.putBoolean(mContext.getContentResolver(),
+                     Settings.System.VIBRATE_NOTIF_EXPAND,
+                     ((CheckBoxPreference) preference).isChecked());
+ 	     Helpers.restartSystemUI();
+ 	     return true;
             }
         return super.onPreferenceTreeClick(preferenceScreen, preference);
     }

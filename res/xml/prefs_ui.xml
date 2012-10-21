@@ -16,6 +16,11 @@
             android:summary="@string/status_bar_notif_count_summary"
  	    android:defaultValue="false" />
 
+         <CheckBoxPreference
+            android:key="vibrate_notif_expand"
+            android:title="@string/vibrate_notif_expand_title"
+            android:summary="@string/vibrate_notif_expand_summary" />
+
           
           <CheckBoxPreference
             android:key="show_overflow"
@@ -79,6 +84,12 @@
             android:key="lcd_density_setup"
             android:title="@string/lcd_density_title"
             android:summary="@string/lcd_density_summary" />
+
+         <CheckBoxPreference
+            android:key="use_alt_resolver"
+ 	    android:title="@string/alt_resolver"
+            android:summary="@string/alt_resolver_summary"
+            android:defaultValue="false" />
  
           <Preference
              android:key="custom_carrier_label"

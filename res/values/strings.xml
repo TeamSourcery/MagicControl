@@ -597,4 +597,7 @@
     <string name="vibrate_notif_expand_summary">Vibrate when expanding notifications (requires UI restart)</string>
     <string name="alt_resolver">Use Alt Default App Grid</string>
     <string name="alt_resolver_summary">Use Alternate (GB style) Default App Picker</string>
+
+    <string name="statusbar_brightness_slider_title">Statusbar brightness slider</string>
+    <string name="statusbar_brightness_slider_summary">Statusbar brightness slider when you slide across the statusbar On/Off</string>
  </resources>

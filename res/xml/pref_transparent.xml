@@ -14,6 +14,12 @@
          android:defaultValue="#000000"
          alphaSlider="true" />
 
+      <CheckBoxPreference
+         android:key="statusbar_brightness_slider"
+         android:title="@string/statusbar_brightness_slider_title"
+         android:summary="@string/statusbar_brightness_slider_summary"
+         android:defaultValue="true" />
+
         </PreferenceCategory>
 
 </PreferenceScreen>

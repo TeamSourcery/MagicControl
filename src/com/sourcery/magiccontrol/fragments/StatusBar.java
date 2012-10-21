@@ -39,9 +39,10 @@ public class StatusBar extends SettingsPreferenceFragment implements OnPreferenc
     
    
     private static final String PREF_STATUSBAR_BACKGROUND_COLOR = "statusbar_background_color";
-   
+    private static final String PREF_STATUSBAR_BRIGHTNESS_SLIDER = "statusbar_brightness_slider";
    
     ColorPickerPreference mStatusbarBgColor;
+    CheckBoxPreference mStatusBarBrightnessSlider;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -56,8 +57,9 @@ public class StatusBar extends SettingsPreferenceFragment implements OnPreferenc
         mStatusbarBgColor = (ColorPickerPreference) findPreference(PREF_STATUSBAR_BACKGROUND_COLOR);
         mStatusbarBgColor.setOnPreferenceChangeListener(this);
 
-       
-       
+        mStatusBarBrightnessSlider = (CheckBoxPreference) findPreference(PREF_STATUSBAR_BRIGHTNESS_SLIDER);
+        mStatusBarBrightnessSlider.setChecked(Settings.System.getBoolean(mContext.getContentResolver(),
+                 Settings.System.STATUS_BAR_BRIGHTNESS_SLIDER, true));
      
 }
     public boolean onPreferenceChange(Preference preference, Object newValue) {
@@ -71,8 +73,21 @@ public class StatusBar extends SettingsPreferenceFragment implements OnPreferenc
                     Settings.System.STATUSBAR_BACKGROUND_COLOR, intHex);
            Log.e("SOURCERY", intHex + "");
             return true;
+           }
+          return false;
+          }
+
+    @Override
+    public boolean onPreferenceTreeClick(PreferenceScreen preferenceScreen,
+            Preference preference) {
+
+         if (preference == mStatusBarBrightnessSlider) {
+            Settings.System.putBoolean(getActivity().getContentResolver(),
+                     Settings.System.STATUS_BAR_BRIGHTNESS_SLIDER,
+                     isCheckBoxPreferenceChecked(preference));
+          return true;
         }
-         return false;
+         return super.onPreferenceTreeClick(preferenceScreen, preference);
 	
      }
           

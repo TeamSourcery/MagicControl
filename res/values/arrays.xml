@@ -85,42 +85,47 @@
         <item>@string/toggle_sync</item>
     </string-array>
  
+   
     <!-- Battery styles -->
     <string-array name="battery_icon_entries">
-	<item>Icon only</item>
-	<item>Text only</item>
-	
-	<item>Icon with centered text</item>
-	<item>Turn on Battery Mods</item>
-	<item>Vanish</item>
+        <item>@string/icon_only</item>
+        
+        <item>@string/icon_with_percent_center</item>
+        <item>@string/text_only</item>
+        <item>@string/circle_mod</item>
+        <item>@string/cm_circle_wo_percent</item>
+        <item>@string/cm_circle_with_percent</item>
+        <item>@string/battery_hide</item>
     </string-array>
 
     <string-array name="battery_icon_values" translatable="false">
+        <item>0</item>
+       
+        <item>2</item>
+        <item>3</item>
+        <item>4</item>
+        <item>5</item>
+        <item>6</item>
+        <item>7</item>
+    </string-array>
+
+    <string-array name="battery_bar_entries">
+	<item>Vanish</item>
+	<item>Statusbar</item>
+	<item>Navbar Top</item>
+	<item>Navbar Bottom</item>
+    </string-array>
+
+    <string-array name="battery_bar_values">
 	<item>0</item>
 	<item>1</item>
-	
+	<item>2</item>
 	<item>3</item>
-	<item>4</item>
-	<item>5</item>
-    </string-array>
- 
-    <string-array name="battery_bar_entries">
-		<item>Vanish</item>
-		<item>Statusbar</item>
-		<item>Navbar Top</item>
-		<item>Navbar Bottom</item>
-	</string-array>
-
-	<string-array name="battery_bar_values">
-		<item>0</item>
-		<item>1</item>
-		<item>2</item>
-		<item>3</item>
 	</string-array>
 
        <string-array name="battery_bar_style_entries">
-		<item>Regular</item>
-		<item>Center</item>
+	<item>Regular</item>
+	<item>Center</item>
 	</string-array>
 
 	<string-array name="battery_bar_style_values">

@@ -40,7 +40,7 @@ public class StatusBarToggles extends SettingsPreferenceFragment implements OnPr
 
     private static final String TAG = "TogglesLayout";
 
-    private static final String PREF_ENABLE_TOGGLES = "enable_toggles";
+    private static final String PREF_ENABLE_TOGGLES = "enabled_toggles";
     private static final String PREF_BRIGHTNESS_LOC = "brightness_location";
     private static final String PREF_TOGGLES_STYLE = "toggle_style";
     private static final String PREF_ALT_BUTTON_LAYOUT = "toggles_layout_preference";
@@ -51,6 +51,7 @@ public class StatusBarToggles extends SettingsPreferenceFragment implements OnPr
     private static final String PREF_TOGGLE_TEXT_COLOR = "toggle_text_color";
     private static final String PREF_SETTINGS_BUTTON_BEHAVIOR = "settings_behavior";
     private static final String PREF_TOGGLES_AUTOHIDE = "toggles_autohide";
+    private static final String PREF_HAPTIC_FEEDBACK_TOGGLES_ENABLED = "toggles_haptic_feedback";
 
     Preference mEnabledToggles;
     Preference mLayout;
@@ -65,6 +66,7 @@ public class StatusBarToggles extends SettingsPreferenceFragment implements OnPr
     ColorPickerPreference mToggleTextColor;
     CheckBoxPreference mDefaultSettingsButtonBehavior;
     CheckBoxPreference mTogglesAutoHide;
+    CheckBoxPreference mHapticFeedback;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -72,6 +74,10 @@ public class StatusBarToggles extends SettingsPreferenceFragment implements OnPr
         setTitle(R.string.title_statusbar_toggles);
         // Load the preferences from an XML resource
         addPreferencesFromResource(R.xml.prefs_statusbar_toggles);
+
+        mHapticFeedback = (CheckBoxPreference) findPreference(PREF_HAPTIC_FEEDBACK_TOGGLES_ENABLED);
+        mHapticFeedback.setChecked(Settings.System.getInt(getActivity().getContentResolver(),
+                Settings.System.HAPTIC_FEEDBACK_TOGGLES_ENABLED, 0) == 1);
 
         mEnabledToggles = findPreference(PREF_ENABLE_TOGGLES);
 
@@ -186,6 +192,11 @@ public class StatusBarToggles extends SettingsPreferenceFragment implements OnPr
 
             d.show();
 
+            return true;
+        } else if (preference == mHapticFeedback) {
+            Settings.System.putInt(getActivity().getContentResolver(),
+                    Settings.System.HAPTIC_FEEDBACK_TOGGLES_ENABLED,
+                    ((CheckBoxPreference) preference).isChecked() ? 1 : 0);
             return true;
         } else if (preference == mLayout) {
             FragmentTransaction ft = getFragmentManager().beginTransaction();

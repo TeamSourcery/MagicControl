@@ -618,4 +618,8 @@
 
     <string name="statusbar_brightness_slider_title">Statusbar brightness slider</string>
     <string name="statusbar_brightness_slider_summary">Statusbar brightness slider when you slide across the statusbar On/Off</string>
+
+    <!-- haptic feedback on toggle press -->
+    <string name="toggles_enable_haptic_feedback_title">Enable haptic feedback</string>
+    <string name="toggles_enable_haptic_feedback_summary">Use haptic feedback when pressing toggles</string>
  </resources>

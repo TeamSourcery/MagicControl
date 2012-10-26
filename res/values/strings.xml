@@ -622,4 +622,11 @@
     <!-- haptic feedback on toggle press -->
     <string name="toggles_enable_haptic_feedback_title">Enable haptic feedback</string>
     <string name="toggles_enable_haptic_feedback_summary">Use haptic feedback when pressing toggles</string>
+
+    <string name="clock_date_opens_title">Clock/Date PullDown Launcher</string>
+    <string name="clock_date_opens_summary">Clock Opens Alarms, Date Opens Calendar (SystemUI will restart)</string>
+
+     <!-- Notification status bar clock color -->
+    <string name="expanded_clock_color_title">Notification Clock Color</string>
+    
  </resources>

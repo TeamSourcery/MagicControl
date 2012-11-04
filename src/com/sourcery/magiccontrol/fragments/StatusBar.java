@@ -78,7 +78,6 @@ public class StatusBar extends SettingsPreferenceFragment implements
    
     private static final String PREF_STATUSBAR_BACKGROUND_COLOR = "statusbar_background_color";
     private static final String PREF_STATUSBAR_BRIGHTNESS_SLIDER = "statusbar_brightness_slider";
-    private static final String PREF_CLOCK_DATE_OPENS = "clock_date_opens";
     private static final String PREF_EXPANDED_CLOCK_COLOR = "expanded_clock_color";
    
    
@@ -86,7 +85,6 @@ public class StatusBar extends SettingsPreferenceFragment implements
       
     ColorPickerPreference mStatusbarBgColor;
     CheckBoxPreference mStatusBarBrightnessSlider;
-    CheckBoxPreference mClockDateOpens;
     ColorPickerPreference mExpandedClockColor;
     
     private int seekbarProgress;
@@ -108,10 +106,7 @@ public class StatusBar extends SettingsPreferenceFragment implements
         mStatusBarBrightnessSlider.setChecked(Settings.System.getBoolean(mContext.getContentResolver(),
                  Settings.System.STATUS_BAR_BRIGHTNESS_SLIDER, true));
      
-        mClockDateOpens = (CheckBoxPreference) findPreference(PREF_CLOCK_DATE_OPENS);
-        mClockDateOpens.setChecked(Settings.System.getBoolean(mContext.getContentResolver(),
-                 Settings.System.CLOCK_DATE_OPENS, true));
-
+        
         mExpandedClockColor = (ColorPickerPreference) findPreference(PREF_EXPANDED_CLOCK_COLOR);
         mExpandedClockColor.setOnPreferenceChangeListener(this);
                
@@ -132,13 +127,7 @@ public class StatusBar extends SettingsPreferenceFragment implements
                      Settings.System.STATUS_BAR_BRIGHTNESS_SLIDER,
                      isCheckBoxPreferenceChecked(preference));
           return true;
-        } else if (preference == mClockDateOpens) {
-             Settings.System.putBoolean(mContext.getContentResolver(),
-                     Settings.System.CLOCK_DATE_OPENS,
-                     ((CheckBoxPreference) preference).isChecked());
-             Helpers.restartSystemUI();
-           return true;
-        
+       
          }
          return super.onPreferenceTreeClick(preferenceScreen, preference);
 	

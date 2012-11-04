@@ -156,6 +156,14 @@
     <string name="reset_color_title">Reset Color</string>
     <string name="enable_clock_weekday">Current Weekday</string>
     <string name="enable_clock_weekday_summary">Abbreviated current day of week</string>
+    <string name="alarm">Alarms</string>
+    <string name="today">Calendar for today</string>
+    <string name="event">Calendar new event</string>
+    <string name="voiceassist">Voice commands</string>
+    <string name="title_date_longclick">Date long click actions</string>
+    <string name="title_date_shortclick">Date short click actions</string>
+    <string name="title_clock_longclick">Clock long click actions</string>
+    <string name="title_clock_shortclick">Clock short click actions</string>
    
      <!-- Colorpicker -->
     <string name="dialog_color_picker">Color Picker</string>
@@ -187,7 +195,7 @@
     <string name="title_pref_navigation_menu_display">Menu visibility</string>
     <string name="summary_pref_navigation_menu_display">How and when do you want the menu buttons to appear?</string>
 
-    <string name="navbar_qty_title">Navigation 1-5 Keys</string>
+    <string name="navbar_qty_title">Navigation Keys One-Seven</string>
     <string name="navbar_qty_summary">Choose the number of Softkeys</string>
     <string name="button_transparency_title">Soft Key Brightness</string>
     <string name="navbar_action_title">Button %1$s action &amp; icon</string>
@@ -337,17 +345,19 @@
     <string name="weather_use_celcius">Metric units</string>
     <string name="weather_use_celcius_summary">Enabling this will display weather temperature in Celsius rather than Fahrenheit and windspeed in km/h rather than mph.</string>
     <string name="weather_statusbar_style">Statusbar weather style</string>
-    <string name="weather_start_custom_app">Start custom app</string>
-    <string name="weather_start_custom_app_summary">Start a custom app when clicking on the weather image.</string>
-    <string name="weather_custom_app_title">Custom app</string>
-    <string name="weather_custom_app_dialog_title">Choose your app</string>
-    <string name="weather_custom_app_dialog_message">Package name for now.</string>
+    <string name="title_weather_longclick">Weather panel long click actions</string>
+    <string name="title_weather_shortclick">Weather panel short click actions</string>
+    <string name="update">Update weather panel</string>
     <string name="weather_refreshing">Requesting weather update!</string>
     <string name="weather_loc_warning_title">Cannot retrieve location!</string>
     <string name="weather_loc_warning_msg">"Obtaining location from network is currently disabled. This breaks the ability to get the current weather in your current location. Please set a custom location or enable obtaining your location from your network."</string>
     <string name="weather_loc_warning_positive">"Enable network location"</string>
     <string name="weather_loc_warning_negative">"Don't enable."</string>
     <string name="menu_weather_get_weather">Get weather</string>
+    <string name="weather_statusbar_hide">Weather panel hide options</string>
+    <string name="always_on">Always visible</string>
+    <string name="same_toggles">Hide with toggles</string>
+    <string name="opposite_toggles">Hide opposite of toggles</string>
     <string name="lockscreen_weather_cat">Weather</string>
     <string name="lockscreen_weather_title">Enable</string>
     <string name="lockscreen_weather_summary">Show Weather Information on Lockscreen. Set options for weather below.</string>
@@ -370,7 +380,8 @@
     <string name="lockscreen_calendar_flip_summary">If enabled, the widget will display multiple events by flipping between them.</string>
     <string name="lockscreen_calendar_interval_title">Flip interval</string>
     <string name="lockscreen_calendar_interval_summary">Choose the animation speed in seconds.</string>
-
+    <string name="nothing">Nothing</string>
+    <string name="custom_app">Custom app</string>
     
 
     <!-- Weather Codes -->
@@ -637,10 +648,8 @@
     <string name="toggles_enable_haptic_feedback_title">Enable haptic feedback</string>
     <string name="toggles_enable_haptic_feedback_summary">Use haptic feedback when pressing toggles</string>
 
-    <string name="clock_date_opens_title">Clock/Date PullDown Launcher</string>
-    <string name="clock_date_opens_summary">Clock Opens Alarms, Date Opens Calendar (SystemUI will restart)</string>
-
+    
      <!-- Notification status bar clock color -->
-    <string name="expanded_clock_color_title">Notification Clock Color</string>
+    <string name="expanded_clock_color_title">Notification Date(only) Color</string>
     
  </resources>

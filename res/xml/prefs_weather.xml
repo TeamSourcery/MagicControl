@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
 
+  
     <CheckBoxPreference
         android:key="use_custom_location"
         android:title="@string/weather_use_custom_location"
@@ -23,17 +24,17 @@
         android:title="@string/weather_use_celcius"
         android:summary="@string/weather_use_celcius_summary" />
 
+    <ListPreference
+        android:entries="@array/weather_action_entries"
+        android:entryValues="@array/weather_action_values"
+        android:key="weather_shortclick"
+        android:title="@string/title_weather_shortclick" />
 
-    <CheckBoxPreference
-        android:key="use_custom_app"
-        android:title="@string/weather_start_custom_app"
-        android:summary="@string/weather_start_custom_app_summary" />
-
-    <Preference
-        android:key="custom_app"
-        android:title="@string/weather_custom_app_title"
-        android:dependency="use_custom_app" />
-
+    <ListPreference
+        android:entries="@array/weather_action_entries"
+        android:entryValues="@array/weather_action_values"
+        android:key="weather_longclick"
+        android:title="@string/title_weather_longclick" />
 
     <ListPreference
         android:entries="@array/weather_interval_entries"
@@ -41,12 +42,16 @@
         android:key="refresh_interval"
         android:title="@string/weather_refresh_interval" />
 
-
     <ListPreference
         android:entries="@array/weather_statusbar_location_entries"
         android:entryValues="@array/weather_statusbar_location_values"
         android:key="statusbar_location"
         android:title="@string/weather_statusbar_style" />
 
+    <ListPreference
+        android:entries="@array/weather_statusbar_hide_entries"
+        android:entryValues="@array/weather_statusbar_hide_values"
+        android:key="weather_hide"
+        android:title="@string/weather_statusbar_hide" />
 
 </PreferenceScreen>

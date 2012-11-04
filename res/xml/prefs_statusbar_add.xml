@@ -20,11 +20,7 @@
          android:summary="@string/statusbar_brightness_slider_summary"
          android:defaultValue="true" />
 
-      <CheckBoxPreference
-         android:key="clock_date_opens"
-         android:title="@string/clock_date_opens_title"
-         android:summary="@string/clock_date_opens_summary" />
-
+    
       <net.margaritov.preference.colorpicker.ColorPickerPreference
          android:key="expanded_clock_color"
          android:title="@string/expanded_clock_color_title"

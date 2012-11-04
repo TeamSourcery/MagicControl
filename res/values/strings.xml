@@ -29,6 +29,7 @@
     <string name="title_power_menu">Power Menu</string>
     <string name="title_led">LED Control</string>
     <string name="title_lockscreens">Lockscreen Options</string>
+    <string name="title_navring">Navigation Ring</string>
     <string name="title_sound">Sound Settings</string>
     <string name="title_weather">Weather Settings</string>
     <string name="title_performance">Performance Settings</string>
@@ -167,6 +168,16 @@
     <string name="ics_color">Default</string>
 
     <!-- Navigation Bar -->
+    <string name="none">None</string>
+    <string name="take_screenshot">Take Screenshot</string>
+    <string name="open_ime_switcher">Open IME Switcher</string>
+    <string name="ring_vib">Ring/Vib</string>
+    <string name="ring_silent">Ring/Silent</string>
+    <string name="ring_vib_silent">Ring/Vib/Silent</string>
+    <string name="screen_off">Screen Off</string>
+    <string name="kill_app">Kill app</string>
+    <string name="google_now">Google Now</string>
+
     <string name="navigation_bar">Navigation bar</string>
     <string name="navbar_button_cat">Navigation bar buttons</string>
     
@@ -240,7 +251,7 @@
  <!-- Nav Ring Targets -->
     <string name="navbar_ring_cat">Navigation Bar Ring Targets</string>
     <string name="interface_softkey_settings">Softkey Settings</string>
-    <string name="interface_softkeys_pref_default_title">No Activity Selected</string>
+    <string name="interface_softkeys_pref_default_title">Click to select activity</string>
     <string name="interface_softkeys_pref_default_summary">Tap the settings icon to select a custom long press activity</string>
     <string name="interface_softkeys_activity_dialog_title">Select Activity</string>
     <string name="interface_softkeys_reboot_title">Reboot Menu</string>

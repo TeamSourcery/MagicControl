@@ -52,6 +52,7 @@ public class UserInterface extends SettingsPreferenceFragment {
     private static final String PREF_HIDE_EXTRAS = "hide_extras";
     private static final String PREF_SHOW_OVERFLOW = "show_overflow";
     private static final String PREF_VIBRATE_NOTIF_EXPAND = "vibrate_notif_expand";
+    private static final String PREF_NOTIFICATION_SHOW_WIFI_SSID = "notification_show_wifi_ssid";	
 
     CheckBoxPreference mEnableVolumeOptions;
     CheckBoxPreference mDisableBootAnimation;
@@ -70,6 +71,7 @@ public class UserInterface extends SettingsPreferenceFragment {
     CheckBoxPreference mVibrateOnExpand;
     Preference mLcdDensity;
     CheckBoxPreference mShowActionOverflow;
+    CheckBoxPreference mShowWifiName;
 
      Random randomGenerator = new Random();
 
@@ -127,6 +129,10 @@ public class UserInterface extends SettingsPreferenceFragment {
         mVibrateOnExpand = (CheckBoxPreference) findPreference(PREF_VIBRATE_NOTIF_EXPAND);
         mVibrateOnExpand.setChecked(Settings.System.getBoolean(mContext.getContentResolver(),
                  Settings.System.VIBRATE_NOTIF_EXPAND, true));
+
+        mShowWifiName = (CheckBoxPreference) findPreference(PREF_NOTIFICATION_SHOW_WIFI_SSID);
+        mShowWifiName.setChecked(Settings.System.getBoolean(mContext.getContentResolver(),
+                Settings.System.NOTIFICATION_SHOW_WIFI_SSID, false));
 
         mUseAltResolver = (CheckBoxPreference) findPreference(PREF_USE_ALT_RESOLVER);
         mUseAltResolver.setChecked(Settings.System.getBoolean(mContext.getContentResolver(),
@@ -340,6 +346,11 @@ public class UserInterface extends SettingsPreferenceFragment {
                      ((CheckBoxPreference) preference).isChecked());
  	     Helpers.restartSystemUI();
  	     return true;
+             } else if (preference == mShowWifiName) {
+            Settings.System.putBoolean(mContext.getContentResolver(),
+                    Settings.System.NOTIFICATION_SHOW_WIFI_SSID,
+                    ((CheckBoxPreference) preference).isChecked());
+            return true;
             }
         return super.onPreferenceTreeClick(preferenceScreen, preference);
     }

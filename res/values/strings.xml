@@ -652,7 +652,11 @@
      <!-- Notification status bar clock color -->
     <string name="expanded_clock_color_title">Notification Date(only) Color</string>
 
-     <string name="notification_show_wifi_ssid_title">Show Wifi Network Name In PullDown.</string>
-     <string name="notification_show_wifi_ssid_summary">Display The Name Of The Wifi Network You Are Connected To.</string>
+    <string name="notification_show_wifi_ssid_title">Show Wifi Network Name In PullDown.</string>
+    <string name="notification_show_wifi_ssid_summary">Display The Name Of The Wifi Network You Are Connected To.</string>
     
+     <!-- Lock screen see through -->
+    <string name="lockscreen_see_through_title">See through</string>
+    <string name="lockscreen_see_through_summary">Allows to see behind the lock screen. Custom image will disable this preference.</string>
+
  </resources>

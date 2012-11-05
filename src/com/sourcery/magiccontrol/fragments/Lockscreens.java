@@ -89,6 +89,7 @@ public class Lockscreens extends SettingsPreferenceFragment implements
     private static final String PREF_LOCKSCREEN_BATTERY = "lockscreen_battery";
     private static final String PREF_SHOW_LOCK_BEFORE_UNLOCK = "show_lock_before_unlock";
     private static final String PREF_LOCKSCREEN_AUTO_ROTATE = "lockscreen_auto_rotate";
+    public static final String KEY_SEE_TRHOUGH_PREF = "lockscreen_see_through";
 
     public static final int REQUEST_PICK_WALLPAPER = 199;
     public static final int REQUEST_PICK_CUSTOM_ICON = 200;
@@ -119,7 +120,7 @@ public class Lockscreens extends SettingsPreferenceFragment implements
     ListPreference mCalendarRange;
     CheckBoxPreference mLockscreenCalendarHideOngoing;
     CheckBoxPreference mLockscreenCalendarUseColors;
-    
+    private CheckBoxPreference mSeeThrough;
 
     
     private int currentIconIndex;
@@ -166,6 +167,10 @@ public class Lockscreens extends SettingsPreferenceFragment implements
 
         mLockscreenTextColor = (ColorPickerPreference) findPreference(PREF_LOCKSCREEN_TEXT_COLOR);
         mLockscreenTextColor.setOnPreferenceChangeListener(this);
+
+        mSeeThrough = (CheckBoxPreference) findPreference(KEY_SEE_TRHOUGH_PREF);
+        mSeeThrough.setChecked((Settings.System.getInt(getActivity().getApplicationContext().getContentResolver(),
+                 Settings.System.LOCKSCREEN_SEE_THROUGH, 0) == 1));
 
         mLockscreenWeather = (CheckBoxPreference) findPreference(PREF_LOCKSCREEN_WEATHER);
         mLockscreenWeather.setChecked(Settings.System.getBoolean(getActivity().getContentResolver(),
@@ -267,6 +272,11 @@ public class Lockscreens extends SettingsPreferenceFragment implements
                     Settings.System.VOLUME_MUSIC_CONTROLS,
                     ((CheckBoxPreference) preference).isChecked() ? 1 : 0);
             return true;
+       } else if (preference == mSeeThrough) {
+             int value = mSeeThrough.isChecked() ? 1 : 0;
+             Settings.System.putInt(getActivity().getApplicationContext().getContentResolver(),
+                     Settings.System.LOCKSCREEN_SEE_THROUGH, value);
+             return true;
        } else if (preference == mLockscreenWeather) {
 	    // _stop_ alarm or start service
             boolean check = ((CheckBoxPreference) preference).isChecked();

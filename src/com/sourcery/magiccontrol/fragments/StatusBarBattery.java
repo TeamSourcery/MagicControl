@@ -10,6 +10,7 @@ import android.preference.PreferenceFragment;
 import android.preference.PreferenceScreen;
 import android.provider.Settings;
 
+import com.sourcery.magiccontrol.SettingsPreferenceFragment;
 import com.sourcery.magiccontrol.R;
 
 import net.margaritov.preference.colorpicker.ColorPickerPreference;
@@ -51,10 +52,10 @@ public class StatusBarBattery extends PreferenceFragment implements
                 0))
                 + "");
 
-        mBatteryNotification = (CheckBoxPreference) findPreference(PREF_BATT_NOT);
-        mBatteryNotification.setChecked(Settings.System.getInt(
-                getActivity().getContentResolver(),
-                Settings.System.NOTIFICATION_BATTERY_DISPLAY, 0) == 1);
+      //  mBatteryNotification = (CheckBoxPreference) findPreference(PREF_BATT_NOT);
+    //    mBatteryNotification.setChecked(Settings.System.getInt(
+     //           getActivity().getContentResolver(),
+     //           Settings.System.NOTIFICATION_BATTERY_DISPLAY, 0) == 1);
 
         mBatteryBar = (ListPreference) findPreference(PREF_BATT_BAR);
         mBatteryBar.setOnPreferenceChangeListener(this);
@@ -105,16 +106,16 @@ public class StatusBarBattery extends PreferenceFragment implements
     @Override
     public boolean onPreferenceTreeClick(PreferenceScreen preferenceScreen,
             Preference preference) {
-        if (preference == mBatteryNotification) {
-            Settings.System.putInt(getActivity().getContentResolver(),
-                    Settings.System.NOTIFICATION_BATTERY_DISPLAY,
-                    ((CheckBoxPreference) preference).isChecked() ? 1 : 0);
-            return true;
+      //  if (preference == mBatteryNotification) {
+      //      Settings.System.putInt(getActivity().getContentResolver(),
+      //              Settings.System.NOTIFICATION_BATTERY_DISPLAY,
+      //              ((CheckBoxPreference) preference).isChecked() ? 1 : 0);
+       //     return true;
 
-        } else if (preference == mBatteryBarChargingAnimation) {
+         if (preference == mBatteryBarChargingAnimation) {
             Settings.System.putInt(getActivity().getContentResolver(),
                     Settings.System.STATUSBAR_BATTERY_BAR_ANIMATE,
-                    ((CheckBoxPreference) preference).isChecked() ? 1 : 0);
+                   ((CheckBoxPreference) preference).isChecked() ? 1 : 0);
             return true;
         }
         return super.onPreferenceTreeClick(preferenceScreen, preference);

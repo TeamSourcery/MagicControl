@@ -1,8 +1,6 @@
 
 package com.sourcery.magiccontrol.fragments;
 
-import java.util.ArrayList;
-
 import android.app.AlertDialog;
 import android.app.FragmentTransaction;
 import android.app.ListFragment;
@@ -10,7 +8,6 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.DialogInterface.OnMultiChoiceClickListener;
 import android.content.pm.PackageManager;
-import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.os.Bundle;
 import android.preference.CheckBoxPreference;
@@ -20,6 +17,7 @@ import android.preference.PreferenceGroup;
 import android.preference.Preference.OnPreferenceChangeListener;
 import android.preference.PreferenceScreen;
 import android.provider.Settings;
+import android.content.res.Configuration;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -35,38 +33,19 @@ import com.sourcery.magiccontrol.widgets.SeekBarPreference;
 import com.scheffsblend.smw.Preferences.ImageListPreference;
 import net.margaritov.preference.colorpicker.ColorPickerPreference;
 
+import java.util.ArrayList;
 
-public class StatusBarToggles extends SettingsPreferenceFragment implements OnPreferenceChangeListener {
+public class StatusBarToggles extends SettingsPreferenceFragment implements
+        OnPreferenceChangeListener {
 
     private static final String TAG = "TogglesLayout";
 
     private static final String PREF_ENABLE_TOGGLES = "enabled_toggles";
-    private static final String PREF_BRIGHTNESS_LOC = "brightness_location";
-    private static final String PREF_TOGGLES_STYLE = "toggle_style";
-    private static final String PREF_ALT_BUTTON_LAYOUT = "toggles_layout_preference";
-    private static final String PREF_TOGGLE_BTN_ENABLED_COLOR = "toggle_btn_enabled_color";
-    private static final String PREF_TOGGLE_BTN_DISABLED_COLOR = "toggle_btn_disabled_color";
-    private static final String PREF_TOGGLE_BTN_ALPHA = "toggle_btn_alpha";
-    private static final String PREF_TOGGLE_BTN_BACKGROUND = "toggle_btn_background";
-    private static final String PREF_TOGGLE_TEXT_COLOR = "toggle_text_color";
-    private static final String PREF_SETTINGS_BUTTON_BEHAVIOR = "settings_behavior";
-    private static final String PREF_TOGGLES_AUTOHIDE = "toggles_autohide";
-    private static final String PREF_HAPTIC_FEEDBACK_TOGGLES_ENABLED = "toggles_haptic_feedback";
+    private static final String PREF_TOGGLES_PER_ROW = "toggles_per_row";
 
     Preference mEnabledToggles;
     Preference mLayout;
-    ListPreference mBrightnessLocation;
-    ImageListPreference mTogglesLayout;
-    ListPreference mToggleStyle;
-    Preference mResetToggles;
-    SeekBarPreference mToggleBtnAlpha;
-    SeekBarPreference mBtnBackground;
-    ColorPickerPreference mBtnEnabledColor;
-    ColorPickerPreference mBtnDisabledColor;
-    ColorPickerPreference mToggleTextColor;
-    CheckBoxPreference mDefaultSettingsButtonBehavior;
-    CheckBoxPreference mTogglesAutoHide;
-    CheckBoxPreference mHapticFeedback;
+    ListPreference mTogglesPerRow;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -75,75 +54,28 @@ public class StatusBarToggles extends SettingsPreferenceFragment implements OnPr
         // Load the preferences from an XML resource
         addPreferencesFromResource(R.xml.prefs_statusbar_toggles);
 
-        mHapticFeedback = (CheckBoxPreference) findPreference(PREF_HAPTIC_FEEDBACK_TOGGLES_ENABLED);
-        mHapticFeedback.setChecked(Settings.System.getInt(getActivity().getContentResolver(),
-                Settings.System.HAPTIC_FEEDBACK_TOGGLES_ENABLED, 0) == 1);
-
         mEnabledToggles = findPreference(PREF_ENABLE_TOGGLES);
 
-        mBrightnessLocation = (ListPreference) findPreference(PREF_BRIGHTNESS_LOC);
-        mBrightnessLocation.setOnPreferenceChangeListener(this);
-        mBrightnessLocation.setValue(Integer.toString(Settings.System.getInt(getActivity()
-                .getContentResolver(), Settings.System.STATUSBAR_TOGGLES_BRIGHTNESS_LOC, 3)));
- 
+        mTogglesPerRow = (ListPreference) findPreference(PREF_TOGGLES_PER_ROW);
+        mTogglesPerRow.setOnPreferenceChangeListener(this);
+        mTogglesPerRow.setValue(Settings.System.getInt(getActivity().getContentResolver(),
+                Settings.System.QUICK_TOGGLES_PER_ROW, 3) + "");
+
         int mTabletui = Settings.System.getInt(mContext.getContentResolver(),
-                        Settings.System.TABLET_UI, 0);
- 
-        if (mTabletui == 1) {
-           ((PreferenceGroup) findPreference("advanced_cat")).removePreference(mBrightnessLocation);
-        }
-
-        mToggleStyle = (ListPreference) findPreference(PREF_TOGGLES_STYLE);
-        mToggleStyle.setOnPreferenceChangeListener(this);
-        mToggleStyle.setValue(Integer.toString(Settings.System.getInt(getActivity()
-                .getContentResolver(), Settings.System.STATUSBAR_TOGGLES_STYLE, 3)));
-
-        mTogglesLayout = (ImageListPreference) findPreference(PREF_ALT_BUTTON_LAYOUT);
-        mTogglesLayout.setOnPreferenceChangeListener(this);
-
-        mBtnEnabledColor = (ColorPickerPreference) findPreference(
-                PREF_TOGGLE_BTN_ENABLED_COLOR);
-        mBtnEnabledColor.setOnPreferenceChangeListener(this);
-
-        mBtnDisabledColor = (ColorPickerPreference) findPreference(
-                PREF_TOGGLE_BTN_DISABLED_COLOR);
-        mBtnDisabledColor.setOnPreferenceChangeListener(this);
-
-        float btnAlpha = Settings.System.getFloat(getActivity()
-                .getContentResolver(),
-                Settings.System.STATUSBAR_TOGGLES_ALPHA, 0.7f);
-        mToggleBtnAlpha = (SeekBarPreference) findPreference(PREF_TOGGLE_BTN_ALPHA);
-        mToggleBtnAlpha.setInitValue((int) (btnAlpha * 100));
-        mToggleBtnAlpha.setOnPreferenceChangeListener(this);
-
-        float btnBgAlpha = Settings.System.getFloat(getActivity()
-                .getContentResolver(),
-                Settings.System.STATUSBAR_TOGGLES_BACKGROUND, 0.0f);
-        mBtnBackground = (SeekBarPreference) findPreference(PREF_TOGGLE_BTN_BACKGROUND);
-        mBtnBackground.setInitValue((int) (btnBgAlpha * 100));
-        mBtnBackground.setOnPreferenceChangeListener(this);
-
-        mDefaultSettingsButtonBehavior = (CheckBoxPreference) findPreference(PREF_SETTINGS_BUTTON_BEHAVIOR);
-        mDefaultSettingsButtonBehavior.setChecked(Settings.System.getBoolean(mContext
-                .getContentResolver(), Settings.System.STATUSBAR_SETTINGS_BEHAVIOR, true));
-            if (mDefaultSettingsButtonBehavior.isChecked()) {
-                mDefaultSettingsButtonBehavior.setSummary(R.string.summary_settings_behavior_default);
-            } else {
-                mDefaultSettingsButtonBehavior.setSummary(R.string.summary_settings_behavior_reverse);
-            }
-
-        mTogglesAutoHide = (CheckBoxPreference) findPreference(PREF_TOGGLES_AUTOHIDE);
-        mTogglesAutoHide.setChecked(Settings.System.getBoolean(mContext
-                .getContentResolver(), Settings.System.STATUSBAR_TOGGLES_AUTOHIDE, false));
-
-        mToggleTextColor = (ColorPickerPreference) findPreference(
-                PREF_TOGGLE_TEXT_COLOR);
-        mToggleTextColor.setOnPreferenceChangeListener(this);
+                           Settings.System.TABLET_UI, 0);
 
         mLayout = findPreference("toggles");
 
-        mResetToggles = findPreference("reset_toggles");
+    }
 
+    @Override
+    public boolean onPreferenceChange(Preference preference, Object newValue) {
+        if (preference == mTogglesPerRow) {
+            int val = Integer.parseInt((String) newValue);
+            Settings.System.putInt(getActivity().getContentResolver(),
+                    Settings.System.QUICK_TOGGLES_PER_ROW, val);
+        }
+        return false;
     }
 
     @Override
@@ -193,112 +125,30 @@ public class StatusBarToggles extends SettingsPreferenceFragment implements OnPr
             d.show();
 
             return true;
-        } else if (preference == mHapticFeedback) {
-            Settings.System.putInt(getActivity().getContentResolver(),
-                    Settings.System.HAPTIC_FEEDBACK_TOGGLES_ENABLED,
-                    ((CheckBoxPreference) preference).isChecked() ? 1 : 0);
-            return true;
         } else if (preference == mLayout) {
             FragmentTransaction ft = getFragmentManager().beginTransaction();
             TogglesLayout fragment = new TogglesLayout();
             ft.addToBackStack("toggles_layout");
             ft.replace(this.getId(), fragment);
             ft.commit();
-
-        } else if (preference == mResetToggles) {
-            Settings.System.putString(getActivity().getContentResolver(),
-                    Settings.System.STATUSBAR_TOGGLES, "WIFI");
-            return true;
-        } else if (preference == mTogglesAutoHide) {
-
-            Settings.System.putBoolean(mContext.getContentResolver(),
-                    Settings.System.STATUSBAR_TOGGLES_AUTOHIDE,
-                    ((CheckBoxPreference) preference).isChecked() ? true : false);
-            return true;
-        } else if (preference == mDefaultSettingsButtonBehavior) {
-
-            Settings.System.putBoolean(mContext.getContentResolver(),
-                    Settings.System.STATUSBAR_SETTINGS_BEHAVIOR,
-                    ((CheckBoxPreference) preference).isChecked() ? true : false);
-            if (mDefaultSettingsButtonBehavior.isChecked()) {
-                mDefaultSettingsButtonBehavior.setSummary(R.string.summary_settings_behavior_default);
-            } else {
-                mDefaultSettingsButtonBehavior.setSummary(R.string.summary_settings_behavior_reverse);
-            }
-            return true;
         }
         return super.onPreferenceTreeClick(preferenceScreen, preference);
 
     }
 
-    @Override
-    public boolean onPreferenceChange(Preference preference, Object newValue) {
-        boolean result = false;
-
-        if (preference == mBrightnessLocation) {
-            int val = Integer.parseInt((String) newValue);
-            result = Settings.System.putInt(getActivity().getContentResolver(),
-                    Settings.System.STATUSBAR_TOGGLES_BRIGHTNESS_LOC, val);
-        } else if (preference == mToggleStyle) {
-            int val = Integer.parseInt((String) newValue);
-            result = Settings.System.putInt(getActivity().getContentResolver(),
-                    Settings.System.STATUSBAR_TOGGLES_STYLE, val);
-        } else if (preference == mTogglesLayout) {
-            int val = Integer.parseInt((String) newValue);
-            Settings.System.putInt(getActivity().getContentResolver(),
-                    Settings.System.STATUSBAR_TOGGLES_STYLE, val == 0 ? 3 : 2);
-            result = Settings.System.putInt(getActivity().getContentResolver(),
-                    Settings.System.STATUSBAR_TOGGLES_USE_BUTTONS,
-                    val);
-        } else if (preference == mBtnEnabledColor) {
-            String hex = ColorPickerPreference.convertToARGB(
-                    Integer.valueOf(String.valueOf(newValue)));
-            preference.setSummary(hex);
-
-            int intHex = ColorPickerPreference.convertToColorInt(hex);
-            result = Settings.System.putInt(getActivity().getContentResolver(),
-                    Settings.System.STATUSBAR_TOGGLES_ENABLED_COLOR, intHex);
-        } else if (preference == mBtnDisabledColor) {
-            String hex = ColorPickerPreference.convertToARGB(
-                    Integer.valueOf(String.valueOf(newValue)));
-            preference.setSummary(hex);
-
-            int intHex = ColorPickerPreference.convertToColorInt(hex);
-            result = Settings.System.putInt(getActivity().getContentResolver(),
-                    Settings.System.STATUSBAR_TOGGLES_DISABLED_COLOR, intHex);
-        } else if (preference == mToggleTextColor) {
-            String hex = ColorPickerPreference.convertToARGB(
-                    Integer.valueOf(String.valueOf(newValue)));
-            preference.setSummary(hex);
-
-            int intHex = ColorPickerPreference.convertToColorInt(hex);
-            result = Settings.System.putInt(getActivity().getContentResolver(),
-                    Settings.System.STATUSBAR_TOGGLES_TEXT_COLOR, intHex);
-        } else if (preference == mToggleBtnAlpha) {
-            float val = Float.parseFloat((String) newValue);
-            result = Settings.System.putFloat(getActivity().getContentResolver(),
-                    Settings.System.STATUSBAR_TOGGLES_ALPHA, val / 100);
-        } else if (preference == mBtnBackground) {
-            float val = Float.parseFloat((String) newValue);
-            result = Settings.System.putFloat(getActivity().getContentResolver(),
-                    Settings.System.STATUSBAR_TOGGLES_BACKGROUND, val / 100);
-        }
-        return result;
-    }
-
-    public static void addToggle(Context context, String key) {
+    public void addToggle(Context context, String key) {
         ArrayList<String> enabledToggles = getTogglesStringArray(context);
         enabledToggles.add(key);
         setTogglesFromStringArray(context, enabledToggles);
     }
 
-    public static void removeToggle(Context context, String key) {
+    public void removeToggle(Context context, String key) {
         ArrayList<String> enabledToggles = getTogglesStringArray(context);
         enabledToggles.remove(key);
         setTogglesFromStringArray(context, enabledToggles);
     }
 
-    public static class TogglesLayout extends ListFragment {
+    public class TogglesLayout extends ListFragment {
 
         private ListView mButtonList;
         private ButtonAdapter mButtonAdapter;
@@ -448,7 +298,7 @@ public class StatusBarToggles extends SettingsPreferenceFragment implements OnPr
         }
     }
 
-    public static void setTogglesFromStringArray(Context c, ArrayList<String> newGoodies) {
+    public void setTogglesFromStringArray(Context c, ArrayList<String> newGoodies) {
         String newToggles = "";
 
         for (String s : newGoodies)
@@ -460,30 +310,28 @@ public class StatusBarToggles extends SettingsPreferenceFragment implements OnPr
         } catch (StringIndexOutOfBoundsException e) {
         }
 
-        Settings.System.putString(c.getContentResolver(), Settings.System.STATUSBAR_TOGGLES,
+        Settings.System.putString(c.getContentResolver(), Settings.System.QUICK_TOGGLES,
                 newToggles);
     }
 
-    public static ArrayList<String> getTogglesStringArray(Context c) {
+    public ArrayList<String> getTogglesStringArray(Context c) {
         String clusterfuck = Settings.System.getString(c.getContentResolver(),
-                Settings.System.STATUSBAR_TOGGLES);
+                Settings.System.QUICK_TOGGLES);
 
         if (clusterfuck == null) {
             Log.e(TAG, "clusterfuck was null");
             // return null;
-            clusterfuck = "WIFI|BT|GPS|ROTATE|VIBRATE|SYNC|SILENT";
+            clusterfuck = getResources().getString(R.string.toggle_default_entries);
         }
 
         String[] togglesStringArray = clusterfuck.split("\\|");
         ArrayList<String> iloveyou = new ArrayList<String>();
         for (String s : togglesStringArray) {
             if(s != null && s != "") {
-                 Log.e(TAG, "adding: " + s);
-                 iloveyou.add(s);
+                Log.e(TAG, "adding: " + s);
+                iloveyou.add(s);
             }
         }
-
         return iloveyou;
     }
 }
-

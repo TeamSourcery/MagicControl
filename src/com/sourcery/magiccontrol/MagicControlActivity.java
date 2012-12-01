@@ -34,7 +34,6 @@ import android.widget.ListAdapter;
 import android.widget.Switch;
 import android.widget.TextView;
 
-import com.sourcery.magiccontrol.service.BootService;
 
 public class MagicControlActivity extends PreferenceActivity implements ButtonBarHandler {
 
@@ -54,13 +53,12 @@ public class MagicControlActivity extends PreferenceActivity implements ButtonBa
 
     Locale defaultLocale;
 
-    boolean mTablet;
     protected boolean isShortcut;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
 
-        mTablet = Settings.System.getBoolean(getContentResolver(), Settings.System.TABLET_UI, false);
+        
         hasNotificationLed = getResources().getBoolean(R.bool.has_notification_led);
         defaultLocale = Locale.getDefault();
         Log.i(TAG, "defualt locale: " + defaultLocale.getDisplayName());
@@ -89,10 +87,7 @@ public class MagicControlActivity extends PreferenceActivity implements ButtonBa
             }
         }
 
-         if (!BootService.servicesStarted) {
- 	     getApplicationContext().startService(
- 	         new Intent(getApplicationContext(), BootService.class));
-         }
+        
     }
 
     @Override

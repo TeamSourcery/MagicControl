@@ -1,3 +1,4 @@
+
 package com.sourcery.magiccontrol.util;
 
 import java.io.BufferedReader;
@@ -59,9 +60,10 @@ public class Helpers {
     public static boolean isNetworkAvailable(final Context c) {
         boolean state = false;
         if (c != null) {
-            ConnectivityManager cm = (ConnectivityManager) c.getSystemService(Context.CONNECTIVITY_SERVICE);
+            ConnectivityManager cm = (ConnectivityManager) c
+                    .getSystemService(Context.CONNECTIVITY_SERVICE);
             NetworkInfo netInfo = cm.getActiveNetworkInfo();
-            if(netInfo != null && netInfo.isConnected()) {
+            if (netInfo != null && netInfo.isConnected()) {
                 Log.i(TAG, "The device currently has data connectivity");
                 state = true;
             } else {
@@ -110,16 +112,14 @@ public class Helpers {
                 }
             }
             br.close();
-        } 
-        catch (FileNotFoundException e) {
+        } catch (FileNotFoundException e) {
             Log.d(TAG, "/proc/mounts does not exist");
-        } 
-        catch (IOException e) {
+        } catch (IOException e) {
             Log.d(TAG, "Error reading /proc/mounts");
         }
         return null;
     }
-    
+
     public static boolean getMount(final String mount)
     {
         final CMDProcessor cmd = new CMDProcessor();
@@ -130,54 +130,100 @@ public class Helpers {
             final String device = mounts[0];
             final String path = mounts[1];
             final String point = mounts[2];
-            if (cmd.su.runWaitFor("mount -o " + mount + ",remount -t " + point + " " + device + " " + path).success())
+            if (cmd.su.runWaitFor(
+                    "mount -o " + mount + ",remount -t " + point + " " + device + " " + path)
+                    .success())
             {
                 return true;
             }
         }
-        return ( cmd.su.runWaitFor("busybox mount -o remount," + mount + " /system").success() );
+        return (cmd.su.runWaitFor("busybox mount -o remount," + mount + " /system").success());
     }
-    
-    public static String getFile(final String filename) {
-        String s = "";
-        final File f = new File(filename);
 
-        if (f.exists() && f.canRead()) {
+    public static String readOneLine(String fname) {
+        BufferedReader br;
+        String line = null;
+        try {
+            br = new BufferedReader(new FileReader(fname), 512);
             try {
-                final BufferedReader br = new BufferedReader(new FileReader(f),
-                        256);
-                String buffer = null;
-                while ((buffer = br.readLine()) != null) {
-                    s += buffer + "\n";
-                }
-
+                line = br.readLine();
+            } finally {
                 br.close();
-            } catch (final Exception e) {
-                Log.e(TAG, "Error reading file: " + filename, e);
-                s = null;
+            }
+        } catch (Exception e) {
+            Log.e(TAG, "IO Exception when reading sys file", e);
+            // attempt to do magic!
+            return readFileViaShell(fname, true);
+        }
+        return line;
+    }
+
+    public static String readFileViaShell(String filePath, boolean useSu) {
+        CMDProcessor.CommandResult cr = null;
+        if (useSu) {
+            cr = new CMDProcessor().su.runWaitFor("cat " + filePath);
+        } else {
+            cr = new CMDProcessor().sh.runWaitFor("cat " + filePath);
+        }
+        if (cr.success())
+            return cr.stdout;
+        return null;
+    }
+
+    public static boolean writeOneLine(String fname, String value) {
+        try {
+            FileWriter fw = new FileWriter(fname);
+            try {
+                fw.write(value);
+            } finally {
+                fw.close();
+            }
+        } catch (IOException e) {
+            String Error = "Error writing to " + fname + ". Exception: ";
+            Log.e(TAG, Error, e);
+            return false;
+        }
+        return true;
+    }
+
+    public static String[] getAvailableIOSchedulers() {
+        String[] schedulers = null;
+        String[] aux = readStringArray("/sys/block/mmcblk0/queue/scheduler");
+        if (aux != null) {
+            schedulers = new String[aux.length];
+            for (int i = 0; i < aux.length; i++) {
+                if (aux[i].charAt(0) == '[') {
+                    schedulers[i] = aux[i].substring(1, aux[i].length() - 1);
+                } else {
+                    schedulers[i] = aux[i];
+                }
             }
         }
-        return s;
+        return schedulers;
     }
-    
-    public static void writeNewFile(String filePath, String fileContents) {
-        File f = new File(filePath);
-        if (f.exists()) {
-            f.delete();
-        }
 
-        try{
-            // Create file 
-            FileWriter fstream = new FileWriter(f);
-            BufferedWriter out = new BufferedWriter(fstream);
-            out.write(fileContents);
-            //Close the output stream
-            out.close();
-        }catch (Exception e){
-            Log.d( TAG, "Failed to create " + filePath + " File contents: " + fileContents);  
+    private static String[] readStringArray(String fname) {
+        String line = readOneLine(fname);
+        if (line != null) {
+            return line.split(" ");
         }
+        return null;
     }
-    
+
+    public static String getIOScheduler() {
+        String scheduler = null;
+        String[] schedulers = readStringArray("/sys/block/mmcblk0/queue/scheduler");
+        if (schedulers != null) {
+            for (String s : schedulers) {
+                if (s.charAt(0) == '[') {
+                    scheduler = s.substring(1, s.length() - 1);
+                    break;
+                }
+            }
+        }
+        return scheduler;
+    }
+
     /**
      * Long toast message
      * 
@@ -225,24 +271,24 @@ public class Helpers {
         Date now = new Date();
         java.text.DateFormat dateFormat = android.text.format.DateFormat.getDateFormat(context);
         java.text.DateFormat timeFormat = android.text.format.DateFormat.getTimeFormat(context);
-        if(dateFormat != null && timeFormat != null) {
+        if (dateFormat != null && timeFormat != null) {
             timestamp = dateFormat.format(now) + " " + timeFormat.format(now);
         }
         return timestamp;
     }
-    
+
     public static boolean isPackageInstalled(final String packageName,
             final PackageManager pm)
     {
         String mVersion;
         try {
-            mVersion = pm.getPackageInfo(packageName, 0).versionName;           
+            mVersion = pm.getPackageInfo(packageName, 0).versionName;
             if (mVersion.equals(null)) {
                 return false;
             }
         } catch (NameNotFoundException e) {
             return false;
-        }       
+        }
         return true;
     }
 

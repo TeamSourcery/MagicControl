@@ -27,11 +27,7 @@
         android:title="@string/general_ui"
         android:summary="@string/header_summary_general_ui" />
     
-    <header
-        android:id="@+id/transparency"
-	android:fragment="com.sourcery.magiccontrol.fragments.StatusBar"
-        android:title="Status Bar Mods"
-        android:summary="Mods pertaining to status bar." />
+    
 
     <header
         android:id="@+id/navbar"
@@ -43,11 +39,7 @@
         android:title="@string/nav_bar"
         android:summary="@string/header_summary_navigation_bar" />
 
-     <header
-        android:id="@+id/power_menu"
-        android:fragment="com.sourcery.magiccontrol.fragments.PowerMenu"
-        android:title="@string/power_menu"
-        android:summary="@string/header_summary_power_menu" />
+     
 
     <header
        android:title="@string/toggles_layout" />
@@ -58,12 +50,7 @@
         android:summary="@string/header_summary_toggles"
         android:title="@string/toggles_layout" />
 
-     <header
-        android:id="@+id/power_widgets"
-        android:fragment="com.sourcery.magiccontrol.fragments.PowerWidget"
-        android:summary="@string/power_widget_title"
-        android:title="@string/toggles_layout" />
-
+     
 
     <header android:title="@string/lockscreen_options" />
 

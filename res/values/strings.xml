@@ -720,5 +720,9 @@
     <string name="direction_west">W</string>
     <string name="direction_north_west">NW</string>
 
+    <string name="lockscreen_all_widgets_title">Allow All Widgets on Lockscreen</string>
+    <string name="lockscreen_all_widgets_summary">Warning** Some widgets are not intended to be used
+ on the lock screen, Security could be at risk! The widget maker and Team Sourcery are not responsible for your choice of lock screen widgets.</string>
+
 
 </resources>

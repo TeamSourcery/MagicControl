@@ -65,8 +65,9 @@ public class Lockscreens extends SettingsPreferenceFragment implements OnPrefere
 
     private static final String PREF_VOLUME_ROCKER_WAKE = "volume_rocker_wake";
     private static final String PREF_VOLUME_MUSIC = "volume_music_controls";
-    private static final String PREF_QUICK_UNLOCK = "lockscreen_quick_unlock_control";
+   // private static final String PREF_QUICK_UNLOCK = "lockscreen_quick_unlock_control";
     private static final String PREF_LOCKSCREEN_AUTO_ROTATE = "lockscreen_auto_rotate";
+    private static final String PREF_LOCKSCREEN_ALL_WIDGETS = "lockscreen_all_widgets";
     private static final String PREF_LOCKSCREEN_BATTERY = "lockscreen_battery";
     private static final String PREF_LOCKSCREEN_TEXT_COLOR = "lockscreen_text_color";
 
@@ -82,10 +83,11 @@ public class Lockscreens extends SettingsPreferenceFragment implements OnPrefere
 
     CheckBoxPreference mVolumeMusic;
     CheckBoxPreference mVolumeRockerWake;
-    CheckBoxPreference mQuickUnlock;
+   // CheckBoxPreference mQuickUnlock;
     CheckBoxPreference mLockscreenBattery;
     ColorPickerPreference mLockscreenTextColor;
     CheckBoxPreference mLockscreenAutoRotate;
+    CheckBoxPreference mLockscreenAllWidgets;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -103,12 +105,16 @@ public class Lockscreens extends SettingsPreferenceFragment implements OnPrefere
         mVolumeMusic.setChecked(Settings.System.getBoolean(mContext.getContentResolver(),
                 Settings.System.VOLUME_MUSIC_CONTROLS, false));
 
-        mQuickUnlock = (CheckBoxPreference) findPreference(PREF_QUICK_UNLOCK);
-        mQuickUnlock.setChecked(Settings.System.getBoolean(mContext.getContentResolver(), Settings.System.LOCKSCREEN_QUICK_UNLOCK_CONTROL, false));
+    //    mQuickUnlock = (CheckBoxPreference) findPreference(PREF_QUICK_UNLOCK);
+     //   mQuickUnlock.setChecked(Settings.System.getBoolean(mContext.getContentResolver(), Settings.System.LOCKSCREEN_QUICK_UNLOCK_CONTROL, false));
 
         mLockscreenAutoRotate = (CheckBoxPreference)findPreference(PREF_LOCKSCREEN_AUTO_ROTATE);
         mLockscreenAutoRotate.setChecked(Settings.System.getBoolean(mContext
                 .getContentResolver(), Settings.System.LOCKSCREEN_AUTO_ROTATE, false));
+
+        mLockscreenAllWidgets = (CheckBoxPreference)findPreference(PREF_LOCKSCREEN_ALL_WIDGETS);
+        mLockscreenAllWidgets.setChecked(Settings.System.getBoolean(getActivity().getContentResolver(),
+                Settings.System.LOCKSCREEN_ALL_WIDGETS, false));
 
         mLockscreenBattery = (CheckBoxPreference)findPreference(PREF_LOCKSCREEN_BATTERY);
         mLockscreenBattery.setChecked(Settings.System.getBoolean(getActivity().getContentResolver(),
@@ -140,9 +146,14 @@ public class Lockscreens extends SettingsPreferenceFragment implements OnPrefere
                     Settings.System.VOLUME_MUSIC_CONTROLS,
                     ((CheckBoxPreference) preference).isChecked());
             return true;
-        } else if (preference == mQuickUnlock) {
+      //  } else if (preference == mQuickUnlock) {
+        //    Settings.System.putBoolean(mContext.getContentResolver(),
+       //             Settings.System.LOCKSCREEN_QUICK_UNLOCK_CONTROL,
+       //             ((CheckBoxPreference) preference).isChecked());
+       //     return true;
+         } else if (preference == mLockscreenAllWidgets) {
             Settings.System.putBoolean(mContext.getContentResolver(),
-                    Settings.System.LOCKSCREEN_QUICK_UNLOCK_CONTROL,
+                    Settings.System.LOCKSCREEN_ALL_WIDGETS,
                     ((CheckBoxPreference) preference).isChecked());
             return true;
         } else if (preference == mLockscreenWallpaper) {

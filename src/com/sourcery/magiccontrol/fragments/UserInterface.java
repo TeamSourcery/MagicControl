@@ -1,17 +1,26 @@
 
 package com.sourcery.magiccontrol.fragments;
 
+import java.io.File;
+import java.util.ArrayList;
+import java.util.Random;
+
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.res.Resources;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.os.Handler;
 import android.preference.CheckBoxPreference;
+import android.preference.ListPreference;
 import android.preference.Preference;
 import android.preference.PreferenceActivity;
 import android.preference.PreferenceGroup;
 import android.preference.PreferenceScreen;
+import android.preference.Preference.OnPreferenceChangeListener;
 import android.provider.Settings;
 import android.text.Spannable;
 import android.view.LayoutInflater;
@@ -19,6 +28,7 @@ import android.widget.EditText;
 
 import com.sourcery.magiccontrol.SettingsPreferenceFragment;
 import com.sourcery.magiccontrol.R;
+import com.sourcery.magiccontrol.util.CMDProcessor;
 import com.sourcery.magiccontrol.util.Helpers;
 
 public class UserInterface extends SettingsPreferenceFragment {
@@ -32,6 +42,7 @@ public class UserInterface extends SettingsPreferenceFragment {
     private static final String PREF_VIBRATE_NOTIF_EXPAND = "vibrate_notif_expand";
     private static final String PREF_RECENT_KILL_ALL = "recent_kill_all";
     private static final String PREF_RAM_USAGE_BAR = "ram_usage_bar";
+    private static final String PREF_ENABLE_VOLUME_OPTIONS = "enable_volume_options";
 
     CheckBoxPreference mAllow180Rotation;
     CheckBoxPreference mStatusBarNotifCount;
@@ -40,6 +51,11 @@ public class UserInterface extends SettingsPreferenceFragment {
     CheckBoxPreference mVibrateOnExpand;
     CheckBoxPreference mRecentKillAll;
     CheckBoxPreference mRamBar;
+    SharedPreferences prefs;
+    CheckBoxPreference mEnableVolumeOptions;
+    CheckBoxPreference mDisableBootAnimation;
+
+    Random randomGenerator = new Random();
 
     String mCustomLabelText = null;
 
@@ -49,6 +65,11 @@ public class UserInterface extends SettingsPreferenceFragment {
         setTitle(R.string.title_ui);
         // Load the preferences from an XML resource
         addPreferencesFromResource(R.xml.prefs_ui);
+
+        mEnableVolumeOptions = (CheckBoxPreference) findPreference(PREF_ENABLE_VOLUME_OPTIONS);
+        mEnableVolumeOptions.setChecked(Settings.System.getBoolean(getActivity()
+                .getContentResolver(),
+                Settings.System.ENABLE_VOLUME_OPTIONS, false));
 
         mAllow180Rotation = (CheckBoxPreference) findPreference(PREF_180);
         mAllow180Rotation.setChecked(Settings.System.getInt(mContext
@@ -78,12 +99,27 @@ public class UserInterface extends SettingsPreferenceFragment {
         mRamBar = (CheckBoxPreference) findPreference(PREF_RAM_USAGE_BAR);
         mRamBar.setChecked(Settings.System.getBoolean(getActivity  ().getContentResolver(),
                 Settings.System.RAM_USAGE_BAR, false));
+
+         mDisableBootAnimation = (CheckBoxPreference) findPreference("disable_bootanimation");
+         mDisableBootAnimation.setChecked(!new File("/system/media/bootanimation.zip").exists());
+                 if (mDisableBootAnimation.isChecked()) {
+                     Resources res = mContext.getResources();
+                     String[] insults = res.getStringArray(R.array.disable_bootanimation_insults);
+                     int randomInt = randomGenerator.nextInt(insults.length);
+                     mDisableBootAnimation.setSummary(insults[randomInt]);
+                 }
     }
 
     @Override
     public boolean onPreferenceTreeClick(PreferenceScreen preferenceScreen,
             final Preference preference) {
-        if (preference == mAllow180Rotation) {
+       if (preference == mEnableVolumeOptions) {
+
+           boolean checked = ((CheckBoxPreference) preference).isChecked();
+           Settings.System.putBoolean(getActivity().getContentResolver(),
+                    Settings.System.ENABLE_VOLUME_OPTIONS, checked);
+           return true;
+       } else if (preference == mAllow180Rotation) {
             boolean checked = ((CheckBoxPreference) preference).isChecked();
             Settings.System.putInt(mContext.getContentResolver(),
                     Settings.System.ACCELEROMETER_ROTATION_ANGLES, checked ? (1 | 2 | 4 | 8) : (1 | 2 | 8 ));
@@ -143,7 +179,26 @@ public class UserInterface extends SettingsPreferenceFragment {
             Settings.System.putBoolean(getActivity().getContentResolver(),
                     Settings.System.RAM_USAGE_BAR, checked ? true : false);
             return true;
-        }
+        } else if (preference == mDisableBootAnimation) {
+            boolean checked = ((CheckBoxPreference) preference).isChecked();
+            if (checked) {
+                Helpers.getMount("rw");
+                new CMDProcessor().su
+                        .runWaitFor("mv /system/media/bootanimation.zip /system/media/bootanimation.sourcery");
+                Helpers.getMount("ro");
+                Resources res = mContext.getResources();
+                String[] insults = res.getStringArray(R.array.disable_bootanimation_insults);
+                int randomInt = randomGenerator.nextInt(insults.length);
+                preference.setSummary(insults[randomInt]);
+            } else {
+                Helpers.getMount("rw");
+                new CMDProcessor().su
+                        .runWaitFor("mv /system/media/bootanimation.sourcery /system/media/bootanimation.zip");
+                Helpers.getMount("ro");
+                preference.setSummary("");
+            }
+            return true;
+            }
         return super.onPreferenceTreeClick(preferenceScreen, preference);
     }
 

@@ -42,17 +42,23 @@
                 android:key="lockscreen_auto_rotate"
                 android:title="@string/lockscreen_auto_rotate_title"
                 android:summary="@string/lockscreen_auto_rotate_summary" />
+             
+            <CheckBoxPreference
+                android:key="lockscreen_all_widgets"
+                android:title="@string/lockscreen_all_widgets_title"
+                android:summary="@string/lockscreen_all_widgets_summary" />
+
 
     </PreferenceCategory>
 
-    <PreferenceCategory
+  <!--   <PreferenceCategory
             android:key="security"
             android:title="@string/lockscreen_security_cat">
 
         <CheckBoxPreference
             android:key="lockscreen_quick_unlock_control"
             android:title="@string/lockscreen_quick_unlock_control_title"
-            android:summary="@string/lockscreen_quick_unlock_control_summary" />
+            android:summary="@string/lockscreen_quick_unlock_control_summary" /> 
 
-    </PreferenceCategory>
+    </PreferenceCategory> -->
 </PreferenceScreen>

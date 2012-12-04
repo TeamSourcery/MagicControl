@@ -39,7 +39,15 @@
         android:title="@string/nav_bar"
         android:summary="@string/header_summary_navigation_bar" />
 
-     
+     <header
+       android:title="Power Menu Options" />
+
+
+      <header
+        android:id="@+id/power_menu"
+        android:fragment="com.sourcery.magiccontrol.fragments.PowerMenu"
+        android:title="@string/power_menu"
+	android:summary="@string/header_summary_power_menu" />
 
     <header
        android:title="@string/toggles_layout" />

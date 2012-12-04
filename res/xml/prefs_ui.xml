@@ -63,6 +63,15 @@
             android:summary="@string/alt_resolver_summary"
             android:defaultValue="false" />
 
+         <CheckBoxPreference
+	    android:key="disable_bootanimation"	
+            android:title="@string/disable_bootanimation_title" />
+
+         
+           <CheckBoxPreference
+	    android:key="enable_volume_options"
+	    android:title="@string/enable_volume_options" />
+
     </PreferenceCategory>
 
 </PreferenceScreen>

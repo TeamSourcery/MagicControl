@@ -36,10 +36,13 @@ import com.sourcery.magiccontrol.SettingsPreferenceFragment;
 import com.sourcery.magiccontrol.R;
 import com.sourcery.magiccontrol.widgets.TouchInterceptor;
 import com.sourcery.magiccontrol.widgets.SeekBarPreference;
+import com.sourcery.magiccontrol.util.Helpers;
 import com.scheffsblend.smw.Preferences.ImageListPreference;
 import net.margaritov.preference.colorpicker.ColorPickerPreference;
 
+import java.util.Arrays;
 import java.util.ArrayList;
+import java.util.List;
 
 public class StatusBarToggles extends SettingsPreferenceFragment implements
         OnPreferenceChangeListener {
@@ -49,13 +52,19 @@ public class StatusBarToggles extends SettingsPreferenceFragment implements
     private static final String PREF_ENABLE_TOGGLES = "enabled_toggles";
     private static final String PREF_TOGGLES_PER_ROW = "toggles_per_row";
     private static final String PREF_TOGGLE_FAV_CONTACT = "toggle_fav_contact";
+    private static final String PREF_TOGGLE_FAV_CONTACTTWO = "toggle_fav_contacttwo";
+    private static final String PREF_TOGGLE_FAV_CONTACTTHREE = "toggle_fav_contactthree";
 
     private final int PICK_CONTACT = 1;
+    private final int PICK_CONTACTTWO = 2;
+    private final int PICK_CONTACTTHREE = 3;
 
     Preference mEnabledToggles;
     Preference mLayout;
     ListPreference mTogglesPerRow;
     Preference mFavContact;
+    Preference mFavContactTwo;
+    Preference mFavContactThree;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -73,7 +82,37 @@ public class StatusBarToggles extends SettingsPreferenceFragment implements
         mLayout = findPreference("toggles");
 
         mFavContact = findPreference(PREF_TOGGLE_FAV_CONTACT);
-    }
+        mFavContactTwo = findPreference(PREF_TOGGLE_FAV_CONTACTTWO);
+        mFavContactThree = findPreference(PREF_TOGGLE_FAV_CONTACTTHREE);
+
+        final String[] entries = getResources().getStringArray(R.array.available_toggles_entries);
+
+        List<String> allToggles = Arrays.asList(entries);
+
+        if (allToggles.contains("FAVCONTACT")) {
+            ArrayList<String> enabledToggles = getTogglesStringArray(getActivity());
+            mFavContact.setEnabled(enabledToggles.contains("FAVCONTACT"));
+        }
+        else {
+            getPreferenceScreen().removePreference(mFavContact);
+        }
+ 
+        if (allToggles.contains("FAVCONTACTTWO")) {
+            ArrayList<String> enabledToggles = getTogglesStringArray(getActivity());
+            mFavContactTwo.setEnabled(enabledToggles.contains("FAVCONTACTTWO"));
+        }
+        else {
+            getPreferenceScreen().removePreference(mFavContactTwo);
+        }
+
+        if (allToggles.contains("FAVCONTACTTHREE")) {
+            ArrayList<String> enabledToggles = getTogglesStringArray(getActivity());
+            mFavContactThree.setEnabled(enabledToggles.contains("FAVCONTACTTHREE"));
+        }
+        else {
+            getPreferenceScreen().removePreference(mFavContactThree);
+        }
+      }
 
     @Override
     public boolean onPreferenceChange(Preference preference, Object newValue) {
@@ -124,6 +163,16 @@ public class StatusBarToggles extends SettingsPreferenceFragment implements
                         addToggle(getActivity(), toggleKey);
                     else
                         removeToggle(getActivity(), toggleKey);
+
+                    if (toggleKey.equals("FAVCONTACT")) 
+                        mFavContact.setEnabled(isChecked);
+
+                    if (toggleKey.equals("FAVCONTACTTWO")) 
+                        mFavContactTwo.setEnabled(isChecked);
+
+                    if (toggleKey.equals("FAVCONTACTTHREE")) 
+                        mFavContactThree.setEnabled(isChecked);
+                     
                 }
             });
 
@@ -142,7 +191,14 @@ public class StatusBarToggles extends SettingsPreferenceFragment implements
         else if (preference == mFavContact) {
             Intent intent = new Intent(Intent.ACTION_PICK, ContactsContract.Contacts.CONTENT_URI);
             startActivityForResult(intent, PICK_CONTACT);
-            Log.e(TAG, "PICK_CONTACT");
+        }
+        else if (preference == mFavContactTwo) {
+            Intent intent = new Intent(Intent.ACTION_PICK, ContactsContract.Contacts.CONTENT_URI);
+            startActivityForResult(intent, PICK_CONTACTTWO);
+        }
+        else if (preference == mFavContactThree) {
+            Intent intent = new Intent(Intent.ACTION_PICK, ContactsContract.Contacts.CONTENT_URI);
+            startActivityForResult(intent, PICK_CONTACTTHREE);
         }
         return super.onPreferenceTreeClick(preferenceScreen, preference);
 
@@ -167,11 +223,59 @@ public class StatusBarToggles extends SettingsPreferenceFragment implements
                     } finally {
                         cursor.close();
                     }
+                  Helpers.restartSystemUI();
+                }
+            }
+          super.onActivityResult(requestCode, resultCode, data);
+        }
+
+   if (resultCode == Activity.RESULT_OK) {
+            if (requestCode == PICK_CONTACTTWO) {
+                Uri contactData = data.getData();
+                String[] projection = new String[] {ContactsContract.Contacts.LOOKUP_KEY};
+                String selection = ContactsContract.Contacts.DISPLAY_NAME + " IS NOT NULL";
+                CursorLoader cursorLoader =  new CursorLoader(getActivity().getBaseContext(), contactData, projection, selection, null, null);
+                Cursor cursor = cursorLoader.loadInBackground();
+                if (cursor != null) {
+                    try {
+                        if (cursor.moveToFirst()) {
+                            String lookup_key = cursor.getString(cursor.getColumnIndex(ContactsContract.Contacts.LOOKUP_KEY));
+                            Settings.System.putString(getActivity().getContentResolver(),
+                            Settings.System.QUICK_TOGGLE_FAV_CONTACTTWO, lookup_key);
+                        }
+                    } finally {
+                        cursor.close();
+                    }
+                  Helpers.restartSystemUI();
+                }
+            }
+           super.onActivityResult(requestCode, resultCode, data);
+       }
+       
+    if (resultCode == Activity.RESULT_OK) {
+            if (requestCode == PICK_CONTACTTHREE) {
+                Uri contactData = data.getData();
+                String[] projection = new String[] {ContactsContract.Contacts.LOOKUP_KEY};
+                String selection = ContactsContract.Contacts.DISPLAY_NAME + " IS NOT NULL";
+                CursorLoader cursorLoader =  new CursorLoader(getActivity().getBaseContext(), contactData, projection, selection, null, null);
+                Cursor cursor = cursorLoader.loadInBackground();
+                if (cursor != null) {
+                    try {
+                        if (cursor.moveToFirst()) {
+                            String lookup_key = cursor.getString(cursor.getColumnIndex(ContactsContract.Contacts.LOOKUP_KEY));
+                            Settings.System.putString(getActivity().getContentResolver(),
+                            Settings.System.QUICK_TOGGLE_FAV_CONTACTTHREE, lookup_key);
+                        }
+                    } finally {
+                        cursor.close();
+                    }
+                  Helpers.restartSystemUI();
                 }
             }
         }
         super.onActivityResult(requestCode, resultCode, data);
     }
+
 
     public void addToggle(Context context, String key) {
         ArrayList<String> enabledToggles = getTogglesStringArray(context);

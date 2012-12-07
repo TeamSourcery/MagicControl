@@ -66,6 +66,8 @@
     <string-array name="available_toggles_entries" translatable="false">
         <item>USER</item>
         <item>FAVCONTACT</item>
+        <item>FAVCONTACTTWO</item>
+        <item>FAVCONTACTTHREE</item>
         <item>BRIGHTNESS</item>
         <item>SETTINGS</item>
         <item>WIFI</item>
@@ -91,6 +93,8 @@
     <string-array name="available_toggles_values" translatable="false">
         <item>@string/toggle_user</item>
         <item>@string/toggle_favorite_contact</item>
+        <item>@string/toggle_favorite_contacttwo</item>
+        <item>@string/toggle_favorite_contactthree</item>
         <item>@string/toggle_brightness</item>
         <item>@string/toggle_settings</item>
         <item>@string/toggle_wifi</item>

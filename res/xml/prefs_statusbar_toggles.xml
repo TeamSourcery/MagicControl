@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android" 
-    xmlns:aokp="http://schemas.android.com/apk/res/com.aokp.romcontrol">
+    xmlns:sourcery="http://schemas.android.com/apk/res/com.sourcery.magiccontrol">
 
     <Preference
         android:key="enabled_toggles"
@@ -19,9 +19,28 @@
         android:title="@string/toggles_per_row_title"
         android:summary="@string/toggles_per_row_summary" />
 
+    <PreferenceCategory
+		android:key="contacts"
+		android:title="@string/toggle_favcontact_cattitle">
+
+
     <Preference
         android:key="toggle_fav_contact"
-        android:summary="@string/toggle_favcontact_summary"
         android:title="@string/toggle_favcontact_title" />
+
+    <Preference
+        android:key="toggle_fav_contacttwo"
+        android:title="@string/toggle_favcontact_titletwo" />
+
+    <Preference
+        android:key="toggle_fav_contactthree"
+        android:title="@string/toggle_favcontact_titlethree" />
+
+    <Preference
+        android:title="@string/toggle_favcontact_titlecat" 
+        android:summary="@string/toggle_favcontact_titlecatsummary" />
+
+
+    </PreferenceCategory>
 
 </PreferenceScreen>

@@ -64,11 +64,16 @@
             android:defaultValue="false" />
 
          <CheckBoxPreference
+            android:key="ime_switcher"
+            android:title="@string/ime_switcher_title"
+            android:summary="@string/ime_switcher_summary"
+            android:defaultValue="true" />
+
+         <CheckBoxPreference
 	    android:key="disable_bootanimation"	
             android:title="@string/disable_bootanimation_title" />
 
-         
-           <CheckBoxPreference
+         <CheckBoxPreference
 	    android:key="enable_volume_options"
 	    android:title="@string/enable_volume_options" />
 

@@ -43,6 +43,7 @@ public class UserInterface extends SettingsPreferenceFragment {
     private static final String PREF_RECENT_KILL_ALL = "recent_kill_all";
     private static final String PREF_RAM_USAGE_BAR = "ram_usage_bar";
     private static final String PREF_ENABLE_VOLUME_OPTIONS = "enable_volume_options";
+    private static final String PREF_IME_SWITCHER = "ime_switcher";
 
     CheckBoxPreference mAllow180Rotation;
     CheckBoxPreference mStatusBarNotifCount;
@@ -54,6 +55,7 @@ public class UserInterface extends SettingsPreferenceFragment {
     SharedPreferences prefs;
     CheckBoxPreference mEnableVolumeOptions;
     CheckBoxPreference mDisableBootAnimation;
+    CheckBoxPreference mShowImeSwitcher;
 
     Random randomGenerator = new Random();
 
@@ -86,6 +88,10 @@ public class UserInterface extends SettingsPreferenceFragment {
         mUseAltResolver = (CheckBoxPreference) findPreference(PREF_USE_ALT_RESOLVER);
         mUseAltResolver.setChecked(Settings.System.getBoolean(mContext.getContentResolver(),
                         Settings.System.ACTIVITY_RESOLVER_USE_ALT, false));
+
+        mShowImeSwitcher = (CheckBoxPreference) findPreference(PREF_IME_SWITCHER);
+        mShowImeSwitcher.setChecked(Settings.System.getBoolean(mContext.getContentResolver(),
+                         Settings.System.SHOW_STATUSBAR_IME_SWITCHER, true));
 
         mVibrateOnExpand = (CheckBoxPreference) findPreference(PREF_VIBRATE_NOTIF_EXPAND);
         mVibrateOnExpand.setChecked(Settings.System.getBoolean(mContext.getContentResolver(),
@@ -128,6 +134,11 @@ public class UserInterface extends SettingsPreferenceFragment {
             Settings.System.putBoolean(mContext.getContentResolver(),
                     Settings.System.STATUSBAR_NOTIF_COUNT,
                     ((CheckBoxPreference) preference).isChecked());
+            return true;
+        } else if (preference == mShowImeSwitcher) {
+            Settings.System.putBoolean(getActivity().getContentResolver(),
+                    Settings.System.SHOW_STATUSBAR_IME_SWITCHER,
+                    isCheckBoxPreferenceChecked(preference));
             return true;
         } else if (preference == mCustomLabel) {
             AlertDialog.Builder alert = new AlertDialog.Builder(getActivity());

@@ -36,11 +36,7 @@
         android:key="toggle_fav_contactthree"
         android:title="@string/toggle_favcontact_titlethree" />
 
-    <Preference
-        android:title="@string/toggle_favcontact_titlecat" 
-        android:summary="@string/toggle_favcontact_titlecatsummary" />
-
-
+   
     </PreferenceCategory>
 
 </PreferenceScreen>

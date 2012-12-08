@@ -223,7 +223,6 @@ public class StatusBarToggles extends SettingsPreferenceFragment implements
                     } finally {
                         cursor.close();
                     }
-                  Helpers.restartSystemUI();
                 }
             }
           super.onActivityResult(requestCode, resultCode, data);
@@ -246,7 +245,6 @@ public class StatusBarToggles extends SettingsPreferenceFragment implements
                     } finally {
                         cursor.close();
                     }
-                  Helpers.restartSystemUI();
                 }
             }
            super.onActivityResult(requestCode, resultCode, data);
@@ -269,7 +267,6 @@ public class StatusBarToggles extends SettingsPreferenceFragment implements
                     } finally {
                         cursor.close();
                     }
-                  Helpers.restartSystemUI();
                 }
             }
         }

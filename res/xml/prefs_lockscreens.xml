@@ -18,6 +18,13 @@
             android:title="@string/lockscreen_battery_title"
             android:summary="@string/lockscreen_battery_summary" />
 
+    
+     <Preference
+                android:fragment="com.sourcery.magiccontrol.fragments.LockscreenInterface"
+                android:key="lockscreen_targets"
+                android:title="@string/lock_screen_title" />
+
+  
     </PreferenceCategory>
     <PreferenceCategory
         android:key="music"
@@ -49,7 +56,7 @@
                 android:title="@string/lockscreen_all_widgets_title"
                 android:summary="@string/lockscreen_all_widgets_summary" />
 
-
+           
     </PreferenceCategory>
 
   <!--   <PreferenceCategory

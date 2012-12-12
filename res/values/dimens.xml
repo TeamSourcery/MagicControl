@@ -34,4 +34,6 @@
     <dimen name="appwidget_min_width">260dip</dimen>
     <dimen name="appwidget_min_height">40dip</dimen>
 
+    <dimen name="shortcut_picker_left_padding">70dip</dimen>
+
 </resources>

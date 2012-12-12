@@ -16,6 +16,7 @@
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.VIBRATE" />
     <uses-permission android:name="android.permission.BIND_APPWIDGET" />
+    <uses-permission android:name="android.permission.INTERACT_ACROSS_USERS_FULL" />
 
     <application
         android:hardwareAccelerated="true"
@@ -135,6 +136,26 @@
                <action android:name="android.intent.action.CREATE_SHORTCUT" />
   	       <category android:name="android.intent.category.DEFAULT" />
           </intent-filter>
+        </activity>
+
+       <activity
+             android:name=".fragments.LockscreenTargets"
+             android:label="Lockscreen Targets" >
+             <intent-filter>
+                 <action android:name="android.intent.action.MAIN" />
+ 
+                <category android:name="com.sourcery.magiccontrol.SHORTCUT" />
+             </intent-filter>
+        </activity>
+ 
+        <activity
+             android:name=".fragments.LockscreenInterface"
+             android:label="Lockscreen Interface" >
+             <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+ 
+                <category android:name="com.sourcery.magiccontrol.SHORTCUT" />
+             </intent-filter>
         </activity>
     
         </application>

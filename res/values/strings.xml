@@ -787,4 +787,8 @@
     <string name="profile_reset_title">Reset</string>
     <string name="profile_applist_title">Applications</string>
     <string name="custom_targets">Custom Lockscreen Targets</string>
+
+    <string name="screen_security_category">Screen security</string>
+    <string name="screen_security_title">Lock screen</string>
+    <string name="screen_security_summary">View or change lock screen security, delay and timeout settings</string>
 </resources>

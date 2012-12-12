@@ -59,14 +59,5 @@
            
     </PreferenceCategory>
 
-  <!--   <PreferenceCategory
-            android:key="security"
-            android:title="@string/lockscreen_security_cat">
-
-        <CheckBoxPreference
-            android:key="lockscreen_quick_unlock_control"
-            android:title="@string/lockscreen_quick_unlock_control_title"
-            android:summary="@string/lockscreen_quick_unlock_control_summary" /> 
-
-    </PreferenceCategory> -->
+  
 </PreferenceScreen>

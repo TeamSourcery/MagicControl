@@ -510,8 +510,8 @@ public class Navbar extends SettingsPreferenceFragment implements
                 } catch (FileNotFoundException e) {
                     return; // NOOOOO
                 }
-
-                Uri selectedImageUri = getTempFileUri();
+		
+                Uri selectedImageUri = getTempFileUri(data);
                 try {
                     Log.e(TAG, "Selected image path: " + selectedImageUri.getPath());
                     Bitmap bitmap = BitmapFactory.decodeFile(selectedImageUri.getPath());
@@ -772,9 +772,21 @@ public class Navbar extends SettingsPreferenceFragment implements
     }
 
     private Uri getTempFileUri() {
-        return Uri.fromFile(new File(Environment.getExternalStorageDirectory(),
+        return Uri.fromFile(new File(Environment.getExternalStorageDirectory().getPath(),
                 "tmp_icon_" + mPendingIconIndex + ".png"));
 
+    }
+
+    //Whole new method here, just to check if the file explorer used to pick an image returned what it should have
+    //This is only necessary because Mi File Explorer does not return the correct data
+    private Uri getTempFileUri(Intent data) {
+	File testPath = new File(Environment.getExternalStorageDirectory().getPath(),
+                "tmp_icon_" + mPendingIconIndex + ".png");
+	if (testPath.exists()) {
+		return getTempFileUri();
+	} else {
+		return data.getData();
+	}
     }
 
     private String getIconFileName(int index) {

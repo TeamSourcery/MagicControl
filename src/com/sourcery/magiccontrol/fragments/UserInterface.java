@@ -44,6 +44,7 @@ public class UserInterface extends SettingsPreferenceFragment {
     private static final String PREF_RAM_USAGE_BAR = "ram_usage_bar";
     private static final String PREF_ENABLE_VOLUME_OPTIONS = "enable_volume_options";
     private static final String PREF_IME_SWITCHER = "ime_switcher";
+    private static final String PREF_ALARM_ENABLE = "alarm";
 
     CheckBoxPreference mAllow180Rotation;
     CheckBoxPreference mStatusBarNotifCount;
@@ -56,6 +57,7 @@ public class UserInterface extends SettingsPreferenceFragment {
     CheckBoxPreference mEnableVolumeOptions;
     CheckBoxPreference mDisableBootAnimation;
     CheckBoxPreference mShowImeSwitcher;
+    CheckBoxPreference mAlarm;
 
     Random randomGenerator = new Random();
 
@@ -93,6 +95,10 @@ public class UserInterface extends SettingsPreferenceFragment {
         mShowImeSwitcher.setChecked(Settings.System.getBoolean(mContext.getContentResolver(),
                          Settings.System.SHOW_STATUSBAR_IME_SWITCHER, true));
 
+        mAlarm = (CheckBoxPreference) findPreference(PREF_ALARM_ENABLE);
+        mAlarm.setChecked(Settings.System.getInt(getActivity().getContentResolver(),
+                         Settings.System.STATUSBAR_SHOW_ALARM, 1) == 1);
+         
         mVibrateOnExpand = (CheckBoxPreference) findPreference(PREF_VIBRATE_NOTIF_EXPAND);
         mVibrateOnExpand.setChecked(Settings.System.getBoolean(mContext.getContentResolver(),
                 Settings.System.VIBRATE_NOTIF_EXPAND, true));
@@ -140,6 +146,10 @@ public class UserInterface extends SettingsPreferenceFragment {
                     Settings.System.SHOW_STATUSBAR_IME_SWITCHER,
                     isCheckBoxPreferenceChecked(preference));
             return true;
+        } else if (preference == mAlarm) {
+            boolean checked = ((CheckBoxPreference) preference).isChecked();
+            Settings.System.putInt(getActivity().getContentResolver(),
+                     Settings.System.STATUSBAR_SHOW_ALARM, checked ? 1 : 0);
         } else if (preference == mCustomLabel) {
             AlertDialog.Builder alert = new AlertDialog.Builder(getActivity());
 

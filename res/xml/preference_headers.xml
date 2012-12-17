@@ -27,7 +27,12 @@
         android:title="@string/general_ui"
         android:summary="@string/header_summary_general_ui" />
     
-    
+    <header
+        android:id="@+id/transparency"
+	android:fragment="com.sourcery.magiccontrol.fragments.StatusBar"
+        android:title="Status Bar Mods"
+        android:summary="Mods pertaining to status bar." />
+
 
     <header
         android:id="@+id/navbar"

@@ -4,15 +4,15 @@ package com.sourcery.magiccontrol.fragments;
 import android.os.Bundle;
 import android.preference.CheckBoxPreference;
 import android.preference.Preference;
-import android.preference.PreferenceFragment;
 import android.preference.PreferenceScreen;
 import android.provider.Settings;
 import android.provider.Settings.SettingNotFoundException;
 
+import com.sourcery.magiccontrol.SettingsPreferenceFragment;
 import com.sourcery.magiccontrol.R;
 import com.sourcery.magiccontrol.R.xml;
 
-public class PowerMenu extends PreferenceFragment {
+public class PowerMenu extends SettingsPreferenceFragment {
 
     
     private static final String PREF_SCREENSHOT = "show_screenshot";

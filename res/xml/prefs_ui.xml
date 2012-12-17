@@ -68,6 +68,11 @@
             android:title="@string/ime_switcher_title"
             android:summary="@string/ime_switcher_summary"
             android:defaultValue="true" />
+        
+          <CheckBoxPreference
+            android:key="alarm"
+ 	    android:title="@string/enable_alarm_icon_title"
+            android:summary="@string/enable_alarm_icon__summary" />
 
          <CheckBoxPreference
 	    android:key="disable_bootanimation"	

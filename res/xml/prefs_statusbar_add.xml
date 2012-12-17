@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+
+
+    <!-- Status bar tweaks -->
+    
+    <PreferenceCategory android:title="@string/statusbar_bg">
+
+        <ListPreference
+             android:key="statusbar_background_style"
+             android:layout="?android:attr/preferenceLayoutChild"
+             android:persistent="true"
+             android:entries="@array/navbar_background_entries"
+             android:entryValues="@array/navbar_background_values"
+             android:title="@string/statusbar_background_style" />
+ 	
+        <net.margaritov.preference.colorpicker.ColorPickerPreference
+             android:key="statusbar_background_color"
+             android:layout="?android:attr/preferenceLayoutChild"
+             android:persistent="true"
+             android:title="@string/statusbar_background_color"
+             android:defaultValue="#000000"
+             alphaSlider="true" />
+ 
+    </PreferenceCategory>
+         
+  <!--        <CheckBoxPreference
+         android:key="statusbar_brightness_slider"
+         android:title="@string/statusbar_brightness_slider_title"
+         android:summary="@string/statusbar_brightness_slider_summary"
+         android:defaultValue="true" />  -->
+</PreferenceScreen>
+

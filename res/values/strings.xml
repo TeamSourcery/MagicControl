@@ -788,4 +788,26 @@
     <string name="profile_applist_title">Applications</string>
     <string name="custom_targets">Custom Lockscreen Targets</string>
 
+     <!-- Nav and status bar color stuff -->
+    <string name="interface_navbar_appearance">Navigation Bar Color</string>
+    <string name="interface_navbar_color_title">Set Color</string>
+    <string name="interface_navbar_restore_stock_color">Restore stock color</string>
+    <string name="statusbar_bg">Statusbar background</string>
+    <string name="statusbar_background_style">Statusbar background style</string>
+    <string name="navbar_bg">Navbar background</string>
+    <string name="navbar_button_colors">Navbar button color</string>
+    <string name="navbar_background_style">Navbar background style</string>
+    <string name="navbar_color">Color/alpha only</string>
+    <string name="navbar_defaultbg_plus_color">Default Bg plus color/alpha</string>
+    <string name="navbar_defaultbg">Default Bg only</string>
+    <string name="navbar_bg_color">Navbar Color</string> 
+    <string name="statusbar_background_color">Statusbar background color</string>
+
+     <!-- Stuff for statusbar option -->
+    <string name="statusbar_brightness_slider_title">Statusbar brightness slider</string>
+    <string name="statusbar_brightness_slider_summary">Statusbar brightness slider when you slide across the statusbar On/Off</string>
+ 
+      <!-- Alarm Toggle -->
+    <string name="enable_alarm_icon_title">Show Alarm Icon in Status Bar</string>
+    <string name="enable_alarm_icon__summary">Will take effect when alarm is toggled.</string>
 </resources>

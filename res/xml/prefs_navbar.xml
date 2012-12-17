@@ -41,6 +41,31 @@
                 android:defaultValue="#00000000"
                 alphaSlider="true" />
 
+       <PreferenceCategory
+            android:key="navbar_appearance"
+            android:title="@string/interface_navbar_appearance" >
+
+       <ListPreference
+            android:key="navbar_bg_style"
+            android:layout="?android:attr/preferenceLayoutChild"
+            android:persistent="true"
+            android:entries="@array/navbar_background_entries"
+            android:entryValues="@array/navbar_background_values"
+            android:title="@string/navbar_background_style" />
+      
+       <net.margaritov.preference.colorpicker.ColorPickerPreference
+            android:key="navigation_bar_background_color"
+            android:title="@string/navbar_bg_color"
+            android:shouldDisableView="true"
+ 	    android:layout="?android:attr/preferenceLayoutChild"
+            android:persistent="true"
+            android:defaultValue="#000000"
+            alphaSlider="true" />
+ 	
+       
+     </PreferenceCategory>
+
+
         <PreferenceCategory
                 android:key="navbar_buttons"
                 android:title="@string/navbar_button_cat">

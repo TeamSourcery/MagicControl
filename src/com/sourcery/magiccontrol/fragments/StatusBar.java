@@ -78,14 +78,14 @@ public class StatusBar extends SettingsPreferenceFragment implements
     public static final String TAG = "StatusBar";
    
     private static final String PREF_STATUSBAR_BACKGROUND_COLOR = "statusbar_background_color";
-  //  private static final String PREF_STATUSBAR_BRIGHTNESS_SLIDER = "statusbar_brightness_slider";
+    private static final String PREF_STATUSBAR_BRIGHTNESS = "statusbar_brightness_slider";
     private static final String PREF_STATUSBAR_BACKGROUND_STYLE = "statusbar_background_style";
    
    
  	
       
     ColorPickerPreference mStatusbarBgColor;
-   // CheckBoxPreference mStatusBarBrightnessSlider;
+    CheckBoxPreference mStatusbarSliderPreference;
     ListPreference mStatusbarBgStyle;
     
     private Activity mActivity;
@@ -106,10 +106,10 @@ public class StatusBar extends SettingsPreferenceFragment implements
         mStatusbarBgColor = (ColorPickerPreference) findPreference(PREF_STATUSBAR_BACKGROUND_COLOR);
         mStatusbarBgColor.setOnPreferenceChangeListener(this);
 
-      //  mStatusBarBrightnessSlider = (CheckBoxPreference) findPreference(PREF_STATUSBAR_BRIGHTNESS_SLIDER);
-     //   mStatusBarBrightnessSlider.setChecked(Settings.System.getBoolean(mContext.getContentResolver(),
-      //           Settings.System.STATUS_BAR_BRIGHTNESS_SLIDER, true));
-     
+        mStatusbarSliderPreference = (CheckBoxPreference) findPreference(PREF_STATUSBAR_BRIGHTNESS);
+        mStatusbarSliderPreference.setChecked(Settings.System.getBoolean(mContext.getContentResolver(),
+                 Settings.System.STATUSBAR_BRIGHTNESS_SLIDER, true));
+      
         mStatusbarBgStyle = (ListPreference) findPreference(PREF_STATUSBAR_BACKGROUND_STYLE);
         mStatusbarBgStyle.setOnPreferenceChangeListener(this);
                
@@ -132,13 +132,12 @@ public class StatusBar extends SettingsPreferenceFragment implements
     public boolean onPreferenceTreeClick(PreferenceScreen preferenceScreen,
             Preference preference) {
 
-       //  if (preference == mStatusBarBrightnessSlider) {
-       //     Settings.System.putBoolean(getActivity().getContentResolver(),
-       //              Settings.System.STATUS_BAR_BRIGHTNESS_SLIDER,
-       //              isCheckBoxPreferenceChecked(preference));
-       //   return true;
-       
-     //    }
+       if (preference == mStatusbarSliderPreference) {
+           Settings.System.putBoolean(getActivity().getContentResolver(),
+                    Settings.System.STATUSBAR_BRIGHTNESS_SLIDER,
+                    isCheckBoxPrefernceChecked(preference));
+            return true;   
+    }
          return super.onPreferenceTreeClick(preferenceScreen, preference);
 
      }

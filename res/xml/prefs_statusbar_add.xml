@@ -24,10 +24,10 @@
  
     </PreferenceCategory>
          
-  <!--        <CheckBoxPreference
+        <CheckBoxPreference
          android:key="statusbar_brightness_slider"
          android:title="@string/statusbar_brightness_slider_title"
          android:summary="@string/statusbar_brightness_slider_summary"
-         android:defaultValue="true" />  -->
+         />
 </PreferenceScreen>
 

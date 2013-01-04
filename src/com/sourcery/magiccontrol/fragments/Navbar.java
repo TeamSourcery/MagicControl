@@ -395,8 +395,7 @@ public class Navbar extends SettingsPreferenceFragment implements
                      Settings.System.NAVIGATION_BAR_BACKGROUND_STYLE, value);
              preference.setSummary(mNavigationBarBgStyle.getEntries()[index]);
              updateVisibility();
-             Helpers.restartSystemUI();
-            return true;
+             return true;
         } else if (preference == mNavigationBarBgColor) {
              String hex = ColorPickerPreference.convertToARGB(Integer.valueOf(String
                      .valueOf(newValue)));
@@ -404,8 +403,7 @@ public class Navbar extends SettingsPreferenceFragment implements
              int intHex = ColorPickerPreference.convertToColorInt(hex);
              Settings.System.putInt(getActivity().getContentResolver(),
                      Settings.System.NAVIGATION_BAR_BACKGROUND_COLOR, intHex);
-             Helpers.restartSystemUI();
- 	     return true;
+             return true;
         } else if (preference == mNavigationBarGlowColor) {
             String hex = ColorPickerPreference.convertToARGB(
                     Integer.valueOf(String.valueOf(newValue)));

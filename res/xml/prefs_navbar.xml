@@ -62,6 +62,10 @@
             android:defaultValue="#000000"
             alphaSlider="true" />
  	
+      <CheckBoxPreference
+            android:key="navigation_bar_menu_arrow_keys"
+            android:title="@string/navigation_bar_menu_arrow_keys_title"
+            android:summary="@string/navigation_bar_menu_arrow_keys_summary" />
        
      </PreferenceCategory>
 

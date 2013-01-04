@@ -810,4 +810,8 @@
       <!-- Alarm Toggle -->
     <string name="enable_alarm_icon_title">Show Alarm Icon in Status Bar</string>
     <string name="enable_alarm_icon__summary">Will take effect when alarm is toggled.</string>
+
+     <!-- Nav Arrows Toggle -->
+    <string name="navigation_bar_menu_arrow_keys_title">Menu arrow keys</string>
+    <string name="navigation_bar_menu_arrow_keys_summary">Show arrow keys in the navigation bar while typing</string>
 </resources>

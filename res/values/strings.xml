@@ -807,11 +807,16 @@
     <string name="statusbar_brightness_slider_title">Statusbar brightness slider</string>
     <string name="statusbar_brightness_slider_summary">Statusbar brightness slider when you slide across the statusbar On/Off</string>
  
-      <!-- Alarm Toggle -->
+     <!-- Alarm Toggle -->
     <string name="enable_alarm_icon_title">Show Alarm Icon in Status Bar</string>
     <string name="enable_alarm_icon__summary">Will take effect when alarm is toggled.</string>
 
      <!-- Nav Arrows Toggle -->
     <string name="navigation_bar_menu_arrow_keys_title">Menu arrow keys</string>
     <string name="navigation_bar_menu_arrow_keys_summary">Show arrow keys in the navigation bar while typing</string>
+  
+     <!-- CM LockClock  -->
+    <string name="header_lock_clock_title">Lock Clock Widget</string>
+    <string name="header_lock_clock_summary">@null</string>
+
 </resources>

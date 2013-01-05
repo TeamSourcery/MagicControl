@@ -135,7 +135,7 @@ public class StatusBar extends SettingsPreferenceFragment implements
        if (preference == mStatusbarSliderPreference) {
            Settings.System.putBoolean(getActivity().getContentResolver(),
                     Settings.System.STATUSBAR_BRIGHTNESS_SLIDER,
-                    isCheckBoxPrefernceChecked(preference));
+                    isCheckBoxPreferenceChecked(preference));
             return true;   
     }
          return super.onPreferenceTreeClick(preferenceScreen, preference);

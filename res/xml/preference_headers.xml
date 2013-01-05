@@ -81,7 +81,7 @@
             android:action="android.intent.action.MAIN"
             android:targetPackage="com.cyanogenmod.lockclock"
             android:targetClass="com.cyanogenmod.lockclock.preference.Preferences" />
-
+    </header>
     <header android:title="@string/led_options" />
     
      <header

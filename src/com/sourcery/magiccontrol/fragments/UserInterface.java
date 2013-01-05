@@ -25,6 +25,7 @@ import android.provider.Settings;
 import android.text.Spannable;
 import android.view.LayoutInflater;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.sourcery.magiccontrol.SettingsPreferenceFragment;
 import com.sourcery.magiccontrol.R;
@@ -45,6 +46,7 @@ public class UserInterface extends SettingsPreferenceFragment {
     private static final String PREF_ENABLE_VOLUME_OPTIONS = "enable_volume_options";
     private static final String PREF_IME_SWITCHER = "ime_switcher";
     private static final String PREF_ALARM_ENABLE = "alarm";
+    private static final String PREF_SHOW_OVERFLOW = "show_overflow";
 
     CheckBoxPreference mAllow180Rotation;
     CheckBoxPreference mStatusBarNotifCount;
@@ -58,6 +60,7 @@ public class UserInterface extends SettingsPreferenceFragment {
     CheckBoxPreference mDisableBootAnimation;
     CheckBoxPreference mShowImeSwitcher;
     CheckBoxPreference mAlarm;
+    CheckBoxPreference mShowActionOverflow;
 
     Random randomGenerator = new Random();
 
@@ -111,6 +114,12 @@ public class UserInterface extends SettingsPreferenceFragment {
         mRamBar = (CheckBoxPreference) findPreference(PREF_RAM_USAGE_BAR);
         mRamBar.setChecked(Settings.System.getBoolean(getActivity  ().getContentResolver(),
                 Settings.System.RAM_USAGE_BAR, false));
+
+        mShowActionOverflow = (CheckBoxPreference) findPreference(PREF_SHOW_OVERFLOW);
+        mShowActionOverflow.setChecked((Settings.System.getInt(getActivity().
+                        getApplicationContext().getContentResolver(),
+                        Settings.System.UI_FORCE_OVERFLOW_BUTTON, 0) == 1));
+
 
          mDisableBootAnimation = (CheckBoxPreference) findPreference("disable_bootanimation");
          mDisableBootAnimation.setChecked(!new File("/system/media/bootanimation.zip").exists());
@@ -199,6 +208,19 @@ public class UserInterface extends SettingsPreferenceFragment {
             boolean checked = ((CheckBoxPreference)preference).isChecked();
             Settings.System.putBoolean(getActivity().getContentResolver(),
                     Settings.System.RAM_USAGE_BAR, checked ? true : false);
+            return true;
+         } else if (preference == mShowActionOverflow) {
+            boolean enabled = mShowActionOverflow.isChecked();
+            Settings.System.putInt(getContentResolver(), Settings.System.UI_FORCE_OVERFLOW_BUTTON,
+                    enabled ? 1 : 0);
+            // Show toast appropriately
+            if (enabled) {
+                Toast.makeText(getActivity(), R.string.show_overflow_toast_enable,
+                        Toast.LENGTH_LONG).show();
+            } else {
+                Toast.makeText(getActivity(), R.string.show_overflow_toast_disable,
+                        Toast.LENGTH_LONG).show();
+            }
             return true;
         } else if (preference == mDisableBootAnimation) {
             boolean checked = ((CheckBoxPreference) preference).isChecked();

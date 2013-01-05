@@ -819,4 +819,8 @@
     <string name="header_lock_clock_title">Lock Clock Widget</string>
     <string name="header_lock_clock_summary">@null</string>
 
+     <!-- Power button torch -->
+    <string name="power_button_torch_title">Power button torch</string>
+    <string name="power_button_torch_summary">Hold power key with screen off to enable torch. Release to disable.</string>
+
 </resources>

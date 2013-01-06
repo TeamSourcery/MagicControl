@@ -31,7 +31,7 @@
         android:id="@+id/transparency"
 	android:fragment="com.sourcery.magiccontrol.fragments.StatusBar"
         android:title="Status Bar Mods"
-        android:summary="Mods pertaining to status bar." />
+         />
 
 
     <header

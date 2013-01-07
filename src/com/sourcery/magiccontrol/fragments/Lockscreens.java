@@ -63,13 +63,14 @@ public class Lockscreens extends SettingsPreferenceFragment implements OnPrefere
     private static final String TAG = "Lockscreens";
     private static final boolean DEBUG = true;
 
-   // private static final String PREF_VOLUME_ROCKER_WAKE = "volume_rocker_wake";
+    private static final String PREF_VOLUME_ROCKER_WAKE = "volume_rocker_wake";
     private static final String PREF_VOLUME_MUSIC = "volume_music_controls";
    // private static final String PREF_QUICK_UNLOCK = "lockscreen_quick_unlock_control";
     private static final String PREF_LOCKSCREEN_AUTO_ROTATE = "lockscreen_auto_rotate";
     private static final String PREF_LOCKSCREEN_ALL_WIDGETS = "lockscreen_all_widgets";
     private static final String PREF_LOCKSCREEN_BATTERY = "lockscreen_battery";
     private static final String PREF_LOCKSCREEN_TEXT_COLOR = "lockscreen_text_color";
+    private static final String PREF_LOCKSCREEN_MAXIMIZE_WIDGETS = "lockscreen_maximize_widgets";
 
     public static final int REQUEST_PICK_WALLPAPER = 199;
     public static final int REQUEST_PICK_CUSTOM_ICON = 200;
@@ -82,12 +83,13 @@ public class Lockscreens extends SettingsPreferenceFragment implements OnPrefere
     Preference mLockscreenTargets;
 
     CheckBoxPreference mVolumeMusic;
-   // CheckBoxPreference mVolumeRockerWake;
+    CheckBoxPreference mVolumeRockerWake;
    // CheckBoxPreference mQuickUnlock;
     CheckBoxPreference mLockscreenBattery;
     ColorPickerPreference mLockscreenTextColor;
     CheckBoxPreference mLockscreenAutoRotate;
     CheckBoxPreference mLockscreenAllWidgets;
+    CheckBoxPreference mMaximizeWidgets;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -97,9 +99,9 @@ public class Lockscreens extends SettingsPreferenceFragment implements OnPrefere
         // Load the preferences from an XML resource
         addPreferencesFromResource(R.xml.prefs_lockscreens);
 
-      //  mVolumeRockerWake = (CheckBoxPreference) findPreference(PREF_VOLUME_ROCKER_WAKE);
-      //  mVolumeRockerWake.setChecked(Settings.System.getBoolean(mContext
-      //          .getContentResolver(), Settings.System.VOLUME_WAKE_SCREEN, false));
+        mVolumeRockerWake = (CheckBoxPreference) findPreference(PREF_VOLUME_ROCKER_WAKE);
+        mVolumeRockerWake.setChecked(Settings.System.getBoolean(mContext
+                .getContentResolver(), Settings.System.VOLUME_WAKE_SCREEN, false));
 
         mVolumeMusic = (CheckBoxPreference) findPreference(PREF_VOLUME_MUSIC);
         mVolumeMusic.setChecked(Settings.System.getBoolean(mContext.getContentResolver(),
@@ -108,6 +110,9 @@ public class Lockscreens extends SettingsPreferenceFragment implements OnPrefere
     //    mQuickUnlock = (CheckBoxPreference) findPreference(PREF_QUICK_UNLOCK);
      //   mQuickUnlock.setChecked(Settings.System.getBoolean(mContext.getContentResolver(), Settings.System.LOCKSCREEN_QUICK_UNLOCK_CONTROL, false));
 
+        mMaximizeWidgets = (CheckBoxPreference) findPreference(PREF_LOCKSCREEN_MAXIMIZE_WIDGETS);
+        mMaximizeWidgets.setOnPreferenceChangeListener(this);
+        
         mLockscreenAutoRotate = (CheckBoxPreference)findPreference(PREF_LOCKSCREEN_AUTO_ROTATE);
         mLockscreenAutoRotate.setChecked(Settings.System.getBoolean(mContext
                 .getContentResolver(), Settings.System.LOCKSCREEN_AUTO_ROTATE, false));
@@ -132,16 +137,22 @@ public class Lockscreens extends SettingsPreferenceFragment implements OnPrefere
     public void onResume() {
         super.onResume();
 
+    ContentResolver cr = getActivity().getContentResolver();
+    if (mMaximizeWidgets != null) {
+            mMaximizeWidgets.setChecked(Settings.System.getInt(cr,
+                    Settings.System.LOCKSCREEN_MAXIMIZE_WIDGETS, 0) == 1);
+        }
+
     }
 
     @Override
     public boolean onPreferenceTreeClick(PreferenceScreen preferenceScreen, Preference preference) {
-      //  if (preference == mVolumeRockerWake) {
-       //     Settings.System.putBoolean(mContext.getContentResolver(),
-        //            Settings.System.VOLUME_WAKE_SCREEN,
-         //           ((CheckBoxPreference) preference).isChecked());
-         //   return true;
-        if (preference == mVolumeMusic) {
+        if (preference == mVolumeRockerWake) {
+            Settings.System.putBoolean(mContext.getContentResolver(),
+                    Settings.System.VOLUME_WAKE_SCREEN,
+                    ((CheckBoxPreference) preference).isChecked());
+            return true;
+        } else if (preference == mVolumeMusic) {
             Settings.System.putBoolean(mContext.getContentResolver(),
                     Settings.System.VOLUME_MUSIC_CONTROLS,
                     ((CheckBoxPreference) preference).isChecked());
@@ -198,6 +209,7 @@ public class Lockscreens extends SettingsPreferenceFragment implements OnPrefere
 
     @Override
     public boolean onPreferenceChange(Preference preference, Object newValue) {
+        ContentResolver cr = getActivity().getContentResolver();
         boolean handled = false;
         if (preference == mLockscreenTextColor) {
             String hex = ColorPickerPreference.convertToARGB(Integer.valueOf(String.valueOf(newValue)));
@@ -206,6 +218,11 @@ public class Lockscreens extends SettingsPreferenceFragment implements OnPrefere
             Settings.System.putInt(getActivity().getContentResolver(),
                     Settings.System.LOCKSCREEN_CUSTOM_TEXT_COLOR, intHex);
             return true;
+        } else if (preference == mMaximizeWidgets) {
+             boolean value = (Boolean) newValue;
+             Settings.System.putInt(cr, Settings.System.LOCKSCREEN_MAXIMIZE_WIDGETS, value ? 1 : 0);
+             return true;
+         
         }
         return false;
     }
@@ -271,5 +288,6 @@ public class Lockscreens extends SettingsPreferenceFragment implements OnPrefere
         out.close();
     }
 
+          
 }
 

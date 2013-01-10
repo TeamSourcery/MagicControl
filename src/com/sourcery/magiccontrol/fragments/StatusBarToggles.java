@@ -6,6 +6,7 @@ import android.app.AlertDialog;
 import android.app.FragmentTransaction;
 import android.app.ListFragment;
 import android.content.Context;
+import android.content.ContentResolver;
 import android.content.CursorLoader;
 import android.content.DialogInterface;
 import android.content.DialogInterface.OnMultiChoiceClickListener;
@@ -37,6 +38,7 @@ import com.sourcery.magiccontrol.R;
 import com.sourcery.magiccontrol.widgets.TouchInterceptor;
 import com.sourcery.magiccontrol.widgets.SeekBarPreference;
 import com.sourcery.magiccontrol.util.Helpers;
+import com.sourcery.magiccontrol.util.Utils;
 import com.scheffsblend.smw.Preferences.ImageListPreference;
 import net.margaritov.preference.colorpicker.ColorPickerPreference;
 
@@ -54,6 +56,7 @@ public class StatusBarToggles extends SettingsPreferenceFragment implements
     private static final String PREF_TOGGLE_FAV_CONTACT = "toggle_fav_contact";
     private static final String PREF_TOGGLE_FAV_CONTACTTWO = "toggle_fav_contacttwo";
     private static final String PREF_TOGGLE_FAV_CONTACTTHREE = "toggle_fav_contactthree";
+    private static final String QUICK_PULLDOWN = "quick_pulldown";
 
     private final int PICK_CONTACT = 1;
     private final int PICK_CONTACTTWO = 2;
@@ -65,13 +68,22 @@ public class StatusBarToggles extends SettingsPreferenceFragment implements
     Preference mFavContact;
     Preference mFavContactTwo;
     Preference mFavContactThree;
+    ListPreference mQuickPulldown;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setTitle(R.string.title_statusbar_toggles);
-        // Load the preferences from an XML resource
         addPreferencesFromResource(R.xml.prefs_statusbar_toggles);
+        }
+     
+   @Override
+    public void onActivityCreated(Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+
+        PreferenceScreen prefSet = getPreferenceScreen();
+        PackageManager pm = getPackageManager();
+        ContentResolver resolver = getActivity().getApplicationContext().getContentResolver();
 
         mEnabledToggles = findPreference(PREF_ENABLE_TOGGLES);
 
@@ -84,6 +96,15 @@ public class StatusBarToggles extends SettingsPreferenceFragment implements
         mFavContact = findPreference(PREF_TOGGLE_FAV_CONTACT);
         mFavContactTwo = findPreference(PREF_TOGGLE_FAV_CONTACTTWO);
         mFavContactThree = findPreference(PREF_TOGGLE_FAV_CONTACTTHREE);
+
+        // Add the Quick Pulldown preference 
+            
+         mQuickPulldown = (ListPreference) prefSet.findPreference(QUICK_PULLDOWN);
+         mQuickPulldown.setOnPreferenceChangeListener(this);
+         int quickPulldownValue = Settings.System.getInt(resolver, Settings.System.QS_QUICK_PULLDOWN, 0);
+         mQuickPulldown.setValue(String.valueOf(quickPulldownValue));
+         updatePulldownSummary(quickPulldownValue);
+         
 
         final String[] entries = getResources().getStringArray(R.array.available_toggles_entries);
 
@@ -114,18 +135,25 @@ public class StatusBarToggles extends SettingsPreferenceFragment implements
         }
       }
 
-    @Override
+   @Override
     public boolean onPreferenceChange(Preference preference, Object newValue) {
+        ContentResolver resolver = getActivity().getApplicationContext().getContentResolver();
         if (preference == mTogglesPerRow) {
             int val = Integer.parseInt((String) newValue);
             Settings.System.putInt(getActivity().getContentResolver(),
                     Settings.System.QUICK_TOGGLES_PER_ROW, val);
         return true;
+        } else if (preference == mQuickPulldown) {
+            int quickPulldownValue = Integer.valueOf((String) newValue);
+            Settings.System.putInt(resolver, Settings.System.QS_QUICK_PULLDOWN,
+                     quickPulldownValue);
+            updatePulldownSummary(quickPulldownValue);
+            return true;
         }
         return false;
     }
 
-    @Override
+   @Override
     public boolean onPreferenceTreeClick(PreferenceScreen preferenceScreen, Preference preference) {
         if (preference == mEnabledToggles) {
             AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
@@ -201,6 +229,7 @@ public class StatusBarToggles extends SettingsPreferenceFragment implements
             Intent intent = new Intent(Intent.ACTION_PICK, ContactsContract.Contacts.CONTENT_URI);
             startActivityForResult(intent, PICK_CONTACTTHREE);
         }
+        
         return super.onPreferenceTreeClick(preferenceScreen, preference);
 
     }
@@ -472,5 +501,19 @@ public class StatusBarToggles extends SettingsPreferenceFragment implements
             }
         }
         return iloveyou;
+    }
+
+    private void updatePulldownSummary(int value) {
+            Resources res = getResources();
+
+        if (value == 0) {
+            /* quick pulldown deactivated */
+            mQuickPulldown.setSummary(res.getString(R.string.quick_pulldown_off));
+        } else {
+            String direction = res.getString(value == 2
+                    ? R.string.quick_pulldown_summary_left
+                    : R.string.quick_pulldown_summary_right);
+            mQuickPulldown.setSummary(res.getString(R.string.summary_quick_pulldown, direction));
+        }
     }
 }

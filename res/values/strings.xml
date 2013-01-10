@@ -822,8 +822,22 @@
      <!-- Power button torch -->
     <string name="power_button_torch_title">Power button torch</string>
     <string name="power_button_torch_summary">Hold power key with screen off to enable torch. Release to disable.</string>
- 
+
+    <!-- Lockscreen widget expander -->
     <string name="lockscreen_maximize_widgets_title">Maximize widgets</string>
     <string name="lockscreen_maximize_widgets_summary">Show widgets maximized and the unlock mimimized when the screen is turned on</string>
+
+    <string name="lockscreen_hide_initial_page_hints_title">Hide initial page hints</string>
+    <string name="lockscreen_hide_initial_page_hints_summary">Set wether the hints for the left and right widgets are shown when the screen is turned on.</string>
+
+    <!-- Toggle pull down styles -->
+    <string name="title_general">QuickSettings Options</string>
+    <string name="title_quick_pulldown">Quick Toggle Expanding</string>
+    <string name="summary_quick_pulldown">%1$s Side of StatusBar Shows QuickSettings</string>
+    <string name="quick_pulldown_summary_left">Left</string>
+    <string name="quick_pulldown_summary_right">Right</string>
+    <string name="quick_pulldown_off">Off</string>
+    <string name="quick_pulldown_left">Left</string>
+    <string name="quick_pulldown_right">Right</string>
  
 </resources>

@@ -2,6 +2,20 @@
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android" 
     xmlns:sourcery="http://schemas.android.com/apk/res/com.sourcery.magiccontrol">
 
+   <PreferenceCategory
+         android:key="pref_general_settings"
+         android:title="@string/title_general" >
+
+         <ListPreference
+         android:key="quick_pulldown"
+         android:title="@string/title_quick_pulldown"
+         android:entries="@array/quick_pulldown_entries"
+         android:entryValues="@array/quick_pulldown_values"
+         android:persistent="false" />
+         
+ 
+    </PreferenceCategory>
+
     <Preference
         android:key="enabled_toggles"
         android:summary="@string/enabled_toggles_summary"

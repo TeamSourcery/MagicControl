@@ -47,6 +47,7 @@ public class UserInterface extends SettingsPreferenceFragment {
     private static final String PREF_IME_SWITCHER = "ime_switcher";
     private static final String PREF_ALARM_ENABLE = "alarm";
     private static final String PREF_SHOW_OVERFLOW = "show_overflow";
+    private static final String PREF_FORCE_DUAL_PANEL = "force_dualpanel";
 
     CheckBoxPreference mAllow180Rotation;
     CheckBoxPreference mStatusBarNotifCount;
@@ -61,6 +62,7 @@ public class UserInterface extends SettingsPreferenceFragment {
     CheckBoxPreference mShowImeSwitcher;
     CheckBoxPreference mAlarm;
     CheckBoxPreference mShowActionOverflow;
+    CheckBoxPreference mDualpane;
 
     Random randomGenerator = new Random();
 
@@ -119,6 +121,11 @@ public class UserInterface extends SettingsPreferenceFragment {
         mShowActionOverflow.setChecked((Settings.System.getInt(getActivity().
                         getApplicationContext().getContentResolver(),
                         Settings.System.UI_FORCE_OVERFLOW_BUTTON, 0) == 1));
+
+        mDualpane = (CheckBoxPreference) findPreference(PREF_FORCE_DUAL_PANEL);
+        mDualpane.setChecked(Settings.System.getBoolean(mContext.getContentResolver(),
+                        Settings.System.FORCE_DUAL_PANEL, getResources().getBoolean(
+                        com.android.internal.R.bool.preferences_prefer_dual_pane)));
 
 
          mDisableBootAnimation = (CheckBoxPreference) findPreference("disable_bootanimation");
@@ -203,6 +210,11 @@ public class UserInterface extends SettingsPreferenceFragment {
             boolean checked = ((CheckBoxPreference)preference).isChecked();
             Settings.System.putBoolean(getActivity().getContentResolver(),
                     Settings.System.RECENT_KILL_ALL_BUTTON, checked ? true : false);
+            return true;
+        } else if (preference == mDualpane) {
+             Settings.System.putBoolean(mContext.getContentResolver(),
+                    Settings.System.FORCE_DUAL_PANEL,
+                    ((CheckBoxPreference) preference).isChecked());
             return true;
         } else if (preference == mRamBar) {
             boolean checked = ((CheckBoxPreference)preference).isChecked();

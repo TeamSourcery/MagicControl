@@ -88,6 +88,12 @@
 	    android:key="enable_volume_options"
 	    android:title="@string/enable_volume_options" />
 
+         <CheckBoxPreference
+            android:key="force_dualpanel"
+            android:title="@string/multipane_ui"
+            android:summary="@string/multipane_ui_summary"
+            android:defaultValue="false" />
+
     </PreferenceCategory>
 
 </PreferenceScreen>

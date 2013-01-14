@@ -818,8 +818,8 @@
     <string name="header_lock_clock_summary">@null</string>
 
      <!-- Power button torch -->
-    <string name="power_button_torch_title">Power button torch(Experimental)</string>
-    <string name="power_button_torch_summary">Hold power key with screen off to enable torch. Release to disable.</string>
+    <string name="power_button_torch_title">Power button torch</string>
+    <string name="power_button_torch_summary">Hold power key with screen off to enable torch. Release to disable.(This Feature is Experimental and doesnt work 100% of the time) </string>
 
     <!-- Lockscreen widget expander -->
     <string name="lockscreen_maximize_widgets_title">Maximize widgets</string>
@@ -841,6 +841,18 @@
 
    <!-- MultiPanel Views -->
    <string name="multipane_ui">Enable/Disable Dual panel</string>
-   <string name="multipane_ui_summary">This will Enable/Disable Dual panel view (Reboot Required!)</string>
+   <string name="multipane_ui_summary">This will Enable/Disable Dual panel view (SystemUI will restart)(Orientation change needed)</string>
+
+  <!-- Tablet Mode -->
+   <string name="user_mode_ui">UI Mode</string>
+   <string name="user_mode_ui_summary">What style to display NavBar and Statusbar(SystemUI will restart)</string>
+   <string name="phone_mode_ui">Phone - NavBar to side in landscape</string>
+   <string name="tablet_mode_ui">Tablet - Combined NavBar and SystemBar</string>
+   <string name="phablet_mode_ui">Phablet - NavBar stays at bottom in landscape</string>
+
+  <!-- Lock screen see through -->
+   <string name="see_through_title">See through</string>
+   <string name="see_through_summary">Allows to see the application behind the lock screen.</string>
+  
  
 </resources>

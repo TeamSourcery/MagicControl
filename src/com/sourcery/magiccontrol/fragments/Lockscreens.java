@@ -72,6 +72,7 @@ public class Lockscreens extends SettingsPreferenceFragment implements OnPrefere
     private static final String PREF_LOCKSCREEN_TEXT_COLOR = "lockscreen_text_color";
     private static final String PREF_LOCKSCREEN_MAXIMIZE_WIDGETS = "lockscreen_maximize_widgets";
     private static final String PREF_LOCKSCREEN_HIDE_INITIAL_PAGE_HINTS = "lockscreen_hide_initial_page_hints";
+    public static final String KEY_SEE_THROUGH = "see_through";
 
     public static final int REQUEST_PICK_WALLPAPER = 199;
     public static final int REQUEST_PICK_CUSTOM_ICON = 200;
@@ -92,6 +93,7 @@ public class Lockscreens extends SettingsPreferenceFragment implements OnPrefere
     CheckBoxPreference mLockscreenAllWidgets;
     CheckBoxPreference mMaximizeWidgets;
     CheckBoxPreference mLockscreenHideInitialPageHints;
+    private CheckBoxPreference mSeeThrough;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -100,6 +102,8 @@ public class Lockscreens extends SettingsPreferenceFragment implements OnPrefere
 
         // Load the preferences from an XML resource
         addPreferencesFromResource(R.xml.prefs_lockscreens);
+
+        mSeeThrough = (CheckBoxPreference) findPreference(KEY_SEE_THROUGH);
 
         mVolumeRockerWake = (CheckBoxPreference) findPreference(PREF_VOLUME_ROCKER_WAKE);
         mVolumeRockerWake.setChecked(Settings.System.getBoolean(mContext
@@ -212,6 +216,10 @@ public class Lockscreens extends SettingsPreferenceFragment implements OnPrefere
             Settings.System.putInt(getActivity().getContentResolver(),
                     Settings.System.LOCKSCREEN_HIDE_INITIAL_PAGE_HINTS,
                     ((CheckBoxPreference)preference).isChecked() ? 1 : 0);
+            return true;
+        } else if (preference == mSeeThrough) {
+             Settings.System.putInt(mContext.getContentResolver(),
+                     Settings.System.LOCKSCREEN_SEE_THROUGH, mSeeThrough.isChecked() ? 1 : 0);
             return true;
         }
         

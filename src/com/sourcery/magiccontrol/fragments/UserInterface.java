@@ -50,7 +50,7 @@ public class UserInterface extends SettingsPreferenceFragment implements OnPrefe
     private static final String PREF_SHOW_OVERFLOW = "show_overflow";
     private static final String PREF_FORCE_DUAL_PANEL = "force_dualpanel";
     private static final String PREF_USER_MODE_UI = "user_mode_ui";
-    //private static final String PREF_HIDE_EXTRAS = "hide_extras";
+    private static final String PREF_HIDE_EXTRAS = "hide_extras";
 
     CheckBoxPreference mAllow180Rotation;
     CheckBoxPreference mStatusBarNotifCount;
@@ -131,9 +131,9 @@ public class UserInterface extends SettingsPreferenceFragment implements OnPrefe
                         getApplicationContext().getContentResolver(),
                         Settings.System.UI_FORCE_OVERFLOW_BUTTON, 0) == 1));
 
-      //  mHideExtras = (CheckBoxPreference) findPreference(PREF_HIDE_EXTRAS);
-      //  mHideExtras.setChecked(Settings.System.getBoolean(mContext.getContentResolver(),
-       //                 Settings.System.HIDE_EXTRAS_SYSTEM_BAR, false));
+        mHideExtras = (CheckBoxPreference) findPreference(PREF_HIDE_EXTRAS);
+        mHideExtras.setChecked(Settings.System.getBoolean(mContext.getContentResolver(),
+                        Settings.System.HIDE_EXTRAS_SYSTEM_BAR, false));
 
 
         mDualpane = (CheckBoxPreference) findPreference(PREF_FORCE_DUAL_PANEL);
@@ -143,7 +143,7 @@ public class UserInterface extends SettingsPreferenceFragment implements OnPrefe
     
         mUserModeUI = (ListPreference) findPreference(PREF_USER_MODE_UI);
         int uiMode = Settings.System.getInt(cr,
-			                Settings.System.CURRENT_UI_MODE, 0);
+		     Settings.System.CURRENT_UI_MODE, 0);
         mUserModeUI.setValue(Integer.toString(Settings.System.getInt(cr,
                 Settings.System.USER_UI_MODE, uiMode)));
         mUserModeUI.setOnPreferenceChangeListener(this);
@@ -177,11 +177,11 @@ public class UserInterface extends SettingsPreferenceFragment implements OnPrefe
                     Settings.System.STATUSBAR_NOTIF_COUNT,
                     ((CheckBoxPreference) preference).isChecked());
             return true;
-      //  } else if (preference == mHideExtras) {
-       //     Settings.System.putBoolean(mContext.getContentResolver(),
-       //             Settings.System.HIDE_EXTRAS_SYSTEM_BAR,
-        //            ((CheckBoxPreference) preference).isChecked());
-        //    return true;
+        } else if (preference == mHideExtras) {
+            Settings.System.putBoolean(mContext.getContentResolver(),
+                   Settings.System.HIDE_EXTRAS_SYSTEM_BAR,
+                   ((CheckBoxPreference) preference).isChecked());
+            return true;
         } else if (preference == mShowImeSwitcher) {
             Settings.System.putBoolean(getActivity().getContentResolver(),
                     Settings.System.SHOW_STATUSBAR_IME_SWITCHER,

@@ -102,11 +102,11 @@
             android:entries="@array/user_mode_ui_entries"
             android:entryValues="@array/user_mode_ui_values" />
 
-     <!--   <CheckBoxPreference
+        <CheckBoxPreference
             android:key="hide_extras"
             android:title= "@string/hide_extras"
             android:summary= "@string/hide_extras_summary"
-            android:defaultValue="false" /> -->
+            android:defaultValue="false" />
 
          <CheckBoxPreference
             android:key="force_dualpanel"

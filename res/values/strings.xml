@@ -826,7 +826,7 @@
     <string name="lockscreen_maximize_widgets_summary">Show widgets maximized and the unlock mimimized when the screen is turned on</string>
 
     <string name="lockscreen_hide_initial_page_hints_title">Hide initial page hints</string>
-    <string name="lockscreen_hide_initial_page_hints_summary">Set wether the hints for the left and right widgets are shown when the screen is turned on.</string>
+    <string name="lockscreen_hide_initial_page_hints_summary">Set whether the hints for the left and right widgets are shown when the screen is turned on.</string>
 
     <!-- Toggle pull down styles -->
     <string name="title_general">QuickSettings Options</string>

@@ -31,6 +31,14 @@
                 alphaSlider="true" />
 
          <com.sourcery.magiccontrol.widgets.SeekBarPreference
+            android:key="width_port"
+            android:title="@string/width_port_title" />
+
+	 <com.sourcery.magiccontrol.widgets.SeekBarPreference
+            android:key="width_land"
+            android:title="@string/width_land_title" />
+
+         <com.sourcery.magiccontrol.widgets.SeekBarPreference
             android:key="button_transparency"
             android:title="@string/button_transparency_title" />
 

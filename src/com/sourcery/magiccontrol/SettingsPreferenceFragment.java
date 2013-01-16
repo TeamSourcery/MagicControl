@@ -65,6 +65,11 @@ public class SettingsPreferenceFragment extends PreferenceFragment implements Di
             mActionBar.setDisplayHomeAsUpEnabled(true);
     }
 
+    public static boolean isTablet(Context context) {
+        return Settings.System.getInt(context.getContentResolver(),
+                Settings.System.CURRENT_UI_MODE,0) == 1;
+    }
+
     public void setTitle(int resId) {
          getActivity().setTitle(resId);
     }

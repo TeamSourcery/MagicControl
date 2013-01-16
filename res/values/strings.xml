@@ -854,5 +854,11 @@
    <string name="see_through_title">See through</string>
    <string name="see_through_summary">Allows to see the application behind the lock screen.</string>
   
- 
+  <!-- Long press on small circle -->
+  <string name="lockscreen_longpress_challenge_title">Enable longpress to unlock</string>
+  <string name="lockscreen_longpress_challenge_summary">This enables your device to be unlocked with the widgets maximised by long pressing the lock icon.</string>
+
+  <!-- Alt lock screen widget picker -->
+  <string name="lockscreen_use_widget_container_carousel_title">Use widget carousel</string>
+  <string name="lockscreen_use_widget_container_carousel_summary">Use a carousel animation when switching between lockscreen widgets.</string>
 </resources>

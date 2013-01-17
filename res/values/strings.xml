@@ -821,7 +821,7 @@
 
      <!-- Power button torch -->
     <string name="power_button_torch_title">Power button torch</string>
-    <string name="power_button_torch_summary">Hold power key with screen off to enable torch. Release to disable.(This Feature is Experimental and doesnt work 100% of the time) </string>
+    <string name="power_button_torch_summary">Hold power key with screen off to enable torch. Release to disable.(DO NOT USE LOCKSCREEN NONE WITH THIS FEATURE)(This Feature is Experimental)</string>
 
     <!-- Lockscreen widget expander -->
     <string name="lockscreen_maximize_widgets_title">Maximize widgets</string>

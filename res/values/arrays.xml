@@ -81,6 +81,7 @@
         <item>BLUETOOTH</item>
         <item>VIBRATE</item>
         <item>SILENT</item>
+        <item>SOUNDSTATE</item>
         <item>SYNC</item>
         <item>FCHARGE</item>
         <item>NFC</item>
@@ -89,6 +90,7 @@
         <item>TORCH</item>
         <item>2G</item>
         <item>LTE</item>
+        <item>RAM</item>
     </string-array>
     <string-array name="available_toggles_values" translatable="false">
         <item>@string/toggle_user</item>
@@ -108,6 +110,7 @@
         <item>@string/toggle_bluetooth</item>
         <item>@string/toggle_vibrate</item>
         <item>@string/toggle_silent</item>
+        <item>@string/toggle_sound_state</item>
         <item>@string/toggle_sync</item>
         <item>@string/toggle_fcharge</item>
         <item>@string/toggle_nfc</item>
@@ -116,6 +119,7 @@
         <item>@string/toggle_torch</item>
         <item>@string/toggle_2g</item>
         <item>@string/toggle_lte</item>
+        <item>@string/toggle_ram</item>
     </string-array>
 
     <!-- Toggles per row -->
@@ -648,4 +652,5 @@
         <item>1</item>
         <item>2</item>
     </string-array>
+   
 </resources>

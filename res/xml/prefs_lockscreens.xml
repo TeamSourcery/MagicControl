@@ -7,6 +7,12 @@
         android:key="layout"
         android:title="@string/lockscreen_layout_cat">
 
+        <Preference
+        android:key="wallpaper"
+        android:title="@string/lockscreen_wallpaper_title"
+        android:summary="@string/lockscreen_wallpaper_summary" />
+
+
         <CheckBoxPreference
         android:key="lockscreen_maximize_widgets"
         android:persistent="false"

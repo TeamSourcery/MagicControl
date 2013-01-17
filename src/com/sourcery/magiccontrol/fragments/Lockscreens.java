@@ -65,7 +65,6 @@ public class Lockscreens extends SettingsPreferenceFragment implements OnPrefere
 
     private static final String PREF_VOLUME_ROCKER_WAKE = "volume_rocker_wake";
     private static final String PREF_VOLUME_MUSIC = "volume_music_controls";
-   // private static final String PREF_QUICK_UNLOCK = "lockscreen_quick_unlock_control";
     private static final String PREF_LOCKSCREEN_AUTO_ROTATE = "lockscreen_auto_rotate";
     private static final String PREF_LOCKSCREEN_ALL_WIDGETS = "lockscreen_all_widgets";
     private static final String PREF_LOCKSCREEN_BATTERY = "lockscreen_battery";
@@ -88,7 +87,6 @@ public class Lockscreens extends SettingsPreferenceFragment implements OnPrefere
 
     CheckBoxPreference mVolumeMusic;
     CheckBoxPreference mVolumeRockerWake;
-   // CheckBoxPreference mQuickUnlock;
     CheckBoxPreference mLockscreenBattery;
     ColorPickerPreference mLockscreenTextColor;
     CheckBoxPreference mLockscreenAutoRotate;
@@ -116,9 +114,6 @@ public class Lockscreens extends SettingsPreferenceFragment implements OnPrefere
         mVolumeMusic = (CheckBoxPreference) findPreference(PREF_VOLUME_MUSIC);
         mVolumeMusic.setChecked(Settings.System.getBoolean(mContext.getContentResolver(),
                 Settings.System.VOLUME_MUSIC_CONTROLS, false));
-
-    //    mQuickUnlock = (CheckBoxPreference) findPreference(PREF_QUICK_UNLOCK);
-     //   mQuickUnlock.setChecked(Settings.System.getBoolean(mContext.getContentResolver(), Settings.System.LOCKSCREEN_QUICK_UNLOCK_CONTROL, false));
 
         mMaximizeWidgets = (CheckBoxPreference) findPreference(PREF_LOCKSCREEN_MAXIMIZE_WIDGETS);
         mMaximizeWidgets.setOnPreferenceChangeListener(this);
@@ -152,10 +147,10 @@ public class Lockscreens extends SettingsPreferenceFragment implements OnPrefere
         mLockscreenLongpressChallenge.setChecked(Settings.System.getBoolean(getActivity().getContentResolver(),
                 Settings.System.LOCKSCREEN_LONGPRESS_CHALLENGE, false));
 
-         if (isTablet(mContext)) {
-            ((PreferenceGroup)findPreference("layout")).removePreference((Preference)findPreference(PREF_LOCKSCREEN_MAXIMIZE_WIDGETS));
-            ((PreferenceGroup)findPreference("layout")).removePreference((Preference)findPreference(PREF_LOCKSCREEN_LONGPRESS_CHALLENGE));
-        }
+    //     if (isTablet(mContext)) {
+     //       ((PreferenceGroup)findPreference("layout")).removePreference((Preference)findPreference(PREF_LOCKSCREEN_MAXIMIZE_WIDGETS));
+     //       ((PreferenceGroup)findPreference("layout")).removePreference((Preference)findPreference(PREF_LOCKSCREEN_LONGPRESS_CHALLENGE));
+     //   }
 
         setHasOptionsMenu(true);
     }
@@ -183,12 +178,7 @@ public class Lockscreens extends SettingsPreferenceFragment implements OnPrefere
                     Settings.System.VOLUME_MUSIC_CONTROLS,
                     ((CheckBoxPreference) preference).isChecked());
             return true;
-      //  } else if (preference == mQuickUnlock) {
-        //    Settings.System.putBoolean(mContext.getContentResolver(),
-       //             Settings.System.LOCKSCREEN_QUICK_UNLOCK_CONTROL,
-       //             ((CheckBoxPreference) preference).isChecked());
-       //     return true;
-         } else if (preference == mLockscreenAllWidgets) {
+        } else if (preference == mLockscreenAllWidgets) {
             Settings.System.putBoolean(mContext.getContentResolver(),
                     Settings.System.LOCKSCREEN_ALL_WIDGETS,
                     ((CheckBoxPreference) preference).isChecked());

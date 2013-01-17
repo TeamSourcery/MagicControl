@@ -226,7 +226,9 @@
     <string name="toggle_lte">LTE</string>
     <string name="toggle_data">Data</string>
     <string name="toggle_nfc">NFC</string>
+    <string name="toggle_ram">Ram Tile</string>
     <string name="toggle_silent">Silent</string>
+    <string name="toggle_sound_state">Ring/Vib/Silent</string>
     <string name="toggle_sync">Sync</string>
     <string name="toggle_torch">Torch</string>
     <string name="toggle_2g">2G</string>
@@ -826,7 +828,7 @@
     <string name="lockscreen_maximize_widgets_summary">Show widgets maximized and the unlock mimimized when the screen is turned on</string>
 
     <string name="lockscreen_hide_initial_page_hints_title">Hide initial page hints</string>
-    <string name="lockscreen_hide_initial_page_hints_summary">Set whether the hints for the left and right widgets are shown when the screen is turned on.</string>
+    <string name="lockscreen_hide_initial_page_hints_summary">Set wether the hints for the left and right widgets are shown when the screen is turned on.</string>
 
     <!-- Toggle pull down styles -->
     <string name="title_general">QuickSettings Options</string>
@@ -861,4 +863,5 @@
   <!-- Alt lock screen widget picker -->
   <string name="lockscreen_use_widget_container_carousel_title">Use widget carousel</string>
   <string name="lockscreen_use_widget_container_carousel_summary">Use a carousel animation when switching between lockscreen widgets.</string>
+
 </resources>

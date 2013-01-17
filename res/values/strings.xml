@@ -854,7 +854,7 @@
 
   <!-- Lock screen see through -->
    <string name="see_through_title">See through</string>
-   <string name="see_through_summary">Allows to see the application behind the lock screen.</string>
+   <string name="see_through_summary">Allows to see the application behind the lock screen.-Must Reset LockScreen Wallpaper</string>
   
   <!-- Long press on small circle -->
   <string name="lockscreen_longpress_challenge_title">Enable longpress to unlock</string>

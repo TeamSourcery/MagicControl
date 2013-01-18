@@ -132,7 +132,16 @@ public class UserInterface extends SettingsPreferenceFragment {
                         getApplicationContext().getContentResolver(),
                         Settings.System.UI_FORCE_OVERFLOW_BUTTON, 0) == 1));
          
+        mDisableBootAnimation = (CheckBoxPreference) findPreference("disable_bootanimation");
+        mDisableBootAnimation.setChecked(!new File("/system/media/bootanimation.zip").exists());
+                 if (mDisableBootAnimation.isChecked()) {
+                     Resources res = mContext.getResources();
+                     String[] insults = res.getStringArray(R.array.disable_bootanimation_insults);
+                     int randomInt = randomGenerator.nextInt(insults.length);
+                     mDisableBootAnimation.setSummary(insults[randomInt]);
+                 }
     }
+
     @Override
     public boolean onPreferenceTreeClick(PreferenceScreen preferenceScreen,
             final Preference preference) {

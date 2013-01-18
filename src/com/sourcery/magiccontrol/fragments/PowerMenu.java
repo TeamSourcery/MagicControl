@@ -19,19 +19,11 @@ public class PowerMenu extends SettingsPreferenceFragment {
     private static final String PREF_TORCH_TOGGLE = "show_torch_toggle";
     private static final String PREF_AIRPLANE_TOGGLE = "show_airplane_toggle";
     private static final String PREF_NAVBAR_HIDE = "show_navbar_hide";
-    private static final String KEY_POWER_BUTTON_TORCH = "power_button_torch";
 
     CheckBoxPreference mShowScreenShot;
     CheckBoxPreference mShowTorchToggle;
     CheckBoxPreference mShowAirplaneToggle;
     CheckBoxPreference mShowNavBarHide;
-    
-    private CheckBoxPreference mPowerButtonTorch;
- 
-    private boolean torchSupported() {
-        return getResources().getBoolean(R.bool.has_led_flash);
-    }
-
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -39,15 +31,6 @@ public class PowerMenu extends SettingsPreferenceFragment {
 
         // Load the preferences from an XML resource
         addPreferencesFromResource(R.xml.prefs_powermenu);
-
-        mPowerButtonTorch = (CheckBoxPreference) findPreference(KEY_POWER_BUTTON_TORCH);
-        if (torchSupported()) {
-            mPowerButtonTorch.setChecked((Settings.System.getInt(getActivity().
-                    getApplicationContext().getContentResolver(),
-                    Settings.System.POWER_BUTTON_TORCH, 0) == 1));
-        } else {
-            getPreferenceScreen().removePreference(mPowerButtonTorch);
-        }
         
         mShowTorchToggle = (CheckBoxPreference) findPreference(PREF_TORCH_TOGGLE);
         mShowTorchToggle.setChecked(Settings.System.getBoolean(getActivity()
@@ -87,11 +70,6 @@ public class PowerMenu extends SettingsPreferenceFragment {
             Settings.System.putBoolean(getActivity().getContentResolver(),
                     Settings.System.POWER_DIALOG_SHOW_NAVBAR_HIDE,
                     ((CheckBoxPreference)preference).isChecked());
-            return true;
-        } else if (preference == mPowerButtonTorch) {
- 	     boolean enabled = mPowerButtonTorch.isChecked();
-             Settings.System.putInt(getContentResolver(), Settings.System.POWER_BUTTON_TORCH,
-                    enabled ? 1 : 0);
             return true;
         }
 

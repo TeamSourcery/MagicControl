@@ -30,8 +30,17 @@
     <header
         android:id="@+id/transparency"
 	android:fragment="com.sourcery.magiccontrol.fragments.StatusBar"
-        android:title="Status Bar Mods"
-         />
+        android:title="Status Bar Mods" />
+    
+      <header
+        android:id="@+id/tablet"
+        android:title="Tablet Mode" />
+
+
+    <header
+        android:id="@+id/tabletmode"
+	android:fragment="com.sourcery.magiccontrol.fragments.TabletMode"
+        android:title="Tablet Mode Options" />
 
 
     <header

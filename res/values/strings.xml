@@ -864,4 +864,8 @@
   <string name="lockscreen_use_widget_container_carousel_title">Use widget carousel</string>
   <string name="lockscreen_use_widget_container_carousel_summary">Use a carousel animation when switching between lockscreen widgets.</string>
 
+  <!-- status bar ticker on /off -->
+   <string name="status_bar_donotdisturb_title">Do not disturb</string>
+   <string name="status_bar_donotdisturb_summary">Disable ticker animation for incoming notifications</string>
+
 </resources>

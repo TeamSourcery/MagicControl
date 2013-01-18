@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+  <PreferenceCategory
+            android:key="tablet"
+            android:title="@string/tabletUI_cat">
+
+
+        <ListPreference
+            android:key="user_mode_ui"
+            android:title="@string/user_mode_ui"
+            android:summary="@string/user_mode_ui_summary"
+            android:entries="@array/user_mode_ui_entries"
+            android:entryValues="@array/user_mode_ui_values" />
+
+        <Preference
+            android:key="lcd_density_setup"
+            android:title="@string/lcd_density_title"
+            android:summary="@string/lcd_density_summary" />
+
+        <CheckBoxPreference
+            android:key="force_dualpanel"
+            android:title="@string/multipane_ui"
+            android:summary="@string/multipane_ui_summary"
+            android:defaultValue="false" />
+
+        <com.sourcery.magiccontrol.widgets.SeekBarPreference
+            android:key="width_port"
+            android:title="@string/width_port_title" />
+
+	<com.sourcery.magiccontrol.widgets.SeekBarPreference
+            android:key="width_land"
+            android:title="@string/width_land_title" />
+
+        <Preference
+            android:key="width_help"
+            android:enabled="false"
+            android:title="@string/navbar_width_help_title"
+            android:summary="@string/navbar_width_help_summary" />
+
+        <CheckBoxPreference
+            android:key="hide_extras"
+            android:title= "@string/hide_extras"
+            android:summary= "@string/hide_extras_summary"
+            android:defaultValue="false" />
+
+                       
+    </PreferenceCategory>
+</PreferenceScreen>

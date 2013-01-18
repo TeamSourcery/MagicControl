@@ -34,7 +34,7 @@ import com.sourcery.magiccontrol.R;
 import com.sourcery.magiccontrol.util.CMDProcessor;
 import com.sourcery.magiccontrol.util.Helpers;
 
-public class UserInterface extends SettingsPreferenceFragment implements OnPreferenceChangeListener {
+public class UserInterface extends SettingsPreferenceFragment {
 
     public static final String TAG = "UserInterface";
 
@@ -49,9 +49,7 @@ public class UserInterface extends SettingsPreferenceFragment implements OnPrefe
     private static final String PREF_IME_SWITCHER = "ime_switcher";
     private static final String PREF_ALARM_ENABLE = "alarm";
     private static final String PREF_SHOW_OVERFLOW = "show_overflow";
-    private static final String PREF_FORCE_DUAL_PANEL = "force_dualpanel";
-    private static final String PREF_USER_MODE_UI = "user_mode_ui";
-    private static final String PREF_HIDE_EXTRAS = "hide_extras";
+        
 
     CheckBoxPreference mAllow180Rotation;
     CheckBoxPreference mStatusBarNotifCount;
@@ -66,10 +64,7 @@ public class UserInterface extends SettingsPreferenceFragment implements OnPrefe
     CheckBoxPreference mShowImeSwitcher;
     CheckBoxPreference mAlarm;
     CheckBoxPreference mShowActionOverflow;
-    CheckBoxPreference mDualpane;
-    ListPreference mUserModeUI;
-    CheckBoxPreference mHideExtras;
-    Preference mLcdDensity;
+       
 
     Random randomGenerator = new Random();
 
@@ -136,43 +131,7 @@ public class UserInterface extends SettingsPreferenceFragment implements OnPrefe
         mShowActionOverflow.setChecked((Settings.System.getInt(getActivity().
                         getApplicationContext().getContentResolver(),
                         Settings.System.UI_FORCE_OVERFLOW_BUTTON, 0) == 1));
-
-        mHideExtras = (CheckBoxPreference) findPreference(PREF_HIDE_EXTRAS);
-        mHideExtras.setChecked(Settings.System.getBoolean(mContext.getContentResolver(),
-                        Settings.System.HIDE_EXTRAS_SYSTEM_BAR, false));
-
-
-        mDualpane = (CheckBoxPreference) findPreference(PREF_FORCE_DUAL_PANEL);
-        mDualpane.setChecked(Settings.System.getBoolean(mContext.getContentResolver(),
-                        Settings.System.FORCE_DUAL_PANEL, getResources().getBoolean(
-                        com.android.internal.R.bool.preferences_prefer_dual_pane)));
-    
-        mUserModeUI = (ListPreference) findPreference(PREF_USER_MODE_UI);
-        int uiMode = Settings.System.getInt(cr,
-		     Settings.System.CURRENT_UI_MODE, 0);
-        mUserModeUI.setValue(Integer.toString(Settings.System.getInt(cr,
-                Settings.System.USER_UI_MODE, uiMode)));
-        mUserModeUI.setOnPreferenceChangeListener(this);
-
-         mDisableBootAnimation = (CheckBoxPreference) findPreference("disable_bootanimation");
-         mDisableBootAnimation.setChecked(!new File("/system/media/bootanimation.zip").exists());
-                 if (mDisableBootAnimation.isChecked()) {
-                     Resources res = mContext.getResources();
-                     String[] insults = res.getStringArray(R.array.disable_bootanimation_insults);
-                     int randomInt = randomGenerator.nextInt(insults.length);
-                     mDisableBootAnimation.setSummary(insults[randomInt]);
-                 }
-   
-    mLcdDensity = findPreference("lcd_density_setup");
-    String currentProperty = SystemProperties.get("ro.sf.lcd_density");
-    try {
-         newDensityValue = Integer.parseInt(currentProperty);
-    } catch (Exception e) {
-         getPreferenceScreen().removePreference(mLcdDensity);
-    }
-
-    mLcdDensity.setSummary(getResources().getString(R.string.current_lcd_density) + currentProperty);
- 
+         
     }
     @Override
     public boolean onPreferenceTreeClick(PreferenceScreen preferenceScreen,
@@ -192,11 +151,6 @@ public class UserInterface extends SettingsPreferenceFragment implements OnPrefe
             Settings.System.putBoolean(mContext.getContentResolver(),
                     Settings.System.STATUSBAR_NOTIF_COUNT,
                     ((CheckBoxPreference) preference).isChecked());
-            return true;
-        } else if (preference == mHideExtras) {
-            Settings.System.putBoolean(mContext.getContentResolver(),
-                   Settings.System.HIDE_EXTRAS_SYSTEM_BAR,
-                   ((CheckBoxPreference) preference).isChecked());
             return true;
         } else if (preference == mShowImeSwitcher) {
             Settings.System.putBoolean(getActivity().getContentResolver(),
@@ -252,12 +206,6 @@ public class UserInterface extends SettingsPreferenceFragment implements OnPrefe
             Settings.System.putBoolean(getActivity().getContentResolver(),
                     Settings.System.RECENT_KILL_ALL_BUTTON, checked ? true : false);
             return true;
-        } else if (preference == mDualpane) {
-             Settings.System.putBoolean(mContext.getContentResolver(),
-                    Settings.System.FORCE_DUAL_PANEL,
-                    ((CheckBoxPreference) preference).isChecked());
-            Helpers.restartSystemUI();
-            return true;
         } else if (preference == mRamBar) {
             boolean checked = ((CheckBoxPreference)preference).isChecked();
             Settings.System.putBoolean(getActivity().getContentResolver(),
@@ -276,11 +224,7 @@ public class UserInterface extends SettingsPreferenceFragment implements OnPrefe
                         Toast.LENGTH_LONG).show();
             }
             return true;
-        } else if (preference == mLcdDensity) {
-              ((PreferenceActivity) getActivity())
-                     .startPreferenceFragment(new DensityChanger(), true);
-             return true;
-        } else if (preference == mDisableBootAnimation) {
+         } else if (preference == mDisableBootAnimation) {
             boolean checked = ((CheckBoxPreference) preference).isChecked();
             if (checked) {
                 Helpers.getMount("rw");
@@ -311,15 +255,5 @@ public class UserInterface extends SettingsPreferenceFragment implements OnPrefe
         } else {
             mCustomLabel.setSummary(mCustomLabelText);
         }
-    }
-    @Override
-    public boolean onPreferenceChange(Preference preference, Object newValue) {
-         if (preference == mUserModeUI) {
-            Settings.System.putInt(getActivity().getContentResolver(),
-                    Settings.System.USER_UI_MODE, Integer.parseInt((String) newValue));
-            Helpers.restartSystemUI();
-            return true;
-        }
-        return false;
     }
 }

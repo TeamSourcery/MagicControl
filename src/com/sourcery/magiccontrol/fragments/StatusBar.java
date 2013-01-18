@@ -80,13 +80,14 @@ public class StatusBar extends SettingsPreferenceFragment implements
     private static final String PREF_STATUSBAR_BACKGROUND_COLOR = "statusbar_background_color";
     private static final String PREF_STATUSBAR_BRIGHTNESS = "statusbar_brightness_slider";
     private static final String PREF_STATUSBAR_BACKGROUND_STYLE = "statusbar_background_style";
-   
+    private static final String STATUS_BAR_DONOTDISTURB = "status_bar_donotdisturb";
    
  	
       
     ColorPickerPreference mStatusbarBgColor;
     CheckBoxPreference mStatusbarSliderPreference;
     ListPreference mStatusbarBgStyle;
+    private CheckBoxPreference mStatusBarDoNotDisturb;
     
     private Activity mActivity;
 
@@ -101,7 +102,9 @@ public class StatusBar extends SettingsPreferenceFragment implements
 
         PreferenceScreen prefs = getPreferenceScreen();
 
-       
+        mStatusBarDoNotDisturb = (CheckBoxPreference) findPreference(STATUS_BAR_DONOTDISTURB);
+        mStatusBarDoNotDisturb.setChecked((Settings.System.getInt(getActivity().getContentResolver(),
+                 Settings.System.STATUS_BAR_DONOTDISTURB, 0) == 1));
        
         mStatusbarBgColor = (ColorPickerPreference) findPreference(PREF_STATUSBAR_BACKGROUND_COLOR);
         mStatusbarBgColor.setOnPreferenceChangeListener(this);
@@ -136,6 +139,11 @@ public class StatusBar extends SettingsPreferenceFragment implements
            Settings.System.putBoolean(getActivity().getContentResolver(),
                     Settings.System.STATUSBAR_BRIGHTNESS_SLIDER,
                     isCheckBoxPreferenceChecked(preference));
+            return true;
+       } else if (preference == mStatusBarDoNotDisturb) {
+           Settings.System.putInt(getActivity().getContentResolver(),
+                    Settings.System.STATUS_BAR_DONOTDISTURB,
+                    mStatusBarDoNotDisturb.isChecked() ? 1 : 0);
             return true;   
     }
          return super.onPreferenceTreeClick(preferenceScreen, preference);

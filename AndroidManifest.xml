@@ -83,6 +83,16 @@
 	            </intent-filter>
 	        </activity>
 
+                   <activity
+	            android:name=".fragments.TabletMode"
+	            android:label="Tablet Mode" >
+	            <intent-filter>
+	                <action android:name="android.intent.action.MAIN" />
+	                <category android:name="com.sourcery.magiccontrol.SHORTCUT" />
+	            </intent-filter>
+	        </activity>
+
+
         
          <activity
                android:name=".fragments.StatusBar"

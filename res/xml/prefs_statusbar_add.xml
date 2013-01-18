@@ -24,10 +24,15 @@
  
     </PreferenceCategory>
          
-        <CheckBoxPreference
+    <CheckBoxPreference
          android:key="statusbar_brightness_slider"
          android:title="@string/statusbar_brightness_slider_title"
-         android:summary="@string/statusbar_brightness_slider_summary"
-         />
+         android:summary="@string/statusbar_brightness_slider_summary" />
+
+    <CheckBoxPreference
+         android:key="status_bar_donotdisturb"
+         android:title="@string/status_bar_donotdisturb_title"
+         android:summary="@string/status_bar_donotdisturb_summary"
+         android:defaultValue="false" />
 </PreferenceScreen>
 

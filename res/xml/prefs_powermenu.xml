@@ -15,4 +15,7 @@
     <CheckBoxPreference android:key="show_airplane_toggle"
         android:title="@string/title_show_airplane_toggle" /> 
 
+    <CheckBoxPreference android:key="show_expanded_desktop_toggle"
+        android:title="@string/title_show_expanded_desktop_toggle" />
+
 </PreferenceScreen>

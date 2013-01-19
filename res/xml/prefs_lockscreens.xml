@@ -5,13 +5,35 @@
     
     <PreferenceCategory
         android:key="layout"
-        android:title="@string/lockscreen_layout_cat">
+        android:title="Lock Screen Wallpaper">
 
         <Preference
         android:key="wallpaper"
         android:title="@string/lockscreen_wallpaper_title"
         android:summary="@string/lockscreen_wallpaper_summary" />
 
+   </PreferenceCategory>
+
+    <PreferenceCategory
+            android:key="lockscreen"
+            android:title="LockScreen Custom Apps">
+
+     <Preference
+            android:fragment="com.sourcery.magiccontrol.fragments.LockscreenInterface"
+            android:key="lockscreen_targets"
+            android:title="@string/lock_screen_title"
+            android:summary="@string/lock_screen_shortcuts_summary_ring" />
+     <PreferenceScreen
+            android:key="lock_screen_shortcuts"
+            android:fragment="com.sourcery.magiccontrol.shortcuts.Shortcuts"
+            android:title="@string/lock_screen_shortcuts_title" 
+            android:summary="@string/lock_screen_shortcuts_summary" />
+  
+    </PreferenceCategory>
+
+    <PreferenceCategory
+            android:key="Lock_Screen_Settings"
+            android:title="LockScreen Settings">
 
         <CheckBoxPreference
         android:key="lockscreen_maximize_widgets"
@@ -49,15 +71,10 @@
             android:key="lockscreen_battery"
             android:title="@string/lockscreen_battery_title"
             android:summary="@string/lockscreen_battery_summary" />
+    </PreferenceCategory>
 
     
-     <Preference
-                android:fragment="com.sourcery.magiccontrol.fragments.LockscreenInterface"
-                android:key="lockscreen_targets"
-                android:title="@string/lock_screen_title" />
 
-  
-    </PreferenceCategory>
     <PreferenceCategory
         android:key="music"
         android:title="@string/lockscreen_music_cat">

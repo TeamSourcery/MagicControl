@@ -865,4 +865,22 @@
    <string name="status_bar_donotdisturb_title">Do not disturb</string>
    <string name="status_bar_donotdisturb_summary">Disable ticker animation for incoming notifications</string>
 
+     
+    <!-- Shortcuts -->
+    <string name="lock_screen_shortcuts_title">Lock Screen Shortcuts</string>
+    <string name="lock_screen_shortcuts_summary">Under Clock Line up Shortcuts</string>
+    <string name="lock_screen_shortcuts_summary_ring">Ring around Lock Shortcuts</string>
+    <string name="lock_screen_shortcuts_add">Add</string>
+    <string name="lock_screen_shortcuts_reset">Reset</string>
+    <string name="lock_screen_shortcuts_reset_message">Reset lock screen shortcuts?</string>
+    <string name="lock_screen_shortcuts_limit">Only 6 shorcuts are allowed!</string>
+    <string name="icon_picker_type">Select icon type:</string>
+    <string name="icon_default">Default</string>
+    <string name="icon_presets">Presets</string>
+    <string name="icon_custom">Custom</string>
+    <string name="choose_app">Choose application</string>
+    <string name="dialog_delete_title">Delete</string>
+    <string name="dialog_delete_message">Remove selected item?</string>
+   
+
 </resources>

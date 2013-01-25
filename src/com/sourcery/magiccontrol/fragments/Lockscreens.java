@@ -206,6 +206,32 @@ public class Lockscreens extends SettingsPreferenceFragment implements OnPrefere
     }
 
     @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == REQUEST_CODE_BG_WALLPAPER) {
+            int hintId;
+
+            if (resultCode == Activity.RESULT_OK) {
+                if (mWallpaperTemporary.exists()) {
+                    mWallpaperTemporary.renameTo(mWallpaperImage);
+                }
+                mWallpaperImage.setReadOnly();
+                hintId = R.string.lockscreen_background_result_successful;
+                Settings.System.putString(getContentResolver(),
+                        Settings.System.LOCKSCREEN_BACKGROUND, "");
+                updateCustomBackgroundSummary();
+            } else {
+                if (mWallpaperTemporary.exists()) {
+                    mWallpaperTemporary.delete();
+                }
+                hintId = R.string.lockscreen_background_result_not_successful;
+            }
+            Toast.makeText(getActivity(),
+                    getResources().getString(hintId), Toast.LENGTH_LONG).show();
+        }
+    }
+
+
+    @Override
     public boolean onPreferenceTreeClick(PreferenceScreen preferenceScreen, Preference preference) {
         if (preference == mVolumeRockerWake) {
             Settings.System.putBoolean(mContext.getContentResolver(),
@@ -310,30 +336,42 @@ public class Lockscreens extends SettingsPreferenceFragment implements OnPrefere
                     .setView(colorView)
                     .show();
         } else if (selection == LOCKSCREEN_BACKGROUND_CUSTOM_IMAGE) {
-           Display display = getActivity().getWindowManager().getDefaultDisplay();
-
-            int width = getActivity().getWallpaperDesiredMinimumWidth();
-            int height = getActivity().getWallpaperDesiredMinimumHeight();
-
-            float spotlightX = (float)display.getWidth() / width;
-            float spotlightY = (float)display.getHeight() / height;
-
-            Intent intent = new Intent(Intent.ACTION_GET_CONTENT, null);
+            final Intent intent = new Intent(Intent.ACTION_GET_CONTENT, null);
             intent.setType("image/*");
             intent.putExtra("crop", "true");
             intent.putExtra("scale", true);
-            intent.putExtra("scaleUpIfNeeded", true);
-            intent.putExtra("aspectX", width);
-            intent.putExtra("aspectY", height);
-            intent.putExtra("outputX", width);
-            intent.putExtra("outputY", height);
-            intent.putExtra("spotlightX", spotlightX);
-            intent.putExtra("spotlightY", spotlightY);
+            intent.putExtra("scaleUpIfNeeded", false);
             intent.putExtra("outputFormat", Bitmap.CompressFormat.PNG.toString());
-            intent.putExtra(MediaStore.EXTRA_OUTPUT, getLockscreenExternalUri());
 
-            startActivityForResult(intent, REQUEST_PICK_WALLPAPER);
-            return true;
+            final Display display = getActivity().getWindowManager().getDefaultDisplay();
+            final Rect rect = new Rect();
+            final Window window = getActivity().getWindow();
+
+            window.getDecorView().getWindowVisibleDisplayFrame(rect);
+
+            int statusBarHeight = rect.top;
+            int contentViewTop = window.findViewById(Window.ID_ANDROID_CONTENT).getTop();
+            int titleBarHeight = contentViewTop - statusBarHeight;
+            boolean isPortrait = getResources().getConfiguration().orientation ==
+                    Configuration.ORIENTATION_PORTRAIT;
+
+            int width = display.getWidth();
+            int height = display.getHeight() - titleBarHeight;
+
+            intent.putExtra("aspectX", isPortrait ? width : height);
+            intent.putExtra("aspectY", isPortrait ? height : width);
+
+            try {
+                mWallpaperTemporary.createNewFile();
+                mWallpaperTemporary.setWritable(true, false);
+                mWallpaperTemporary.setReadable(true, false);
+                intent.putExtra(MediaStore.EXTRA_OUTPUT ,Uri.fromFile(mWallpaperTemporary));
+                intent.putExtra("return-data", false);
+                getActivity().startActivityFromFragment(this, intent, REQUEST_CODE_BG_WALLPAPER);
+                //Ignored would be preferable to nothing
+            } catch (IOException e) {
+            } catch (ActivityNotFoundException e) {
+            }
         } else if (selection == LOCKSCREEN_BACKGROUND_DEFAULT_WALLPAPER) {
             Settings.System.putString(getContentResolver(),
                     Settings.System.LOCKSCREEN_BACKGROUND, null);
@@ -343,67 +381,4 @@ public class Lockscreens extends SettingsPreferenceFragment implements OnPrefere
 
         return false;
     }
-@Override
-    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-        super.onCreateOptionsMenu(menu, inflater);
-        inflater.inflate(R.menu.lockscreens, menu);
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        AdapterContextMenuInfo info = (AdapterContextMenuInfo) item.getMenuInfo();
-        switch (item.getItemId()) {
-            case R.id.remove_wallpaper:
-                File f = new File(mContext.getFilesDir(), WALLPAPER_NAME);
-                Log.e(TAG, mContext.deleteFile(WALLPAPER_NAME) + "");
-                Log.e(TAG, mContext.deleteFile(WALLPAPER_NAME) + "");
-                return true;
-            default:
-                return super.onContextItemSelected(item);
-        }
-    }
-
-    private Uri getLockscreenExternalUri() {
-        File dir = mContext.getExternalCacheDir();
-        File wallpaper = new File(dir, WALLPAPER_NAME);
-
-        return Uri.fromFile(wallpaper);
-    }
-
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (resultCode == Activity.RESULT_OK) {
-            if (requestCode == REQUEST_PICK_WALLPAPER) {
-
-                FileOutputStream wallpaperStream = null;
-                try {
-                    wallpaperStream = mContext.openFileOutput(WALLPAPER_NAME,
-                            Context.MODE_WORLD_READABLE);
-                } catch (FileNotFoundException e) {
-                    return; // NOOOOO
-                }
-
-                Uri selectedImageUri = getLockscreenExternalUri();
-                Bitmap bitmap = BitmapFactory.decodeFile(selectedImageUri.getPath());
-
-                bitmap.compress(Bitmap.CompressFormat.PNG, 100, wallpaperStream);
-            }
-        }
-    }
-
-    public void copy(File src, File dst) throws IOException {
-        InputStream in = new FileInputStream(src);
-        FileOutputStream out = new FileOutputStream(dst);
-
-        // Transfer bytes from in to out
-        byte[] buf = new byte[1024];
-        int len;
-        while ((len = in.read(buf)) > 0) {
-            out.write(buf, 0, len);
-        }
-        in.close();
-        out.close();
-    }
-
-          
 }
-

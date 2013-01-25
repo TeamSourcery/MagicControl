@@ -885,7 +885,7 @@
     <string name="dialog_delete_message">Remove selected item?</string>
 
     <!-- Custom lock screen background -->
-    <string name="lockscreen_custom_background_title">Background</string>
+    <string name="lockscreen_custom_background_title">Lock Screen Background</string>
     <string name="lockscreen_custom_background_dialog_title">Choose color</string>
     <string name="lockscreen_background_result_successful">Background changed successfully</string>
     <string name="lockscreen_background_result_not_successful">Background could not be changed</string>

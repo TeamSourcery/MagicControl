@@ -308,6 +308,7 @@
     <string name="navbar_action_home">Home</string>
     <string name="navbar_action_back">Back</string>
     <string name="navbar_action_recents">Recents</string>
+    <string name="navbar_action_recent_apps">Windows Style Recents</string>
     <string name="navbar_action_search">Search</string>
     <string name="navbar_action_screenshot">Screenshot</string>
     <string name="navbar_action_menu">Menu</string>
@@ -511,6 +512,7 @@
     <string name="kill_app">Kill app</string>
     <string name="power">Power</string>
     <string name="notifications">Notifications</string>
+    <string name="recent_apps">Windows Style Recents</string>
     <string name="custom_app">Custom app</string>
     <string name="menu_power">Power menu</string>
     <string name="blank">Blank</string>
@@ -883,7 +885,7 @@
     <string name="dialog_delete_message">Remove selected item?</string>
 
     <!-- Custom lock screen background -->
-    <string name="lockscreen_custom_background_title">LockScreen Background</string>
+    <string name="lockscreen_custom_background_title">Background</string>
     <string name="lockscreen_custom_background_dialog_title">Choose color</string>
     <string name="lockscreen_background_result_successful">Background changed successfully</string>
     <string name="lockscreen_background_result_not_successful">Background could not be changed</string>

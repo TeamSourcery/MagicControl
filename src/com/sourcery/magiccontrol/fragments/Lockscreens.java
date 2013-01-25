@@ -4,6 +4,7 @@ import net.margaritov.preference.colorpicker.ColorPickerPreference;
 
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.content.ActivityNotFoundException;
 import android.app.FragmentTransaction;
 import android.content.ContentResolver;
 import android.content.Context;
@@ -58,10 +59,19 @@ import com.sourcery.magiccontrol.SettingsPreferenceFragment;
 import com.sourcery.magiccontrol.R;
 import com.sourcery.magiccontrol.MagicControlActivity;
 
+import net.margaritov.preference.colorpicker.ColorPickerView;
+
 public class Lockscreens extends SettingsPreferenceFragment implements OnPreferenceChangeListener {
+
 
     private static final String TAG = "Lockscreens";
     private static final boolean DEBUG = true;
+
+    private static final int REQUEST_CODE_BG_WALLPAPER = 1024;
+
+    private static final int LOCKSCREEN_BACKGROUND_COLOR_FILL = 0;
+    private static final int LOCKSCREEN_BACKGROUND_CUSTOM_IMAGE = 1;
+    private static final int LOCKSCREEN_BACKGROUND_DEFAULT_WALLPAPER = 2;
 
     private static final String PREF_VOLUME_ROCKER_WAKE = "volume_rocker_wake";
     private static final String PREF_VOLUME_MUSIC = "volume_music_controls";
@@ -74,6 +84,7 @@ public class Lockscreens extends SettingsPreferenceFragment implements OnPrefere
     public static final String KEY_SEE_THROUGH = "see_through";
     private static final String PREF_LOCKSCREEN_LONGPRESS_CHALLENGE = "lockscreen_longpress_challenge";
     private static final String PREF_LOCKSCREEN_USE_CAROUSEL = "lockscreen_use_widget_container_carousel";
+    private static final String KEY_BACKGROUND_PREF = "lockscreen_background";
 
     public static final int REQUEST_PICK_WALLPAPER = 199;
     public static final int REQUEST_PICK_CUSTOM_ICON = 200;
@@ -96,6 +107,10 @@ public class Lockscreens extends SettingsPreferenceFragment implements OnPrefere
     CheckBoxPreference mLockscreenLongpressChallenge;
     CheckBoxPreference mLockscreenUseCarousel;
     private CheckBoxPreference mSeeThrough;
+    private ListPreference mCustomBackground;
+
+    private File mWallpaperImage;
+    private File mWallpaperTemporary;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -134,7 +149,7 @@ public class Lockscreens extends SettingsPreferenceFragment implements OnPrefere
         mLockscreenTextColor.setOnPreferenceChangeListener(this);
 
         mLockscreenWallpaper = findPreference("wallpaper");
-
+        
         mLockscreenHideInitialPageHints = (CheckBoxPreference)findPreference(PREF_LOCKSCREEN_HIDE_INITIAL_PAGE_HINTS);
  	mLockscreenHideInitialPageHints.setChecked(Settings.System.getBoolean(getActivity().getContentResolver(),
                 Settings.System.LOCKSCREEN_HIDE_INITIAL_PAGE_HINTS, false));
@@ -151,6 +166,30 @@ public class Lockscreens extends SettingsPreferenceFragment implements OnPrefere
      //       ((PreferenceGroup)findPreference("layout")).removePreference((Preference)findPreference(PREF_LOCKSCREEN_MAXIMIZE_WIDGETS));
      //       ((PreferenceGroup)findPreference("layout")).removePreference((Preference)findPreference(PREF_LOCKSCREEN_LONGPRESS_CHALLENGE));
      //   }
+
+        mCustomBackground = (ListPreference) findPreference(KEY_BACKGROUND_PREF);
+        mCustomBackground.setOnPreferenceChangeListener(this);
+        updateCustomBackgroundSummary();
+
+        mWallpaperImage = new File(getActivity().getFilesDir()+"/lockwallpaper");
+        mWallpaperTemporary = new File(getActivity().getCacheDir()+"/lockwallpaper.tmp");
+			    }
+
+    private void updateCustomBackgroundSummary() {
+        int resId;
+        String value = Settings.System.getString(getContentResolver(),
+                Settings.System.LOCKSCREEN_BACKGROUND);
+        if (value == null) {
+            resId = R.string.lockscreen_background_default_wallpaper;
+            mCustomBackground.setValueIndex(LOCKSCREEN_BACKGROUND_DEFAULT_WALLPAPER);
+        } else if (value.isEmpty()) {
+            resId = R.string.lockscreen_background_custom_image;
+            mCustomBackground.setValueIndex(LOCKSCREEN_BACKGROUND_CUSTOM_IMAGE);
+        } else {
+            resId = R.string.lockscreen_background_color_fill;
+            mCustomBackground.setValueIndex(LOCKSCREEN_BACKGROUND_COLOR_FILL);
+        }
+        mCustomBackground.setSummary(getResources().getString(resId));
 
         setHasOptionsMenu(true);
     }
@@ -182,31 +221,6 @@ public class Lockscreens extends SettingsPreferenceFragment implements OnPrefere
             Settings.System.putBoolean(mContext.getContentResolver(),
                     Settings.System.LOCKSCREEN_ALL_WIDGETS,
                     ((CheckBoxPreference) preference).isChecked());
-            return true;
-        } else if (preference == mLockscreenWallpaper) {
-            Display display = getActivity().getWindowManager().getDefaultDisplay();
-
-            int width = getActivity().getWallpaperDesiredMinimumWidth();
-            int height = getActivity().getWallpaperDesiredMinimumHeight();
-
-            float spotlightX = (float)display.getWidth() / width;
-            float spotlightY = (float)display.getHeight() / height;
-
-            Intent intent = new Intent(Intent.ACTION_GET_CONTENT, null);
-            intent.setType("image/*");
-            intent.putExtra("crop", "true");
-            intent.putExtra("scale", true);
-            intent.putExtra("scaleUpIfNeeded", true);
-            intent.putExtra("aspectX", width);
-            intent.putExtra("aspectY", height);
-            intent.putExtra("outputX", width);
-            intent.putExtra("outputY", height);
-            intent.putExtra("spotlightX", spotlightX);
-            intent.putExtra("spotlightY", spotlightY);
-            intent.putExtra("outputFormat", Bitmap.CompressFormat.PNG.toString());
-            intent.putExtra(MediaStore.EXTRA_OUTPUT, getLockscreenExternalUri());
-
-            startActivityForResult(intent, REQUEST_PICK_WALLPAPER);
             return true;
         } else if (preference == mLockscreenBattery) {
             Settings.System.putInt(getActivity().getContentResolver(),
@@ -242,6 +256,8 @@ public class Lockscreens extends SettingsPreferenceFragment implements OnPrefere
         return super.onPreferenceTreeClick(preferenceScreen, preference);
     }
 
+   
+
     @Override
     public boolean onPreferenceChange(Preference preference, Object newValue) {
         ContentResolver cr = getActivity().getContentResolver();
@@ -257,12 +273,77 @@ public class Lockscreens extends SettingsPreferenceFragment implements OnPrefere
              boolean value = (Boolean) newValue;
              Settings.System.putInt(cr, Settings.System.LOCKSCREEN_MAXIMIZE_WIDGETS, value ? 1 : 0);
              return true;
-         
+         } else if (preference == mCustomBackground) {
+            int selection = mCustomBackground.findIndexOfValue(newValue.toString());
+            return handleBackgroundSelection(selection); 
         }
         return false;
     }
 
-    @Override
+     private boolean handleBackgroundSelection(int selection) {
+        if (selection == LOCKSCREEN_BACKGROUND_COLOR_FILL) {
+            final ColorPickerView colorView = new ColorPickerView(getActivity());
+            int currentColor = Settings.System.getInt(getContentResolver(),
+                    Settings.System.LOCKSCREEN_BACKGROUND, -1);
+
+            if (currentColor != -1) {
+                colorView.setColor(currentColor);
+            }
+            colorView.setAlphaSliderVisible(true);
+
+            new AlertDialog.Builder(getActivity())
+                    .setTitle(R.string.lockscreen_custom_background_dialog_title)
+                    .setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            Settings.System.putInt(getContentResolver(),
+                                    Settings.System.LOCKSCREEN_BACKGROUND, colorView.getColor());
+                            updateCustomBackgroundSummary();
+                        }
+                    })
+                    .setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            dialog.dismiss();
+                        }
+                    })
+                    .setView(colorView)
+                    .show();
+        } else if (selection == LOCKSCREEN_BACKGROUND_CUSTOM_IMAGE) {
+           Display display = getActivity().getWindowManager().getDefaultDisplay();
+
+            int width = getActivity().getWallpaperDesiredMinimumWidth();
+            int height = getActivity().getWallpaperDesiredMinimumHeight();
+
+            float spotlightX = (float)display.getWidth() / width;
+            float spotlightY = (float)display.getHeight() / height;
+
+            Intent intent = new Intent(Intent.ACTION_GET_CONTENT, null);
+            intent.setType("image/*");
+            intent.putExtra("crop", "true");
+            intent.putExtra("scale", true);
+            intent.putExtra("scaleUpIfNeeded", true);
+            intent.putExtra("aspectX", width);
+            intent.putExtra("aspectY", height);
+            intent.putExtra("outputX", width);
+            intent.putExtra("outputY", height);
+            intent.putExtra("spotlightX", spotlightX);
+            intent.putExtra("spotlightY", spotlightY);
+            intent.putExtra("outputFormat", Bitmap.CompressFormat.PNG.toString());
+            intent.putExtra(MediaStore.EXTRA_OUTPUT, getLockscreenExternalUri());
+
+            startActivityForResult(intent, REQUEST_PICK_WALLPAPER);
+            return true;
+        } else if (selection == LOCKSCREEN_BACKGROUND_DEFAULT_WALLPAPER) {
+            Settings.System.putString(getContentResolver(),
+                    Settings.System.LOCKSCREEN_BACKGROUND, null);
+            updateCustomBackgroundSummary();
+            return true;
+        }
+
+        return false;
+    }
+@Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         super.onCreateOptionsMenu(menu, inflater);
         inflater.inflate(R.menu.lockscreens, menu);

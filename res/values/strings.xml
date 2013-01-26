@@ -246,6 +246,9 @@
     <string name="toggle_ime">IME</string>
     <string name="toggle_battery">Battery</string>
     <string name="toggle_brightness">Brightness</string>
+    <string name="toggle_powermenu">Power Menu</string>
+    <string name="toggle_screen">Screen off</string>
+    
 
     <!-- Statusbar | Battery -->
     <string name="battery_icon">Battery icon style</string>

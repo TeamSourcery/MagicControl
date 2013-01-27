@@ -57,6 +57,8 @@ public class StatusBarToggles extends SettingsPreferenceFragment implements
     private static final String PREF_TOGGLE_FAV_CONTACTTWO = "toggle_fav_contacttwo";
     private static final String PREF_TOGGLE_FAV_CONTACTTHREE = "toggle_fav_contactthree";
     private static final String QUICK_PULLDOWN = "quick_pulldown";
+    private static final String PREF_QUICK_THEME_STYLE = "quick_theme_style";
+    private static final String PREF_QUICK_TEXT_COLOR = "quick_text_color";
 
     private final int PICK_CONTACT = 1;
     private final int PICK_CONTACTTWO = 2;
@@ -69,6 +71,8 @@ public class StatusBarToggles extends SettingsPreferenceFragment implements
     Preference mFavContactTwo;
     Preference mFavContactThree;
     ListPreference mQuickPulldown;
+    ListPreference mThemeStyle;
+    ColorPickerPreference mTextColor;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -133,6 +137,15 @@ public class StatusBarToggles extends SettingsPreferenceFragment implements
         else {
             getPreferenceScreen().removePreference(mFavContactThree);
         }
+
+        mThemeStyle = (ListPreference) findPreference(PREF_QUICK_THEME_STYLE); 
+        mThemeStyle.setOnPreferenceChangeListener(this);
+        mThemeStyle.setValue(Settings.System.getInt(getActivity().getContentResolver(),
+                Settings.System.QUICK_THEME_STYLE, 1) + "");
+
+        mTextColor = (ColorPickerPreference) findPreference(PREF_QUICK_TEXT_COLOR);
+        mTextColor.setOnPreferenceChangeListener(this);
+
       }
 
    @Override
@@ -148,6 +161,18 @@ public class StatusBarToggles extends SettingsPreferenceFragment implements
             Settings.System.putInt(resolver, Settings.System.QS_QUICK_PULLDOWN,
                      quickPulldownValue);
             updatePulldownSummary(quickPulldownValue);
+            return true;
+       } else if (preference == mThemeStyle) {
+        int val = Integer.parseInt((String) newValue);
+            Settings.System.putInt(getActivity().getContentResolver(),
+                    Settings.System.QUICK_THEME_STYLE, val);
+            return true;
+       } else if (preference == mTextColor) {
+            String hex = ColorPickerPreference.convertToARGB(Integer.valueOf(String.valueOf(newValue)));
+            preference.setSummary(hex);
+            int intHex = ColorPickerPreference.convertToColorInt(hex);
+            Settings.System.putInt(getActivity().getContentResolver(),
+                    Settings.System.QUICK_TEXT_COLOR, intHex);
             return true;
         }
         return false;

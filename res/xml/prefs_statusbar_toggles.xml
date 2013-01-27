@@ -33,6 +33,18 @@
         android:title="@string/toggles_per_row_title"
         android:summary="@string/toggles_per_row_summary" />
 
+    <ListPreference
+        android:entries="@array/quicksettings_theme_style_entries"
+        android:entryValues="@array/quicksettings_theme_style_values"
+        android:key="quick_theme_style"
+        android:title="@string/quicksettings_theme_style"
+        android:summary="@string/quicksettings_theme_style_summary" />
+
+    <net.margaritov.preference.colorpicker.ColorPickerPreference
+            android:key="quick_text_color"
+            android:title="@string/quick_text_color_title"
+            android:defaultValue="#ffcccccc" />
+
     <PreferenceCategory
 		android:key="contacts"
 		android:title="@string/toggle_favcontact_cattitle">

@@ -897,6 +897,11 @@
     <string name="lockscreen_background_custom_image">Custom image</string>
     <string name="lockscreen_background_default_wallpaper">Default wallpaper</string>
 
-   
+    <!-- holo theme style for Quick Setting tiles -->
+    <string name="holo_dark">Dark</string>
+    <string name="holo_light">Light</string>
+    <string name="quicksettings_theme_style">Toggle BackGround Tiles</string>
+    <string name="quicksettings_theme_style_summary">Choose between holo light or holo dark</string>
+    <string name="quick_text_color_title">Toggle Text color</string>
 
 </resources>

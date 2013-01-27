@@ -248,6 +248,7 @@
     <string name="toggle_brightness">Brightness</string>
     <string name="toggle_powermenu">Power Menu</string>
     <string name="toggle_screen">Screen off</string>
+    <string name="toggle_3g">3G</string>
     
 
     <!-- Statusbar | Battery -->

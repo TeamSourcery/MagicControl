@@ -89,6 +89,7 @@
         <item>USBTETHER</item>
         <item>TORCH</item>
         <item>2G</item>
+        <item>3G</item>
         <item>LTE</item>
         <item>SCREEN</item>
         <item>POWERMENU</item>
@@ -120,6 +121,7 @@
         <item>@string/toggle_usb_tether</item>
         <item>@string/toggle_torch</item>
         <item>@string/toggle_2g</item>
+        <item>@string/toggle_3g</item>
         <item>@string/toggle_lte</item>
         <item>@string/toggle_screen</item>
         <item>@string/toggle_powermenu</item>

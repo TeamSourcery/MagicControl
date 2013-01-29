@@ -49,7 +49,7 @@ public class UserInterface extends SettingsPreferenceFragment {
     private static final String PREF_IME_SWITCHER = "ime_switcher";
     private static final String PREF_ALARM_ENABLE = "alarm";
     private static final String PREF_SHOW_OVERFLOW = "show_overflow";
-    private static final String PREF_WAKEUP_WHEN_PLUGGED_UNPLUGGED = "wakeup_when_plugged_unplugged"   
+    private static final String PREF_WAKEUP_WHEN_PLUGGED_UNPLUGGED = "wakeup_when_plugged_unplugged";   
 
     CheckBoxPreference mAllow180Rotation;
     CheckBoxPreference mStatusBarNotifCount;

@@ -904,4 +904,8 @@
     <string name="quicksettings_theme_style_summary">Choose between holo light or holo dark</string>
     <string name="quick_text_color_title">Toggle Text color</string>
 
+   <!-- wakeup or not on plugged  -->
+   <string name="wakeup_when_plugged_unplugged_title">Wake Pp Screen If Charging</string>
+   <string name="wakeup_when_plugged_unplugged_summary">Wake up device if a charger is plugged/unplugged.</string>
+
 </resources>

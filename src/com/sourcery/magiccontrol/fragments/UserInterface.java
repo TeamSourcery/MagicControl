@@ -49,7 +49,7 @@ public class UserInterface extends SettingsPreferenceFragment {
     private static final String PREF_IME_SWITCHER = "ime_switcher";
     private static final String PREF_ALARM_ENABLE = "alarm";
     private static final String PREF_SHOW_OVERFLOW = "show_overflow";
-        
+    private static final String PREF_WAKEUP_WHEN_PLUGGED_UNPLUGGED = "wakeup_when_plugged_unplugged"   
 
     CheckBoxPreference mAllow180Rotation;
     CheckBoxPreference mStatusBarNotifCount;
@@ -64,6 +64,7 @@ public class UserInterface extends SettingsPreferenceFragment {
     CheckBoxPreference mShowImeSwitcher;
     CheckBoxPreference mAlarm;
     CheckBoxPreference mShowActionOverflow;
+    CheckBoxPreference mWakeUpWhenPluggedOrUnplugged;
        
 
     Random randomGenerator = new Random();
@@ -131,6 +132,10 @@ public class UserInterface extends SettingsPreferenceFragment {
         mShowActionOverflow.setChecked(Settings.System.getBoolean(getActivity().
                         getApplicationContext().getContentResolver(),
                         Settings.System.UI_FORCE_OVERFLOW_BUTTON, false));
+
+        mWakeUpWhenPluggedOrUnplugged = (CheckBoxPreference) findPreference(PREF_WAKEUP_WHEN_PLUGGED_UNPLUGGED);
+        mWakeUpWhenPluggedOrUnplugged.setChecked(Settings.System.getBoolean(mContext.getContentResolver(),
+                        Settings.System.WAKEUP_WHEN_PLUGGED_UNPLUGGED, true));		
          
         mDisableBootAnimation = (CheckBoxPreference) findPreference("disable_bootanimation");
         mDisableBootAnimation.setChecked(!new File("/system/media/bootanimation.zip").exists());
@@ -232,6 +237,11 @@ public class UserInterface extends SettingsPreferenceFragment {
                 Toast.makeText(getActivity(), R.string.show_overflow_toast_disable,
                         Toast.LENGTH_LONG).show();
             }
+            return true;
+          } else if (preference == mWakeUpWhenPluggedOrUnplugged) {
+            Settings.System.putBoolean(getActivity().getContentResolver(),
+                    Settings.System.WAKEUP_WHEN_PLUGGED_UNPLUGGED,
+                    ((CheckBoxPreference) preference).isChecked());
             return true;
          } else if (preference == mDisableBootAnimation) {
             boolean checked = ((CheckBoxPreference) preference).isChecked();

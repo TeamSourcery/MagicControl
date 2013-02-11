@@ -84,6 +84,8 @@ public class Navbar extends SettingsPreferenceFragment implements
     private static final String PREF_MENU_ARROWS = "navigation_bar_menu_arrow_keys";
     private static final String NAVBAR_HIDE_ENABLE = "navbar_hide_enable";
     private static final String NAVBAR_HIDE_TIMEOUT = "navbar_hide_timeout";
+    private static final String DRAG_HANDLE_OPACITY = "drag_handle_opacity";
+    private static final String DRAG_HANDLE_WIDTH = "drag_handle_width";
 
     public static final int REQUEST_PICK_CUSTOM_ICON = 200;
     public static final int REQUEST_PICK_LANDSCAPE_ICON = 201;
@@ -114,6 +116,8 @@ public class Navbar extends SettingsPreferenceFragment implements
     Preference mConfigureWidgets;
     CheckBoxPreference mNavBarHideEnable;
     ListPreference mNavBarHideTimeout;
+    SeekBarPreference mDragHandleOpacity;
+    SeekBarPreference mDragHandleWidth;
 
     private int mPendingIconIndex = -1;
     private int defaultBgColor = 0xFF000000;
@@ -169,6 +173,18 @@ public class Navbar extends SettingsPreferenceFragment implements
         mNavBarHideEnable.setChecked(Settings.System.getBoolean(getContentResolver(),
                 Settings.System.NAV_HIDE_ENABLE, false));
 
+        final int defaultDragOpacity = Settings.System.getInt(getActivity()
+               .getContentResolver(), Settings.System.DRAG_HANDLE_OPACITY,50);
+        mDragHandleOpacity = (SeekBarPreference) findPreference(DRAG_HANDLE_OPACITY);
+        mDragHandleOpacity.setInitValue((int) (defaultDragOpacity));
+        mDragHandleOpacity.setOnPreferenceChangeListener(this);
+ 
+        final int defaultDragWidth = Settings.System.getInt(getActivity()
+               .getContentResolver(), Settings.System.DRAG_HANDLE_WEIGHT, 5);
+        mDragHandleWidth = (SeekBarPreference) findPreference(DRAG_HANDLE_WIDTH);
+        mDragHandleWidth.setInitValue((int) (defaultDragWidth));
+        mDragHandleWidth.setOnPreferenceChangeListener(this);
+ 
         mNavBarHideTimeout = (ListPreference) findPreference(NAVBAR_HIDE_TIMEOUT);
         mNavBarHideTimeout.setOnPreferenceChangeListener(this);
         mNavBarHideTimeout.setValue(Settings.System.getInt(getActivity().getContentResolver(),
@@ -299,7 +315,7 @@ public class Navbar extends SettingsPreferenceFragment implements
             Settings.System.putBoolean(getActivity().getContentResolver(),
                     Settings.System.NAV_HIDE_ENABLE,
                     ((CheckBoxPreference) preference).isChecked());
-
+            refreshSettings();
             Settings.System.putBoolean(getActivity().getContentResolver(),
                     Settings.System.NAVIGATION_BAR_SHOW_NOW, !((CheckBoxPreference) preference).isChecked());
             Helpers.restartSystemUI();
@@ -309,7 +325,7 @@ public class Navbar extends SettingsPreferenceFragment implements
 
             Settings.System.putBoolean(getActivity().getContentResolver(),
                     Settings.System.SYSTEMUI_NAVRING_LONG_ENABLE,
-                    ((CheckBoxPreference) preference).isChecked() ? true : false);
+                    ((CheckBoxPreference) preference).isChecked());
             resetNavRingLong();
             return true;
         } else if (preference == mNavRingTargets) {
@@ -329,7 +345,7 @@ public class Navbar extends SettingsPreferenceFragment implements
         } else if (preference == mMenuArrowKeysCheckBox) {
             Settings.System.putBoolean(getActivity().getContentResolver(),
                      Settings.System.NAVIGATION_BAR_MENU_ARROW_KEYS,
-                     ((CheckBoxPreference) preference).isChecked() ? true : false);
+                     ((CheckBoxPreference) preference).isChecked());
             return true;
         }
         return super.onPreferenceTreeClick(preferenceScreen, preference);
@@ -475,6 +491,19 @@ public class Navbar extends SettingsPreferenceFragment implements
             Settings.System.putFloat(getActivity().getContentResolver(),
                     Settings.System.NAVIGATION_BAR_BUTTON_ALPHA,
                     val * 0.01f);
+            return true;
+        } else if (preference == mDragHandleOpacity) {
+            String newVal = (String) newValue;
+            int op = Integer.parseInt(newVal);
+            Settings.System.putInt(getActivity().getContentResolver(),
+                     Settings.System.DRAG_HANDLE_OPACITY, op);
+            return true;
+        } else if (preference == mDragHandleWidth) {
+            String newVal = (String) newValue;
+            int dp = Integer.parseInt(newVal);
+            //int height = mapChosenDpToPixels(dp);
+            Settings.System.putInt(getContentResolver(),
+                    Settings.System.DRAG_HANDLE_WEIGHT, dp);
             return true;
          }
         return false;

@@ -91,6 +91,7 @@
         <item>2G</item>
         <item>3G</item>
         <item>LTE</item>
+        <item>NAVBARHIDE</item>
         <item>SCREEN</item>
         <item>POWERMENU</item>
         <item>RAM</item>
@@ -123,6 +124,7 @@
         <item>@string/toggle_2g</item>
         <item>@string/toggle_3g</item>
         <item>@string/toggle_lte</item>
+        <item>@string/toggle_navbar_hide</item>
         <item>@string/toggle_screen</item>
         <item>@string/toggle_powermenu</item>
         <item>@string/toggle_ram</item>

@@ -198,6 +198,7 @@
     <string name="toggle_favcontact_titlecat">System UI Will Reboot</string>
     <string name="toggle_favcontact_titlecatsummary">after contact choices to set them up</string>
     <string name="toggle_favcontact_cattitle">Choose Your Contacts</string>
+    <string name="toggle_navbar_hide">Navbar Auto Hide</string>
     
 
     <!-- Statusbar | Clock -->
@@ -822,7 +823,7 @@
     <string name="navigation_bar_menu_arrow_keys_summary">Show arrow keys in the navigation bar while typing</string>
   
      <!-- CM LockClock  -->
-    <string name="header_lock_clock_title">Lock Clock Widget</string>
+    <string name="header_lock_clock_title">Magic Clock Widget</string>
     <string name="header_lock_clock_summary">@null</string>
 
     
@@ -910,7 +911,9 @@
 
    <!-- Hiding NavBar  -->
    <string name="navbar_hide">NavBar Hide Options</string>
-   <string name="navbar_hide_enable_title">Enable Hidden Navbar</string>
+   <string name="navbar_hide_enable_title">Hidden Navbar Enable</string>
+   <string name="drag_handle_opacity_title">Drag Handle Opacity</string>
+   <string name="drag_handle_width_title">Drag Handle Width</string>
    <string name="title_navbar_timeout">Hidden Navbar Timeout</string>
    <string name="summary_navbar_timeout">Timeout time for Hidden Navbar Window</string>
 </resources>

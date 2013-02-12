@@ -847,6 +847,8 @@
     <string name="quick_pulldown_off">Off</string>
     <string name="quick_pulldown_left">Left</string>
     <string name="quick_pulldown_right">Right</string>
+    <string name="title_no_notifications_pulldown">Quick Pulldown Toggles</string>
+    <string name="summary_no_notifications_pulldown">Pulldown quick settings if no notifications are present</string>
 
 
    <!-- MultiPanel Views -->

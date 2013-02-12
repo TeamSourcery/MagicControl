@@ -57,6 +57,7 @@ public class StatusBarToggles extends SettingsPreferenceFragment implements
     private static final String PREF_TOGGLE_FAV_CONTACTTWO = "toggle_fav_contacttwo";
     private static final String PREF_TOGGLE_FAV_CONTACTTHREE = "toggle_fav_contactthree";
     private static final String QUICK_PULLDOWN = "quick_pulldown";
+    private static final String NO_NOTIFICATIONS_PULLDOWN = "no_notifications_pulldown";
     private static final String PREF_QUICK_THEME_STYLE = "quick_theme_style";
     private static final String PREF_QUICK_TEXT_COLOR = "quick_text_color";
 
@@ -71,6 +72,7 @@ public class StatusBarToggles extends SettingsPreferenceFragment implements
     Preference mFavContactTwo;
     Preference mFavContactThree;
     ListPreference mQuickPulldown;
+    CheckBoxPreference mNoNotificationsPulldown;
     ListPreference mThemeStyle;
     ColorPickerPreference mTextColor;
 
@@ -104,11 +106,16 @@ public class StatusBarToggles extends SettingsPreferenceFragment implements
         // Add the Quick Pulldown preference 
             
          mQuickPulldown = (ListPreference) prefSet.findPreference(QUICK_PULLDOWN);
+         mNoNotificationsPulldown = (CheckBoxPreference) prefSet.findPreference(NO_NOTIFICATIONS_PULLDOWN);
+         
          mQuickPulldown.setOnPreferenceChangeListener(this);
          int quickPulldownValue = Settings.System.getInt(resolver, Settings.System.QS_QUICK_PULLDOWN, 0);
          mQuickPulldown.setValue(String.valueOf(quickPulldownValue));
          updatePulldownSummary(quickPulldownValue);
          
+         mNoNotificationsPulldown.setChecked(Settings.System.getInt(resolver,
+                 Settings.System.QS_NO_NOTIFICATION_PULLDOWN, 0) == 1);
+        
 
         final String[] entries = getResources().getStringArray(R.array.available_toggles_entries);
 
@@ -180,6 +187,7 @@ public class StatusBarToggles extends SettingsPreferenceFragment implements
 
    @Override
     public boolean onPreferenceTreeClick(PreferenceScreen preferenceScreen, Preference preference) {
+        ContentResolver resolver = getActivity().getContentResolver();
         if (preference == mEnabledToggles) {
             AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
 
@@ -253,6 +261,10 @@ public class StatusBarToggles extends SettingsPreferenceFragment implements
         else if (preference == mFavContactThree) {
             Intent intent = new Intent(Intent.ACTION_PICK, ContactsContract.Contacts.CONTENT_URI);
             startActivityForResult(intent, PICK_CONTACTTHREE);
+        }
+        else if (preference == mNoNotificationsPulldown) {
+            Settings.System.putInt(resolver, Settings.System.QS_NO_NOTIFICATION_PULLDOWN,
+                    mNoNotificationsPulldown.isChecked() ? 1 : 0);
         }
         
         return super.onPreferenceTreeClick(preferenceScreen, preference);

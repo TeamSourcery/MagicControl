@@ -71,6 +71,7 @@
     <string name="title_show_airplane_toggle">Show airplane toggle</string>
     <string name="title_show_navbar_hide">Show navigation bar toggle</string>
     <string name="title_show_expanded_desktop_toggle">Show Expanded desktop toggle</string>
+    <string name="title_show_reboot_hide">Hide reboot on lockscreen</string>
   
 
     <!-- Shortcut picker -->
@@ -145,14 +146,17 @@
     <string name="stock_density_changed_summary">"Density set to: "</string>
     <string name="reboot_title">2. Reboot!</string>
     <string name="reboot_summary">Come back here after the reboot and complete the rest of the steps!</string>
-    <string name="clear_market_data_title">3. Clear market data</string>
-    <string name="clear_market_data_cleared">Market data cleared</string>
-    <string name="clear_market_data_donot_cleared">"Market data couldn't be cleared, please clear it yourself!"</string>
+    <string name="clear_market_data_title">3. Clear all relevant market data.</string>
+    <string name="clear_market_data_summary">This step clears data from market, google play services and google services framework.</string>
+    <string name="clear_market_data_cleared">Data successfully cleared</string>
+    <string name="clear_market_data_donot_cleared">"Data couldn't be cleared, please clear it yourself!"</string>
+    <string name="reboot_cleardata_title">4. Reboot!</string>
+    <string name="reboot_cleardata_summary">Come back here after the reboot and complete the rest of the steps!</string>
+    <string name="open_market_title">5. Open Market and hit accept</string>
     <string name="dpi">DPI</string>
-    <string name="open_market_title">4. Open Market and hit accept</string>
     <string name="open_market_summary">Press back when done to return here.</string>
     <string name="open_market_summary_could_not_open">"Couldn't open the market! If you're sure it's installed, open it yourself from the launcher."</string>
-    <string name="custom_density_title">5. Change density to whatever you like!</string>
+    <string name="custom_density_title">6. Change density to whatever you like!</string>
     <string name="custom_density_summary">If you ever have compatibility issues with the market, be sure to return here and repeat the process.</string>
     <string name="custom_density_summary_invalid">"INVALID DENSITY!"</string>
     <string name="custom_density">custom</string>
@@ -916,4 +920,10 @@
    <string name="drag_handle_width_title">Drag Handle Width</string>
    <string name="title_navbar_timeout">Hidden Navbar Timeout</string>
    <string name="summary_navbar_timeout">Timeout time for Hidden Navbar Window</string>
+
+   <!-- CRT on/off  -->
+   <string name="system_power_crt_screen_off_title">CRT Screen Off</string>
+   <string name="system_power_crt_screen_off_summary">Screen will animate an Electron Beam when turned off</string>
+   <string name="system_power_crt_screen_on_title">CRT Screen On</string>
+   <string name="system_power_crt_screen_on_summary">Screen will animate an Electron Beam when turned on</string>
 </resources>

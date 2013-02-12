@@ -59,6 +59,16 @@
             android:defaultValue="true" />
 
          <CheckBoxPreference
+            android:key="system_power_crt_screen_off"
+            android:summary="@string/system_power_crt_screen_off_summary"
+            android:title="@string/system_power_crt_screen_off_title" />
+ 
+         <CheckBoxPreference
+            android:key="system_power_crt_screen_on"
+            android:summary="@string/system_power_crt_screen_on_summary"
+            android:title="@string/system_power_crt_screen_on_title" />
+
+         <CheckBoxPreference
             android:key="rotate_180"
             android:title="@string/rotate_180_title"
             android:summary="@string/rotate_180_summary" />

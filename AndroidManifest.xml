@@ -168,7 +168,25 @@
                 <category android:name="com.sourcery.magiccontrol.SHORTCUT" />
              </intent-filter>
         </activity>
- 
+
+        <activity
+	            android:name=".fragments.Pie"
+	            android:label="Pie" >
+	            <intent-filter>
+	                <action android:name="android.intent.action.MAIN" />
+	                <category android:name="com.sourcery.magiccontrol.SHORTCUT" />
+	            </intent-filter>
+	        </activity>
+   
+        <activity
+	            android:name=".fragments.PieColor"
+	            android:label="Pie Color" >
+	            <intent-filter>
+	                <action android:name="android.intent.action.MAIN" />
+	                <category android:name="com.sourcery.magiccontrol.SHORTCUT" />
+	            </intent-filter>
+	        </activity>
+
         <activity
              android:name=".fragments.LockscreenInterface"
              android:label="Lockscreen Interface" >

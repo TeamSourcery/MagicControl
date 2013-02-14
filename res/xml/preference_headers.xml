@@ -52,6 +52,13 @@
         android:fragment="com.sourcery.magiccontrol.fragments.Navbar"
         android:title="@string/nav_bar"
         android:summary="@string/header_summary_navigation_bar" />
+      
+     <header
+        android:id="@+id/pie_control"
+        android:fragment="com.sourcery.magiccontrol.fragments.Pie"
+        android:summary="@string/pie_controls_summary"
+        android:title="@string/pie_controls_title" />
+    
 
      <header
        android:title="Power Menu Options" />

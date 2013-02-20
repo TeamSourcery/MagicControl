@@ -625,18 +625,7 @@
         <item>@*android:drawable/ic_lockscreen_twitter_normal</item>
     </string-array>
 
-    <!-- navbar/statusbar background -->
-    <string-array name="navbar_background_entries">
-         <item>@string/navbar_color</item>
-         <item>@string/navbar_defaultbg_plus_color</item>
-         <item>@string/navbar_defaultbg</item>
-    </string-array>
- 
-    <string-array name="navbar_background_values" translatable="false">
-         <item>0</item>
-         <item>1</item>
-         <item>2</item>
-    </string-array>
+   
 
    
     <!-- Quick pulldown -->

@@ -821,7 +821,10 @@
     <string name="navbar_defaultbg_plus_color">Default Bg plus color/alpha</string>
     <string name="navbar_defaultbg">Default Bg only</string>
     <string name="navbar_bg_color">Navbar Color</string> 
-    <string name="statusbar_background_color">Statusbar background color</string>
+    <string name="status_bar_color_title">Statusbar background color</string>
+    <string name="navigation_bar_alpha_title">Statusbar and navigation bar opacity</string>
+    <string name="navigation_bar_color_title">Navigation bar color</string>
+     <string name="statusbar_background_color">Statusbar background color</string>
 
      <!-- Stuff for statusbar option -->
     <string name="statusbar_brightness_slider_title">Statusbar brightness slider</string>
@@ -992,4 +995,16 @@
     <string name="all_color">Custom Colors</string>
     <string name="stock_color">Default Colors</string>
 
+    <!-- transparency -->
+    <string name="save">Save</string>
+    <string name="transparency_dialog_title">Transparency settings</string>
+    <string name="transparency_dialog_linked_transparency">Link statusbar &amp; navbar alpha</string>
+    <string name="transparency_dialog_transparency_sb_and_nv">Statusbar and navigation bar</string>
+    <string name="transparency_dialog_statusbar">Statusbar</string>
+    <string name="transparency_dialog_navbar">Navigation bar</string>
+    <string name="transparency_dialog_match_keyguard_alpha">Match lockscreen alpha</string>
+    <string name="transparency_dialog_transparency">Homescreen alpha</string>
+    <string name="transparency_dialog_transparency_keyguard">Lockscreen alpha</string>
+	
+ 
 </resources>

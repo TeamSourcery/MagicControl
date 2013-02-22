@@ -212,6 +212,7 @@
     <string name="toggle_favcontact_titlecatsummary">after contact choices to set them up</string>
     <string name="toggle_favcontact_cattitle">Choose Your Contacts</string>
     <string name="toggle_navbar_hide">Navbar Auto Hide</string>
+    <string name="toggle_quickrecord">Quick Record</string>
     
 
     <!-- Statusbar | Clock -->
@@ -1006,5 +1007,4 @@
     <string name="transparency_dialog_transparency">Homescreen alpha</string>
     <string name="transparency_dialog_transparency_keyguard">Lockscreen alpha</string>
 	
- 
-</resources>
+   </resources>

@@ -4,14 +4,10 @@
 
     <!-- Status bar tweaks -->
     
-    <PreferenceCategory android:title="@string/statusbar_bg">
-
-         <Preference
-            android:key="transparency_dialog"
-            android:title="@string/transparency_dialog_title" />
-
-          
-    </PreferenceCategory>
+   <PreferenceScreen
+          android:fragment="com.sourcery.magiccontrol.activities.StatusBarStyle"
+          android:key="status_bar_background_style"
+          android:title="@string/status_bar_background_style" />
          
     <CheckBoxPreference
          android:key="statusbar_brightness_slider"

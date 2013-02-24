@@ -809,23 +809,7 @@
     <string name="profile_applist_title">Applications</string>
     <string name="custom_targets">Custom Lockscreen Targets</string>
 
-     <!-- Nav and status bar color stuff -->
-    <string name="interface_navbar_appearance">Navigation Bar Color</string>
-    <string name="interface_navbar_color_title">Set Color</string>
-    <string name="interface_navbar_restore_stock_color">Restore stock color</string>
-    <string name="statusbar_bg">Statusbar background</string>
-    <string name="statusbar_background_style">Statusbar background style</string>
-    <string name="navbar_bg">Navbar background</string>
-    <string name="navbar_button_colors">Navbar button color</string>
-    <string name="navbar_background_style">Navbar background style</string>
-    <string name="navbar_color">Color/alpha only</string>
-    <string name="navbar_defaultbg_plus_color">Default Bg plus color/alpha</string>
-    <string name="navbar_defaultbg">Default Bg only</string>
-    <string name="navbar_bg_color">Navbar Color</string> 
-    <string name="status_bar_color_title">Statusbar background color</string>
-    <string name="navigation_bar_alpha_title">Statusbar and navigation bar opacity</string>
-    <string name="navigation_bar_color_title">Navigation bar color</string>
-     <string name="statusbar_background_color">Statusbar background color</string>
+    
 
      <!-- Stuff for statusbar option -->
     <string name="statusbar_brightness_slider_title">Statusbar brightness slider</string>
@@ -992,19 +976,35 @@
     <string name="pie_search_title">Show search button</string>
     <string name="pie_search_summary">Access to GoogleNow via Pie</string>
     <string name="pie_center_title">Center pie</string>
-    <string name="pie_center_summary">If un-checked, pie appears where your fingers are</string>
+    <string name="pie_center_summary">Center Pie on the trigger edge</string>
+ 
+    <string name="pie_stick_title">Prevent rotation</string>
+    <string name="pie_stick_summary">If checked Pie will stay in place no matter which orientation</string>
     <string name="all_color">Custom Colors</string>
     <string name="stock_color">Default Colors</string>
 
-    <!-- transparency -->
-    <string name="save">Save</string>
-    <string name="transparency_dialog_title">Transparency settings</string>
-    <string name="transparency_dialog_linked_transparency">Link statusbar &amp; navbar alpha</string>
-    <string name="transparency_dialog_transparency_sb_and_nv">Statusbar and navigation bar</string>
-    <string name="transparency_dialog_statusbar">Statusbar</string>
-    <string name="transparency_dialog_navbar">Navigation bar</string>
-    <string name="transparency_dialog_match_keyguard_alpha">Match lockscreen alpha</string>
-    <string name="transparency_dialog_transparency">Homescreen alpha</string>
-    <string name="transparency_dialog_transparency_keyguard">Lockscreen alpha</string>
-	
+    
+    <!-- Status bar background style -->
+    <string name="status_bar_transparency_title">Status bar transparency</string>
+    <string name="status_bar_color_title">Status bar color</string>
+    <string name="status_bar_background_style">Status bar background</string>
+    <string name="status_bar_alpha_mode_dialog_text_title">Show navigation and status bar transparency</string>
+    <string name="status_bar_alpha_mode_text_title">Transparency mode</string>
+    <string name="status_bar_alpha_mode_home">on launcher</string>
+    <string name="status_bar_alpha_mode_default">on launcher and lockscreen</string>
+    <string name="status_bar_alpha_mode_always">always</string>
+    <string name="status_bar_style_reset">Reset</string>
+
+    <!-- Navigation bar background style -->
+    <string name="nav_bar_transparency_title">Navigation bar transparency</string>
+    <string name="nav_bar_color_title">Navigation bar color</string>
+    <string name="nav_bar_background_style">Navigation bar background</string>
+    <string name="nav_bar_alpha_mode_dialog_text_title">Show navigation and status bar transparency</string>
+    <string name="nav_bar_alpha_mode_text_title">Transparency mode</string>
+    <string name="nav_bar_alpha_mode_home">on launcher</string>
+    <string name="nav_bar_alpha_mode_default">on launcher and lockscreen</string>
+    <string name="nav_bar_alpha_mode_always">always</string>
+    <string name="nav_bar_style_reset">Reset</string>
+
+    	
    </resources>

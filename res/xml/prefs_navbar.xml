@@ -43,12 +43,12 @@
                 android:defaultValue="#00000000"
                 alphaSlider="true" />
 
-       <net.margaritov.preference.colorpicker.ColorPickerPreference
-                android:key="nav_bar_color"
-                android:title="@string/navigation_bar_color_title"
-                android:defaultValue="#000000" 
-                alphaSlider="true" />
+       <PreferenceScreen
+               android:fragment="com.sourcery.magiccontrol.activities.NavBarStyle"
+               android:key="nav_bar_background_style"
+               android:title="@string/nav_bar_background_style" />
 
+       
       
         <PreferenceCategory
                 android:key="navbar_buttons"

@@ -58,16 +58,8 @@
                 <category android:name="com.sourcery.magiccontrol.SHORTCUT" />
             </intent-filter>
         </activity>
-        <activity
-             android:name=".fragments.TransparencyDialog"
-             android:theme="@android:style/Theme.Dialog"
-             android:label="@string/title_ui" >
-             <intent-filter>
-                 <action android:name="android.intent.action.MAIN" />
- 
-                 <category android:name="com.sourcery.magiccontrol.SHORTCUT" />
-             </intent-filter>
-        </activity>
+        <activity android:name=".activities.StatusBarStyle" />
+        <activity android:name=".activities.NavBarStyle" />
         <activity
             android:name=".fragments.Navbar"
 	    android:label="Navigation Bar" >

@@ -16,7 +16,6 @@
 
 package net.margaritov.preference.colorpicker;
 
-
 import android.app.Dialog;
 import android.content.Context;
 import android.graphics.PixelFormat;

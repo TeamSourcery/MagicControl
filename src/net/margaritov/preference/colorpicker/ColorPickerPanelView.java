@@ -36,18 +36,18 @@ public class ColorPickerPanelView extends View {
      * The width in pixels of the border
      * surrounding the color panel.
      */
-    private final static float BORDER_WIDTH_PX = 1;
+    private final static float    BORDER_WIDTH_PX = 1;
 
     private float mDensity = 1f;
 
-    private int mBorderColor = 0xff6E6E6E;
-    private int mColor = 0xff000000;
+    private int         mBorderColor = 0xff6E6E6E;
+    private int         mColor = 0xff000000;
 
-    private Paint mBorderPaint;
-    private Paint mColorPaint;
+    private Paint        mBorderPaint;
+    private Paint        mColorPaint;
 
-    private RectF mDrawingRect;
-    private RectF mColorRect;
+    private RectF        mDrawingRect;
+    private RectF        mColorRect;
 
     private AlphaPatternDrawable mAlphaPattern;
 
@@ -75,14 +75,14 @@ public class ColorPickerPanelView extends View {
     @Override
     protected void onDraw(Canvas canvas) {
 
-        final RectF     rect = mColorRect;
+        final RectF    rect = mColorRect;
 
-        if (BORDER_WIDTH_PX > 0) {
+        if(BORDER_WIDTH_PX > 0){
             mBorderPaint.setColor(mBorderColor);
             canvas.drawRect(mDrawingRect, mBorderPaint);
         }
 
-        if (mAlphaPattern != null) {
+        if(mAlphaPattern != null){
             mAlphaPattern.draw(canvas);
         }
 
@@ -115,7 +115,7 @@ public class ColorPickerPanelView extends View {
     }
 
     private void setUpColorRect(){
-        final RectF     dRect = mDrawingRect;
+        final RectF    dRect = mDrawingRect;
 
         float left = dRect.left + BORDER_WIDTH_PX;
         float top = dRect.top + BORDER_WIDTH_PX;
@@ -127,10 +127,10 @@ public class ColorPickerPanelView extends View {
         mAlphaPattern = new AlphaPatternDrawable((int)(5 * mDensity));
 
         mAlphaPattern.setBounds(
-                Math.round(mColorRect.left),
-                Math.round(mColorRect.top),
-                Math.round(mColorRect.right),
-                Math.round(mColorRect.bottom)
+            Math.round(mColorRect.left),
+            Math.round(mColorRect.top),
+            Math.round(mColorRect.right),
+            Math.round(mColorRect.bottom)
         );
 
     }
@@ -167,4 +167,5 @@ public class ColorPickerPanelView extends View {
     public int getBorderColor(){
         return mBorderColor;
     }
+
 }

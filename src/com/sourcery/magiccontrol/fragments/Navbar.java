@@ -84,7 +84,7 @@ public class Navbar extends SettingsPreferenceFragment implements
     private static final String NAVBAR_HIDE_TIMEOUT = "navbar_hide_timeout";
     private static final String DRAG_HANDLE_OPACITY = "drag_handle_opacity";
     private static final String DRAG_HANDLE_WIDTH = "drag_handle_width";
-    private static final String NAVIGATION_BAR_COLOR = "nav_bar_color";
+    
 
     public static final int REQUEST_PICK_CUSTOM_ICON = 200;
     public static final int REQUEST_PICK_LANDSCAPE_ICON = 201;
@@ -115,7 +115,7 @@ public class Navbar extends SettingsPreferenceFragment implements
     ListPreference mNavBarHideTimeout;
     SeekBarPreference mDragHandleOpacity;
     SeekBarPreference mDragHandleWidth;
-    ColorPickerPreference mNavigationColor;
+    
 
     private int mPendingIconIndex = -1;
     private NavBarCustomAction mPendingNavBarCustomAction = null;
@@ -199,8 +199,7 @@ public class Navbar extends SettingsPreferenceFragment implements
         mEnableNavigationBar.setChecked(Settings.System.getInt(getContentResolver(),
                 Settings.System.NAVIGATION_BAR_SHOW, hasNavBarByDefault ? 1 : 0) == 1);
 
-        mNavigationColor = (ColorPickerPreference) findPreference(NAVIGATION_BAR_COLOR);
-        mNavigationColor.setOnPreferenceChangeListener(this);
+        
         
         mNavigationBarColor = (ColorPickerPreference) findPreference(PREF_NAV_COLOR);
         mNavigationBarColor.setOnPreferenceChangeListener(this);
@@ -262,8 +261,6 @@ public class Navbar extends SettingsPreferenceFragment implements
                         Settings.System.NAVIGATION_BAR_GLOW_TINT, -1);
                 Settings.System.putInt(getActivity().getContentResolver(),
                         Settings.System.NAVIGATION_BAR_BUTTONS_QTY, 3);
-                Settings.System.putInt(getActivity().getContentResolver(),
- 	                Settings.System.NAVIGATION_BAR_COLOR, -1);
                 Settings.System.putString(getActivity().getContentResolver(),
                         Settings.System.NAVIGATION_CUSTOM_ACTIVITIES[0], "**back**");
                 Settings.System.putString(getActivity().getContentResolver(),
@@ -432,15 +429,7 @@ public class Navbar extends SettingsPreferenceFragment implements
             }
             refreshSettings();
             return true;
-        } else if (preference == mNavigationColor) {
-            String hex = ColorPickerPreference.convertToARGB(
-                     Integer.valueOf(String.valueOf(newValue)));
-             preference.setSummary(hex);
-             int intHex = ColorPickerPreference.convertToColorInt(hex) & 0x00FFFFFF;
-             Settings.System.putInt(getActivity().getContentResolver(),
-                     Settings.System.NAVIGATION_BAR_COLOR, intHex);
-             return true;
-        } else if (preference == mNavigationBarColor) {
+       } else if (preference == mNavigationBarColor) {
             String hex = ColorPickerPreference.convertToARGB(
                     Integer.valueOf(String.valueOf(newValue)));
             preference.setSummary(hex);

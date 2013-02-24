@@ -30,7 +30,7 @@
     <header
         android:id="@+id/transparency"
 	android:fragment="com.sourcery.magiccontrol.fragments.StatusBar"
-        android:title="Transparency and Misc" />
+        android:title="Status Bar Magic" />
     
       <header
         android:id="@+id/tablet"

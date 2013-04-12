@@ -50,7 +50,7 @@ import com.sourcery.magiccontrol.R;
 
 import net.margaritov.preference.colorpicker.ColorPickerDialog;
 
-import com.sourcery.magiccontrol.util.Helpers;
+import com.sourcery.magiccontrol.util.Helpersled;
 import com.sourcery.magiccontrol.util.ShortcutPickerHelper;
 
 import java.net.URISyntaxException;
@@ -194,7 +194,7 @@ public class LEDControl extends Fragment implements ColorPickerDialog.OnColorCha
 
         mChargingLedOn.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             public void onCheckedChanged(CompoundButton v, boolean checked) {
-                Helpers.setSystemProp(PROP_CHARGING_LED, checked ? "1" : "0");
+                Helpersled.setSystemProp(PROP_CHARGING_LED, checked ? "1" : "0");
                 if (DEBUG)
                     Log.i(TAG, "Charging LED is set to: " + checked);
             }
@@ -271,7 +271,7 @@ public class LEDControl extends Fragment implements ColorPickerDialog.OnColorCha
                 b.setSingleChoiceItems(brightnessArray, Settings.System.getInt(mActivity.getContentResolver(), Settings.System.LED_BRIGHTNESS, 1), new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int item) {
-                        Helpers.setSystemProp(PROP_LED_BRIGHTNESS, String.valueOf(brightnessOutput[item]));
+                        Helpersled.setSystemProp(PROP_LED_BRIGHTNESS, String.valueOf(brightnessOutput[item]));
                         Settings.System.putInt(mActivity.getContentResolver(),
                                 Settings.System.LED_BRIGHTNESS, item);
                     }
@@ -393,7 +393,7 @@ public class LEDControl extends Fragment implements ColorPickerDialog.OnColorCha
         mLedScreenOn.setChecked(Settings.Secure.getInt(mActivity.getContentResolver(),
                 Settings.Secure.LED_SCREEN_ON, 0) == 1);
 
-        String charging_led_enabled = Helpers.getSystemProp(PROP_CHARGING_LED, "0");
+        String charging_led_enabled = Helpersled.getSystemProp(PROP_CHARGING_LED, "0");
         if (charging_led_enabled.length() == 0) {
             charging_led_enabled = "0";
         }

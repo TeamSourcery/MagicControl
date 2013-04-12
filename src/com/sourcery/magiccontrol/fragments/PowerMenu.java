@@ -20,14 +20,14 @@ public class PowerMenu extends SettingsPreferenceFragment {
     private static final String PREF_AIRPLANE_TOGGLE = "show_airplane_toggle";
     private static final String PREF_NAVBAR_HIDE = "show_navbar_hide";
     private static final String PREF_SHOW_EXPANDED_DESKTOP_TOGGLE = "show_expanded_desktop_toggle";
-    private static final String PREF_REBOOT_HIDE = "show_reboot_hide";
+    private static final String PREF_REBOOT_KEYGUARD = "show_reboot_keyguard";
 
     CheckBoxPreference mShowScreenShot;
     CheckBoxPreference mShowTorchToggle;
     CheckBoxPreference mShowAirplaneToggle;
     CheckBoxPreference mShowNavBarHide;
     CheckBoxPreference mShowExpandedDesktopToggle;
-    CheckBoxPreference mShowRebootHide;
+    CheckBoxPreference mShowRebootKeyguard;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -52,9 +52,9 @@ public class PowerMenu extends SettingsPreferenceFragment {
         mShowNavBarHide.setChecked(Settings.System.getBoolean(getActivity()
                 .getContentResolver(), Settings.System.POWER_DIALOG_SHOW_NAVBAR_HIDE, false));
 
-        mShowRebootHide = (CheckBoxPreference) findPreference(PREF_REBOOT_HIDE);
-        mShowRebootHide.setChecked(Settings.System.getBoolean(getActivity()
-                .getContentResolver(), Settings.System.POWER_DIALOG_SHOW_REBOOT_HIDE, false));
+        mShowRebootKeyguard = (CheckBoxPreference) findPreference(PREF_REBOOT_KEYGUARD);
+        mShowRebootKeyguard.setChecked(Settings.System.getBoolean(getActivity()
+                .getContentResolver(), Settings.System.POWER_DIALOG_SHOW_REBOOT_KEYGUARD, true));
 
         mShowExpandedDesktopToggle = (CheckBoxPreference) findPreference(PREF_SHOW_EXPANDED_DESKTOP_TOGGLE);
         mShowExpandedDesktopToggle.setChecked(Settings.System.getInt(getActivity()
@@ -83,9 +83,9 @@ public class PowerMenu extends SettingsPreferenceFragment {
                     Settings.System.POWER_DIALOG_SHOW_NAVBAR_HIDE,
                     ((CheckBoxPreference)preference).isChecked());
             return true;
-         } else if (preference == mShowRebootHide) {
+         } else if (preference == mShowRebootKeyguard) {
             Settings.System.putBoolean(getActivity().getContentResolver(),
-                    Settings.System.POWER_DIALOG_SHOW_REBOOT_HIDE,
+                    Settings.System.POWER_DIALOG_SHOW_REBOOT_KEYGUARD,
                     ((CheckBoxPreference)preference).isChecked());
             return true;
         } else if (preference == mShowExpandedDesktopToggle) {

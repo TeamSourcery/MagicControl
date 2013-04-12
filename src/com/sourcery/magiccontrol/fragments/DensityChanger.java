@@ -25,8 +25,8 @@ import android.widget.EditText;
 
 import com.sourcery.magiccontrol.SettingsPreferenceFragment;
 import com.sourcery.magiccontrol.R;
-import com.sourcery.magiccontrol.util.CMDProcessor;
-import com.sourcery.magiccontrol.util.CMDProcessor.CommandResult;
+import com.sourcery.magiccontrol.util.DENSITYCMDProcessor;
+import com.sourcery.magiccontrol.util.DENSITYCMDProcessor.CommandResult;
 import com.sourcery.magiccontrol.util.Helpers;
 
 public class DensityChanger extends SettingsPreferenceFragment implements
@@ -221,7 +221,7 @@ public class DensityChanger extends SettingsPreferenceFragment implements
 
     private void setLcdDensity(int newDensity) {
         Helpers.getMount("rw");
-        new CMDProcessor().su.runWaitFor("busybox sed -i 's|ro.sf.lcd_density=.*|"
+        new DENSITYCMDProcessor().su.runWaitFor("busybox sed -i 's|ro.sf.lcd_density=.*|"
                 + "ro.sf.lcd_density" + "=" + newDensity + "|' " + "/system/build.prop");
         Helpers.getMount("ro");
     }
@@ -238,9 +238,9 @@ public class DensityChanger extends SettingsPreferenceFragment implements
             String gms = "/data/data/com.google.android.gms/";
             String gsf = "/data/data/com.google.android.gsf/";
 
-            CommandResult cr = new CMDProcessor().su.runWaitFor("ls " + vending);
-            CommandResult cr_gms = new CMDProcessor().su.runWaitFor("ls " + gms);
-            CommandResult cr_gsf = new CMDProcessor().su.runWaitFor("ls " + gsf);
+            CommandResult cr = new DENSITYCMDProcessor().su.runWaitFor("ls " + vending);
+            CommandResult cr_gms = new DENSITYCMDProcessor().su.runWaitFor("ls " + gms);
+            CommandResult cr_gsf = new DENSITYCMDProcessor().su.runWaitFor("ls " + gsf);
 
             if (cr.stdout == null || cr_gms.stdout == null || cr_gsf.stdout == null)
                 return false;
@@ -249,7 +249,7 @@ public class DensityChanger extends SettingsPreferenceFragment implements
                 if (!dir.equals("lib")) {
                     String c = "rm -r " + vending + dir;
                     // Log.i(TAG, c);
-                    if (!new CMDProcessor().su.runWaitFor(c).success())
+                    if (!new DENSITYCMDProcessor().su.runWaitFor(c).success())
                         return false;
                 }
             }
@@ -258,7 +258,7 @@ public class DensityChanger extends SettingsPreferenceFragment implements
                 if (!dir_gms.equals("lib")) {
                     String c_gms = "rm -r " + gms + dir_gms;
                     // Log.i(TAG, c);
-                    if (!new CMDProcessor().su.runWaitFor(c_gms).success())
+                    if (!new DENSITYCMDProcessor().su.runWaitFor(c_gms).success())
                         return false;
                 }
             }
@@ -267,7 +267,7 @@ public class DensityChanger extends SettingsPreferenceFragment implements
                 if (!dir_gsf.equals("lib")) {
                     String c_gsf = "rm -r " + gsf + dir_gsf;
                     // Log.i(TAG, c);
-                    if (!new CMDProcessor().su.runWaitFor(c_gsf).success())
+                    if (!new DENSITYCMDProcessor().su.runWaitFor(c_gsf).success())
                         return false;
                 }
             }

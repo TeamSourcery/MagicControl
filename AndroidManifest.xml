@@ -1,6 +1,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.sourcery.magiccontrol" >
     
+    <uses-sdk android:minSdkVersion="17"/>
     <original-package android:name="com.sourcery.magiccontrol" />
 
     <uses-permission android:name="android.permission.REBOOT" />
@@ -15,6 +16,7 @@
     <uses-permission android:name="android.permission.EXPAND_STATUS_BAR" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.VIBRATE" />
+    <uses-permission android:name="android.permission.READ_PHONE_STATE"/>
     <uses-permission android:name="android.permission.BIND_APPWIDGET" />
     <uses-permission android:name="android.permission.INTERACT_ACROSS_USERS_FULL" />
     <uses-permission android:name="android.permission.ACCESS_SUPERUSER" />
@@ -29,7 +31,7 @@
             android:name="MagicControlActivity"
             android:label="@string/app_name" >
             <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
+                <action android:name="android.intent.action.MAIN"/>
                  
             </intent-filter>
         </activity>
@@ -38,8 +40,8 @@
             android:name=".fragments.StatusBarClock"
             android:label="Statusbar Clock" >
             <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="com.sourcery.magiccontrol.SHORTCUT" />
+                <action android:name="android.intent.action.MAIN"/>
+                <category android:name="com.sourcery.magiccontrol.SHORTCUT"/>
             </intent-filter>
         </activity>
       
@@ -47,51 +49,51 @@
             android:name=".fragments.StatusBarToggles"
             android:label="Statusbar Toggles" >
             <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="com.sourcery.magiccontrol.SHORTCUT" />
+                <action android:name="android.intent.action.MAIN"/>
+                <category android:name="com.sourcery.magiccontrol.SHORTCUT"/>
             </intent-filter>
         </activity>
          <activity
             android:name=".fragments.StatusBarBattery"
             android:label="Statusbar Battery" >
             <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="com.sourcery.magiccontrol.SHORTCUT" />
+                <action android:name="android.intent.action.MAIN"/>
+                <category android:name="com.sourcery.magiccontrol.SHORTCUT"/>
             </intent-filter>
         </activity>
-        <activity android:name=".activities.StatusBarStyle" />
-        <activity android:name=".activities.NavBarStyle" />
+        <activity android:name=".activities.StatusBarStyle"/>
+        <activity android:name=".activities.NavBarStyle"/>
         <activity
             android:name=".fragments.Navbar"
-	    android:label="Navigation Bar" >
+	    android:label="Navigation Bar">
 	    <intent-filter>
-              <action android:name="android.intent.action.MAIN" />
-              <category android:name="com.sourcery.magiccontrol.SHORTCUT" />
+              <action android:name="android.intent.action.MAIN"/>
+              <category android:name="com.sourcery.magiccontrol.SHORTCUT"/>
 	            </intent-filter>
 	        </activity>
          <activity
             android:name=".fragments.PowerMenu"
-            android:label="Power Menu" >
+            android:label="Power Menu">
             <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="com.sourcery.magiccontrol.SHORTCUT" />
+                <action android:name="android.intent.action.MAIN"/>
+                <category android:name="com.sourcery.magiccontrol.SHORTCUT"/>
             </intent-filter>
         </activity>
           <activity
 	            android:name=".fragments.UserInterface"
 	            android:label="User Interface" >
 	            <intent-filter>
-	                <action android:name="android.intent.action.MAIN" />
-	                <category android:name="com.sourcery.magiccontrol.SHORTCUT" />
+	                <action android:name="android.intent.action.MAIN"/>
+	                <category android:name="com.sourcery.magiccontrol.SHORTCUT"/>
 	            </intent-filter>
 	        </activity>
 
                    <activity
 	            android:name=".fragments.TabletMode"
-	            android:label="Tablet Mode" >
+	            android:label="Tablet Mode">
 	            <intent-filter>
-	                <action android:name="android.intent.action.MAIN" />
-	                <category android:name="com.sourcery.magiccontrol.SHORTCUT" />
+	                <action android:name="android.intent.action.MAIN"/>
+	                <category android:name="com.sourcery.magiccontrol.SHORTCUT"/>
 	            </intent-filter>
 	        </activity>
 
@@ -99,114 +101,155 @@
         
          <activity
                android:name=".fragments.StatusBar"
-               android:label="StatusBar" >
+               android:label="StatusBar">
                <intent-filter>
-                   <action android:name="android.intent.action.MAIN" />
-                   <category android:name="com.sourcery.magiccontrol.SHORTCUT" />
+                   <action android:name="android.intent.action.MAIN"/>
+                   <category android:name="com.sourcery.magiccontrol.SHORTCUT"/>
               </intent-filter>
           </activity>
 
 	<activity
             android:name=".fragments.Lockscreens"
-            android:label="Lockscreens" >
+            android:label="Lockscreens">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN"/>
+                <category android:name="com.sourcery.magiccontrol.SHORTCUT"/>
+            </intent-filter>
+        </activity>
+
+       <activity android:name=".activities.StatusBarStyle" />
+       <activity android:name=".activities.NavBarStyle" />
+
+        <activity
+            android:name=".fragments.NavRingTargets"
+            android:label="@string/title_navring" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="com.sourcery.magiccontrol.SHORTCUT" />
             </intent-filter>
         </activity>
        
         <activity
             android:name=".fragments.LEDControl"
-            android:label="LED Control" >
+            android:label="LED Control">
             <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="com.sourcery.magiccontrol.SHORTCUT" />
+                <action android:name="android.intent.action.MAIN"/>
+                <category android:name="com.sourcery.magiccontrol.SHORTCUT"/>
             </intent-filter>
         </activity>
          
         <activity
  	    android:name=".ShareToClipboard"
             android:theme="@android:style/Theme.Translucent.NoTitleBar"
- 	    android:label="Share To Clipboard" >
+ 	    android:label="Share To Clipboard">
             <intent-filter>
  	         <action android:name="android.intent.action.SEND"/>
  	         <category android:name="android.intent.category.ALTERNATIVE"/>
  	         <category android:name="android.intent.category.DEFAULT"/>
- 	         <data android:mimeType="text/*" />
+ 	         <data android:mimeType="text/*"/>
             </intent-filter>
         </activity>
         <activity
              android:name=".fragments.StatusBarSignal"
-             android:label="Statusbar Signal" >
+             android:label="Statusbar Signal">
              <intent-filter>
-                 <action android:name="android.intent.action.MAIN" />
-                 <category android:name="com.sourcery.magiccontrol.SHORTCUT" />
+                 <action android:name="android.intent.action.MAIN"/>
+                 <category android:name="com.sourcery.magiccontrol.SHORTCUT"/>
              </intent-filter>
          </activity>
         <activity
  	    android:name="CreateShortcut"
-             android:theme="@style/Theme.CreateShortCut" >
+             android:theme="@style/Theme.CreateShortCut">
  	  <intent-filter>
-               <action android:name="android.intent.action.CREATE_SHORTCUT" />
-  	       <category android:name="android.intent.category.DEFAULT" />
+               <action android:name="android.intent.action.CREATE_SHORTCUT"/>
+  	       <category android:name="android.intent.category.DEFAULT"/>
           </intent-filter>
         </activity>
 
        <activity
              android:name=".fragments.LockscreenTargets"
-             android:label="Lockscreen Targets" >
+             android:label="Lockscreen Targets">
              <intent-filter>
-                 <action android:name="android.intent.action.MAIN" />
+                 <action android:name="android.intent.action.MAIN"/>
  
-                <category android:name="com.sourcery.magiccontrol.SHORTCUT" />
+                <category android:name="com.sourcery.magiccontrol.SHORTCUT"/>
              </intent-filter>
         </activity>
 
         <activity
              android:name=".shortcuts.Shortcuts"
-             android:label="Lockscreen Shortcuts" >
+             android:label="Lockscreen Shortcuts">
              <intent-filter>
-                 <action android:name="android.intent.action.MAIN" />
+                 <action android:name="android.intent.action.MAIN"/>
  
-                <category android:name="com.sourcery.magiccontrol.SHORTCUT" />
+                <category android:name="com.sourcery.magiccontrol.SHORTCUT"/>
              </intent-filter>
         </activity>
 
         <activity
 	            android:name=".fragments.Pie"
-	            android:label="Pie" >
+	            android:label="Pie">
 	            <intent-filter>
-	                <action android:name="android.intent.action.MAIN" />
-	                <category android:name="com.sourcery.magiccontrol.SHORTCUT" />
+	                <action android:name="android.intent.action.MAIN"/>
+	                <category android:name="com.sourcery.magiccontrol.SHORTCUT"/>
 	            </intent-filter>
 	        </activity>
    
         <activity
 	            android:name=".fragments.PieColor"
-	            android:label="Pie Color" >
+	            android:label="Pie Color">
 	            <intent-filter>
-	                <action android:name="android.intent.action.MAIN" />
-	                <category android:name="com.sourcery.magiccontrol.SHORTCUT" />
+	                <action android:name="android.intent.action.MAIN"/>
+	                <category android:name="com.sourcery.magiccontrol.SHORTCUT"/>
 	            </intent-filter>
 	        </activity>
 
         <activity
              android:name=".fragments.LockscreenInterface"
-             android:label="Lockscreen Interface" >
+             android:label="Lockscreen Interface">
              <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
+                <action android:name="android.intent.action.MAIN"/>
  
-                <category android:name="com.sourcery.magiccontrol.SHORTCUT" />
+                <category android:name="com.sourcery.magiccontrol.SHORTCUT"/>
              </intent-filter>
         </activity>
          <activity
              android:name=".fragments.DensityChanger"
-             android:label="@string/lcd_density_wizard" >
+             android:label="@string/lcd_density_wizard">
              <intent-filter>
-                 <action android:name="android.intent.action.MAIN" />
+                 <action android:name="android.intent.action.MAIN"/>
              </intent-filter>
         </activity>
+
+        <receiver
+            android:name=".service.BootReceiver">
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED"/>
+            </intent-filter>
+        </receiver>
+        <receiver
+            android:name=".service.ChangeFastChargeStateReceiver">
+            <intent-filter>
+                <action android:name="com.sourcery.magiccontrol.ACTION_CHANGE_FCHARGE_STATE"/>
+            </intent-filter>
+        </receiver>
+        <receiver android:name=".service.CodeReceiver">
+            <intent-filter>
+                <action android:name="android.provider.Telephony.SECRET_CODE"/>
+                <data
+                    android:scheme="android_secret_code"
+                    android:host="2657"/>
+            </intent-filter>
+        </receiver>
+
+        <service android:name=".service.BootService"/>
+        <service
+            android:name=".service.ExternalCommandService"
+            android:exported="false"/>
+       
+    </application>
     
-        </application>
+       
 </manifest>
   

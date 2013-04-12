@@ -23,4 +23,7 @@
     <color name="title_color">@android:color/holo_blue_light</color>
     <color name="setup_divider_color">#333333</color>
     <color name="dragndrop_background">#e0103010</color>
+
+    <color name="extension_list_item_color">#ffc9c9c9</color>
+    <color name="configure_light_background">#00000000</color>
 </resources>

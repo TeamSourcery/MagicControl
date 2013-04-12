@@ -52,6 +52,8 @@
         android:fragment="com.sourcery.magiccontrol.fragments.Navbar"
         android:title="@string/nav_bar"
         android:summary="@string/header_summary_navigation_bar" />
+
+   
       
      <header
         android:id="@+id/pie_control"

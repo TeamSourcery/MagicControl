@@ -34,7 +34,7 @@ import com.sourcery.magiccontrol.R;
 import com.sourcery.magiccontrol.util.CMDProcessor;
 import com.sourcery.magiccontrol.util.Helpers;
 import com.sourcery.magiccontrol.MagicControlActivity;
-import com.sourcery.magiccontrol.widgets.NavBarItemPreference;
+import com.android.internal.util.sourcery.NavBarHelpers;
 import com.sourcery.magiccontrol.widgets.SeekBarPreference;
 
 public class TabletMode extends SettingsPreferenceFragment implements OnPreferenceChangeListener {

@@ -52,6 +52,7 @@ public class UserInterface extends SettingsPreferenceFragment implements OnPrefe
     private static final String PREF_WAKEUP_WHEN_PLUGGED_UNPLUGGED = "wakeup_when_plugged_unplugged";
     private static final String PREF_POWER_CRT_SCREEN_ON = "system_power_crt_screen_on";
     private static final String PREF_POWER_CRT_SCREEN_OFF = "system_power_crt_screen_off"; 
+    private static final String PREF_LOW_BATTERY_WARNING_POLICY = "pref_low_battery_warning_policy";
 
     CheckBoxPreference mAllow180Rotation;
     CheckBoxPreference mStatusBarNotifCount;
@@ -69,7 +70,7 @@ public class UserInterface extends SettingsPreferenceFragment implements OnPrefe
     CheckBoxPreference mWakeUpWhenPluggedOrUnplugged;
     CheckBoxPreference mCrtOff;
     CheckBoxPreference mCrtOn;
-       
+    ListPreference mLowBatteryWarning;
 
     Random randomGenerator = new Random();
 
@@ -90,6 +91,13 @@ public class UserInterface extends SettingsPreferenceFragment implements OnPrefe
 
         PreferenceScreen prefs = getPreferenceScreen();
         ContentResolver cr = mContext.getContentResolver();
+
+        mLowBatteryWarning = (ListPreference) findPreference(PREF_LOW_BATTERY_WARNING_POLICY);
+        int lowBatteryWarning = Settings.System.getInt(getActivity().getContentResolver(),
+                                    Settings.System.POWER_UI_LOW_BATTERY_WARNING_POLICY, 3);
+        mLowBatteryWarning.setValue(String.valueOf(lowBatteryWarning));
+        mLowBatteryWarning.setSummary(mLowBatteryWarning.getEntry());
+        mLowBatteryWarning.setOnPreferenceChangeListener(this);
 
 
         mEnableVolumeOptions = (CheckBoxPreference) findPreference(PREF_ENABLE_VOLUME_OPTIONS);
@@ -276,8 +284,7 @@ public class UserInterface extends SettingsPreferenceFragment implements OnPrefe
             boolean checked = ((CheckBoxPreference) preference).isChecked();
             if (checked) {
                 Helpers.getMount("rw");
-                new CMDProcessor().su
-                        .runWaitFor("mv /system/media/bootanimation.zip /system/media/bootanimation.sourcery");
+                CMDProcessor.runSuCommand("mv /system/media/bootanimation.zip /system/media/bootanimation.sourcery");
                 Helpers.getMount("ro");
                 Resources res = mContext.getResources();
                 String[] insults = res.getStringArray(R.array.disable_bootanimation_insults);
@@ -285,8 +292,7 @@ public class UserInterface extends SettingsPreferenceFragment implements OnPrefe
                 preference.setSummary(insults[randomInt]);
             } else {
                 Helpers.getMount("rw");
-                new CMDProcessor().su
-                        .runWaitFor("mv /system/media/bootanimation.sourcery /system/media/bootanimation.zip");
+                CMDProcessor.runSuCommand("mv /system/media/bootanimation.sourcery /system/media/bootanimation.zip");
                 Helpers.getMount("ro");
                 preference.setSummary("");
             }
@@ -324,6 +330,13 @@ public class UserInterface extends SettingsPreferenceFragment implements OnPrefe
             Settings.System.putInt(getActivity().getContentResolver(),
                     Settings.System.SYSTEM_POWER_ENABLE_CRT_ON,
                     ((Boolean) newValue).booleanValue() ? 1 : 0);
+            return true;
+        } else if (preference == mLowBatteryWarning) {
+            int lowBatteryWarning = Integer.valueOf((String) newValue);
+            int index = mLowBatteryWarning.findIndexOfValue((String) newValue);
+            Settings.System.putInt(getActivity().getContentResolver(),
+                    Settings.System.POWER_UI_LOW_BATTERY_WARNING_POLICY, lowBatteryWarning);
+            mLowBatteryWarning.setSummary(mLowBatteryWarning.getEntries()[index]);
             return true;
         }
         return false;

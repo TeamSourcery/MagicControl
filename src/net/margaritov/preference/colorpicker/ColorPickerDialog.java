@@ -18,6 +18,8 @@ package net.margaritov.preference.colorpicker;
 
 import android.app.Dialog;
 import android.content.Context;
+import android.content.res.Resources;
+import android.graphics.Color;
 import android.graphics.PixelFormat;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -43,6 +45,9 @@ public class ColorPickerDialog
     private EditText mHex;
     private Button mSetButton;
     private Button mIcsColor;
+    private Button mBPTheme;
+    private Button mBPTextP;
+    private Button mBPTextS;
 
     private OnColorChangedListener mListener;
 
@@ -81,6 +86,9 @@ public class ColorPickerDialog
         mHex = (EditText) layout.findViewById(R.id.hex);
         mSetButton = (Button) layout.findViewById(R.id.enter);
         mIcsColor = (Button) layout.findViewById(R.id.ics_color);
+	mBPTheme = (Button) layout.findViewById(R.id.bp_theme);
+	mBPTextP = (Button) layout.findViewById(R.id.bp_text1);
+	mBPTextS = (Button) layout.findViewById(R.id.bp_text2);
 
         ((LinearLayout) mOldColor.getParent()).setPadding(
                 Math.round(mColorPicker.getDrawingOffset()),
@@ -114,6 +122,43 @@ public class ColorPickerDialog
                 try {
                     int newColor = 0xFF33B5E5;
                     mColorPicker.setColor(newColor, true);
+                } catch (Exception e) {
+                }
+            }
+        });
+
+        mBPTheme.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+
+                try {
+		    int themecolor = Resources.getSystem().getColor(android.R.color.sourceryThemeColor);
+                    mColorPicker.setColor(themecolor, true);
+                } catch (Exception e) {
+                }
+            }
+        });
+
+	mBPTextP.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                try {
+                    int text1color = Resources.getSystem().getColor(android.R.color.sourceryTextColor1);
+                    mColorPicker.setColor(text1color, true);
+                } catch (Exception e) {
+                }
+            }
+        });
+	
+	mBPTextS.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                try {
+                    int text2color = Resources.getSystem().getColor(android.R.color.sourceryTextColor2);
+                    mColorPicker.setColor(text2color, true);
                 } catch (Exception e) {
                 }
             }

@@ -89,6 +89,7 @@ public class StatusBar extends SettingsPreferenceFragment implements
     
     private static final String PREF_STATUSBAR_BRIGHTNESS = "statusbar_brightness_slider";
     private static final String STATUS_BAR_DONOTDISTURB = "status_bar_donotdisturb";
+    private static final String KEY_STATUS_BAR_ICON_OPACITY = "status_bar_icon_opacity";
    
  	
       
@@ -96,7 +97,7 @@ public class StatusBar extends SettingsPreferenceFragment implements
     CheckBoxPreference mStatusbarSliderPreference;
     
     private CheckBoxPreference mStatusBarDoNotDisturb;
-    
+    private ListPreference mStatusBarIconOpacity;
     
     private Activity mActivity;
 
@@ -119,6 +120,12 @@ public class StatusBar extends SettingsPreferenceFragment implements
         mStatusbarSliderPreference = (CheckBoxPreference) findPreference(PREF_STATUSBAR_BRIGHTNESS);
         mStatusbarSliderPreference.setChecked(Settings.System.getBoolean(mContext.getContentResolver(),
                  Settings.System.STATUSBAR_BRIGHTNESS_SLIDER, true));
+
+        int iconOpacity = Settings.System.getInt(getActivity().getApplicationContext().getContentResolver(),
+                Settings.System.STATUS_BAR_NOTIF_ICON_OPACITY, 140);
+        mStatusBarIconOpacity = (ListPreference) findPreference(KEY_STATUS_BAR_ICON_OPACITY);
+        mStatusBarIconOpacity.setValue(String.valueOf(iconOpacity));
+        mStatusBarIconOpacity.setOnPreferenceChangeListener(this);
       
                 
         }
@@ -147,7 +154,7 @@ public class StatusBar extends SettingsPreferenceFragment implements
                     Settings.System.STATUS_BAR_DONOTDISTURB,
                     mStatusBarDoNotDisturb.isChecked() ? 1 : 0);
             return true;   
-       
+      
     }
          return super.onPreferenceTreeClick(preferenceScreen, preference);
 
@@ -157,10 +164,15 @@ public class StatusBar extends SettingsPreferenceFragment implements
 
           
          @Override
-    public boolean onPreferenceChange(Preference preference, Object newValue) {
-        
-         
-         return true;
-           }
+    public boolean onPreferenceChange(Preference preference, Object Value) {
+         final String key = preference.getKey();
+        if (preference == mStatusBarIconOpacity) {
+            int iconOpacity = Integer.valueOf((String) Value);
+            Settings.System.putInt(getActivity().getApplicationContext().getContentResolver(),
+                    Settings.System.STATUS_BAR_NOTIF_ICON_OPACITY, iconOpacity);
+            return true;
+             }
+            return false;
+             }
     
 }

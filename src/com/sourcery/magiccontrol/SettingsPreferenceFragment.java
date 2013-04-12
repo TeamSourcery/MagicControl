@@ -25,11 +25,14 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.os.Vibrator;
 import android.preference.CheckBoxPreference;
 import android.preference.Preference;
 import android.preference.PreferenceActivity;
 import android.preference.PreferenceFragment;
 import android.provider.Settings;
+import android.telephony.TelephonyManager;
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.widget.Button;
 
@@ -48,6 +51,8 @@ public class SettingsPreferenceFragment extends PreferenceFragment implements Di
     protected boolean hasHardwareButtons;
     protected boolean hasFastCharge;
     protected boolean hasColorTuning;
+    protected boolean hasVibration = false;
+    protected ContentResolver mContentRes;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -56,13 +61,19 @@ public class SettingsPreferenceFragment extends PreferenceFragment implements Di
         hasHardwareButtons = getResources().getBoolean(R.bool.has_hardware_buttons);
         hasFastCharge = getResources().getBoolean(R.bool.has_fast_charge);
         hasColorTuning = getResources().getBoolean(R.bool.has_color_tuning);
-        mContext = getActivity().getApplicationContext();
+        mContext = getActivity();
         mActionBar = getActivity().getActionBar();
+        mContentRes = getActivity().getContentResolver();
         if(getArguments() != null) {
             mShortcutFragment = getArguments().getBoolean("started_from_shortcut", false);
         }
         if(!mShortcutFragment)
             mActionBar.setDisplayHomeAsUpEnabled(true);
+
+        Vibrator mVibrator = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
+        if (mVibrator != null && mVibrator.hasVibrator()) {
+            hasVibration = true;
+        }
     }
 
     public static boolean isTablet(Context context) {
@@ -70,8 +81,29 @@ public class SettingsPreferenceFragment extends PreferenceFragment implements Di
                 Settings.System.CURRENT_UI_MODE,0) == 1;
     }
 
+    public static boolean isPhablet(Context context) {
+        return Settings.System.getInt(context.getContentResolver(),
+                Settings.System.CURRENT_UI_MODE,0) == 2;
+    }
+
+    public static boolean hasPhoneAbility(Context context)
+    {
+       TelephonyManager telephonyManager = (TelephonyManager) context.getSystemService(Context.TELEPHONY_SERVICE);
+       if(telephonyManager.getPhoneType() == TelephonyManager.PHONE_TYPE_NONE)
+           return false;
+
+       return true;
+    }
+
+    public static boolean isSW600DPScreen(Context context) {
+        DisplayMetrics displayMetrics = context.getResources().getDisplayMetrics();
+        int widthPixels = displayMetrics.widthPixels;
+        float density = displayMetrics.density;
+        return ((widthPixels / density) >= 600);
+    }
+
     public void setTitle(int resId) {
-         getActivity().setTitle(resId);
+        getActivity().setTitle(resId);
     }
 
     /*
@@ -276,7 +308,7 @@ public class SettingsPreferenceFragment extends PreferenceFragment implements Di
         }
     }
 
-   protected boolean isCheckBoxPreferenceChecked(Preference p) {
+    protected boolean isCheckBoxPreferenceChecked(Preference p) {
         if(p instanceof CheckBoxPreference) {
             return ((CheckBoxPreference) p).isChecked();
         } else {

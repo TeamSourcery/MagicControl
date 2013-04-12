@@ -1,73 +1,91 @@
 <?xml version="1.0" encoding="utf-8"?>
-<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android" 
-    xmlns:sourcery="http://schemas.android.com/apk/res/com.sourcery.magiccontrol">
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:aokp="http://schemas.android.com/apk/res/com.sourcery.magiccontrol">
 
-   <PreferenceCategory
-         android:key="pref_general_settings"
-         android:title="@string/title_general" >
+    <Preference
+        android:key="toggles"
+        android:title="@string/toggle_dialog_arrange_title" />
 
-         <ListPreference
+    <ListPreference
+        android:entries="@array/toggles_style_entries"
+        android:entryValues="@array/toggles_style_values"
+        android:key="toggles_style"
+        android:summary="@string/toggles_style_summary"
+        android:title="@string/toggles_style_title" />
+
+    <ListPreference
+        android:entries="@array/toggles_per_row_entries"
+        android:entryValues="@array/toggles_per_row_values"
+        android:key="toggles_per_row"
+        android:summary="@string/toggles_per_row_summary"
+        android:title="@string/toggles_per_row_title" />
+
+    <Preference
+        android:key="toggle_fav_contact"
+        android:summary="@string/toggle_favcontact_summary"
+        android:title="@string/toggle_favcontact_title" />
+
+   <ListPreference
+        android:entries="@array/screenshot_delay_entries"
+        android:entryValues="@array/screenshot_delay_values"
+        android:key="screenshot_delay"
+        android:summary="@string/screenshot_delay_summary"
+        android:title="@string/screenshot_delay_title" />
+
+    <ListPreference
          android:key="quick_pulldown"
          android:title="@string/title_quick_pulldown"
          android:entries="@array/quick_pulldown_entries"
          android:entryValues="@array/quick_pulldown_values"
          android:persistent="false" />
 
-        <CheckBoxPreference
+     <CheckBoxPreference
          android:key="no_notifications_pulldown"
          android:title="@string/title_no_notifications_pulldown"
          android:summary="@string/summary_no_notifications_pulldown" />
-         
- 
-    </PreferenceCategory>
-
-    <Preference
-        android:key="enabled_toggles"
-        android:summary="@string/enabled_toggles_summary"
-        android:title="@string/enabled_toggles_title" />
-
-    <Preference
-        android:key="toggles"
-        android:summary="@string/toggles_order_summary"
-        android:title="@string/toggles_order_title" />
-
-    <ListPreference
-        android:entries="@array/toggles_per_row_entries"
-        android:entryValues="@array/toggles_per_row_values"
-        android:key="toggles_per_row"
-        android:title="@string/toggles_per_row_title"
-        android:summary="@string/toggles_per_row_summary" />
-
-    <ListPreference
-        android:entries="@array/quicksettings_theme_style_entries"
-        android:entryValues="@array/quicksettings_theme_style_values"
-        android:key="quick_theme_style"
-        android:title="@string/quicksettings_theme_style"
-        android:summary="@string/quicksettings_theme_style_summary" />
-
-    <net.margaritov.preference.colorpicker.ColorPickerPreference
-            android:key="quick_text_color"
-            android:title="@string/quick_text_color_title"
-            android:defaultValue="#ffcccccc" />
 
     <PreferenceCategory
-		android:key="contacts"
-		android:title="@string/toggle_favcontact_cattitle">
+        android:key="custom_toggle"
+        android:title="@string/custom_toggle_cat">
 
+        <CheckBoxPreference
+            android:key="advanced_toggle_actions"
+            android:summaryOff="@string/advanced_toggle_summaryoff"
+            android:summaryOn="@string/advanced_toggle_summaryon"
+            android:title="@string/advanced_toggle_title" />
 
-    <Preference
-        android:key="toggle_fav_contact"
-        android:title="@string/toggle_favcontact_title" />
+        <CheckBoxPreference
+            android:key="set_boot_action"
+            android:summary="@string/boot_action_summary"
+            android:title="@string/boot_action_title" />
 
-    <Preference
-        android:key="toggle_fav_contacttwo"
-        android:title="@string/toggle_favcontact_titletwo" />
+        <CheckBoxPreference
+            android:key="match_icon_action"
+            android:summary="@string/match_icon_action_summary"
+            android:title="@string/match_icon_action_title" />
 
-    <Preference
-        android:key="toggle_fav_contactthree"
-        android:title="@string/toggle_favcontact_titlethree" />
+        <ListPreference
+            android:entries="@array/collapse_bar_entries"
+            android:entryValues="@array/collapse_bar_values"
+            android:key="collapse_bar"
+            android:title="@string/collapse_bar_title"
+            android:summary="@string/collapse_bar_summary" />
 
-   
+        <ListPreference
+            android:entries="@array/custom_toggle_dclick_entries"
+            android:entryValues="@array/custom_toggle_dclick_values"
+            android:key="dclick_action"
+            android:title="@string/dclick_action_title"
+            android:summary="@string/dclick_action_summary" />
+
+    </PreferenceCategory>
+    <PreferenceCategory
+        android:key="custom_buttons"
+        android:title="@string/custom_button_cat">
+
+        <com.sourcery.magiccontrol.widgets.CustomTogglePref
+            android:key="custom_toggle_pref" />
+
     </PreferenceCategory>
 
 </PreferenceScreen>

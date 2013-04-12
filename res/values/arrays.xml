@@ -207,50 +207,7 @@
         <item>2</item>
         <item>3</item>
     </string-array>
-    <string-array name="navigation_bar_qty_entries" translatable="false">
-        <item>1</item>
-        <item>2</item>
-        <item>3</item>
-        <item>4</item>
-        <item>5</item>
-    </string-array>
-    <string-array name="navigation_bar_qty_values" translatable="false">
-        <item>1</item>
-        <item>2</item>
-        <item>3</item>
-        <item>4</item>
-        <item>5</item>
-    </string-array>
-    <string-array name="navbar_button_entries" translatable="false">
-        <item>@string/home</item>
-        <item>@string/back</item>
-        <item>@string/recents</item>
-        <item>@string/recent_apps</item>
-        <item>@string/search</item>
-        <item>@string/screenshot</item>
-        <item>@string/menu</item>
-        <item>@string/open_ime_switcher</item>
-        <item>@string/kill_app</item>
-        <item>@string/power</item>
-        <item>@string/notifications</item>
-        <item>@string/custom_app</item>
-        <item>@string/blank</item>
-    </string-array>
-    <string-array name="navbar_button_values" translatable="false">
-        <item>**home**</item>
-        <item>**back**</item>
-        <item>**recents**</item>
-        <item>**recentapps**</item>
-        <item>**search**</item>
-        <item>**screenshot**</item>
-        <item>**menu**</item>
-        <item>**ime**</item>
-        <item>**kill**</item>
-        <item>**power**</item>
-        <item>**notifications**</item>
-        <item>**app**</item>
-        <item>**null**</item>
-    </string-array>
+        
     <string-array name="navring_dialog_entries" translatable="false">
         <item>@string/none</item>
         <item>@string/take_screenshot</item>
@@ -871,6 +828,150 @@
         <item>2</item>
     </string-array>
 
+    <string-array name="status_bar_icon_opacity_entries">
+        <item>15%</item>
+        <item>25%</item>
+        <item>35%</item>
+        <item>45%</item>
+        <item>55% (default)</item>
+        <item>65%</item>
+        <item>75%</item>
+        <item>85%</item>
+        <item>95%</item>
+        <item>100%</item>
+    </string-array>
 
+    <string-array name="status_bar_icon_opacity_values">
+        <item>38</item>
+        <item>64</item>
+        <item>89</item>
+        <item>115</item>
+        <item>140</item>
+        <item>166</item>
+        <item>191</item>
+        <item>217</item>
+        <item>242</item>
+        <item>255</item>
+    </string-array>
+
+    <!-- Toggles style -->
+    <string-array name="toggles_style_entries" translatable="false">
+        <item>@string/toggle_style_tile</item>
+        <item>@string/toggle_style_traditional</item>
+        <item>@string/toggle_style_scrollable</item>
+    </string-array>
+    <string-array name="toggles_style_values" translatable="false">
+        <item>0</item>
+        <item>2</item>
+        <item>3</item>
+    </string-array>
+
+   <string-array name="pref_low_battery_warning_policy_entries">
+        <item>Pop-up and sound</item>
+        <item>Pop-up only</item>
+        <item>Sound only</item>
+        <item>Off</item>
+    </string-array>
+
+    <string-array name="pref_low_battery_warning_policy_values">
+        <item>3</item>
+        <item>1</item>
+        <item>2</item>
+        <item>0</item>
+    </string-array>
+
+   <string-array name="choose_toggle_side_entries" translatable="false">
+        <item>@string/right</item>
+        <item>@string/left</item>
+    </string-array>
+    <string-array name="choose_toggle_side_values" translatable="false">
+        <item>1</item>
+        <item>2</item>
+    </string-array>
+
+    <string-array name="navring_long_dialog_entries" translatable="false">
+        <item>@string/navring_short</item>
+        <item>@string/navring_long</item>
+        <item>@string/navring_icon</item>
+    </string-array>
+    <string-array name="navring_long_dialog_values" translatable="false">
+        <item>**short**</item>
+        <item>**long**</item>
+        <item>**icon**</item>
+    </string-array>
+    <string-array name="navring_short_dialog_entries" translatable="false">
+        <item>@string/navring_short</item>
+        <item>@string/navring_icon</item>
+    </string-array>
+    <string-array name="navring_short_dialog_values" translatable="false">
+        <item>**short**</item>
+        <item>**icon**</item>
+    </string-array>
+
+   <!-- Screenshot delay -->
+    <string-array name="screenshot_delay_entries" translatable="false">
+        <item>2 seconds</item>
+        <item>3 seconds</item>
+        <item>4 seconds</item>
+        <item>5 seconds</item>
+        <item>6 seconds</item>
+        <item>7 seconds</item>
+        <item>8 seconds</item>
+    </string-array>
+    <string-array name="screenshot_delay_values" translatable="false">
+        <item>2000</item>
+        <item>3000</item>
+        <item>4000</item>
+        <item>5000</item>
+        <item>6000</item>
+        <item>7000</item>
+        <item>8000</item>
+    </string-array>
+
+    <!-- Custom toggle quantity -->
+    <string-array name="custom_toggle_qty_entries" translatable="false">
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+        <item>4</item>
+        <item>5</item>
+    </string-array>
+    <string-array name="custom_toggle_qty_values" translatable="false">
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+        <item>4</item>
+        <item>5</item>
+    </string-array>
+
+    <!-- Custom toggle collapse bar -->
+    <string-array name="collapse_bar_entries" translatable="false">
+        <item>@string/no_collapse</item>
+        <item>@string/click_collapse</item>
+        <item>@string/long_collapse</item>
+        <item>@string/both_collapse</item>
+    </string-array>
+    <string-array name="collapse_bar_values" translatable="false">
+        <item>10</item>
+        <item>11</item>
+        <item>12</item>
+        <item>13</item>
+    </string-array>
+
+    <!-- Custom toggle double-actions -->
+    <string-array name="custom_toggle_dclick_entries" translatable="false">
+        <item>@string/no_dclick</item>
+        <item>@string/back_one_dclick</item>
+        <item>@string/state_one_dclick</item>
+        <item>@string/skip_back_dclick</item>
+        <item>@string/skip_up_dclick</item>
+    </string-array>
+    <string-array name="custom_toggle_dclick_values" translatable="false">
+        <item>0</item>
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+        <item>4</item>
+    </string-array>
 
 </resources>

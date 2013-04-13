@@ -599,9 +599,9 @@ public class NavRingTargets extends Fragment implements
         case ACTION_KILL:
                 newSummary = getResources().getString(R.string.kill_app);
                 break;
-        case ACTION_LAST_APP:
-                newSummary = getResources().getString(R.string.lastapp);
-                break;
+      //  case ACTION_LAST_APP:
+      //          newSummary = getResources().getString(R.string.lastapp);
+      //          break;
         case ACTION_POWER:
                 newSummary = getResources().getString(R.string.screen_off);
                 break;

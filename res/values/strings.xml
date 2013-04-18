@@ -1062,5 +1062,7 @@
     <string name="screenshot_delay_title">Screenshot delay</string>
     <string name="screenshot_delay_summary">Delay to use after long pressing the screenshot toggle</string>
 
+    <string name="app_killed_message">App Killed</string>
+
 
    </resources>

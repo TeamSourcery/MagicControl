@@ -117,9 +117,19 @@
             </intent-filter>
         </activity>
 
+       <activity
+            android:name=".fragments.Lockscreenstwo"
+            android:label="Lockscreenstwo">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN"/>
+                <category android:name="com.sourcery.magiccontrol.SHORTCUT"/>
+            </intent-filter>
+        </activity>
+
+       <activity android:name=".pie.PieControl" />
        <activity android:name=".activities.StatusBarStyle" />
        <activity android:name=".activities.NavBarStyle" />
-
+       
         <activity
             android:name=".fragments.NavRingTargets"
             android:label="@string/title_navring" >
@@ -129,7 +139,15 @@
                 <category android:name="com.sourcery.magiccontrol.SHORTCUT" />
             </intent-filter>
         </activity>
-       
+       <activity
+            android:name=".fragments.RibbonTargets"
+            android:label="@string/title_ribbon" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="com.sourcery.magiccontrol.SHORTCUT" />
+            </intent-filter>
+        </activity>
         <activity
             android:name=".fragments.LEDControl"
             android:label="LED Control">
@@ -177,33 +195,17 @@
              </intent-filter>
         </activity>
 
-        <activity
-             android:name=".shortcuts.Shortcuts"
-             android:label="Lockscreen Shortcuts">
-             <intent-filter>
-                 <action android:name="android.intent.action.MAIN"/>
- 
-                <category android:name="com.sourcery.magiccontrol.SHORTCUT"/>
-             </intent-filter>
+       <activity
+            android:name=".fragments.PowerWidget"
+            android:label="@string/title_power_widget" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="com.sourcery.magiccontrol.SHORTCUT" />
+              </intent-filter>
         </activity>
 
-        <activity
-	            android:name=".fragments.Pie"
-	            android:label="Pie">
-	            <intent-filter>
-	                <action android:name="android.intent.action.MAIN"/>
-	                <category android:name="com.sourcery.magiccontrol.SHORTCUT"/>
-	            </intent-filter>
-	        </activity>
-   
-        <activity
-	            android:name=".fragments.PieColor"
-	            android:label="Pie Color">
-	            <intent-filter>
-	                <action android:name="android.intent.action.MAIN"/>
-	                <category android:name="com.sourcery.magiccontrol.SHORTCUT"/>
-	            </intent-filter>
-	        </activity>
+        
 
         <activity
              android:name=".fragments.LockscreenInterface"
@@ -234,15 +236,7 @@
                 <action android:name="com.sourcery.magiccontrol.ACTION_CHANGE_FCHARGE_STATE"/>
             </intent-filter>
         </receiver>
-        <receiver android:name=".service.CodeReceiver">
-            <intent-filter>
-                <action android:name="android.provider.Telephony.SECRET_CODE"/>
-                <data
-                    android:scheme="android_secret_code"
-                    android:host="2657"/>
-            </intent-filter>
-        </receiver>
-
+        
         <service android:name=".service.BootService"/>
         <service
             android:name=".service.ExternalCommandService"

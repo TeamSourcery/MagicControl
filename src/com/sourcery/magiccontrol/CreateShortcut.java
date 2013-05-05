@@ -72,8 +72,8 @@ public class CreateShortcut extends LauncherActivity {
             return R.drawable.ic_ics_control_toggles;
         else if (c.equals("UserInterface"))
             return R.drawable.ic_ics_control_general_ui;
-        else if (c.equals("Weather"))
-            return R.drawable.ic_ics_control_weather;
+         else if (c.equals("PowerWidget"))
+            return R.drawable.ic_power_widget;
         else
             return R.mipmap.ic_launcher;
     }

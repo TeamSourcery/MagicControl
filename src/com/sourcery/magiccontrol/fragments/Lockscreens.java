@@ -1,384 +1,937 @@
-package com.sourcery.magiccontrol.fragments;
+/*
+ * Copyright (C) 2013 Android Open Kang Project
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 
-import net.margaritov.preference.colorpicker.ColorPickerPreference;
+package com.sourcery.magiccontrol.fragments;
 
 import android.app.Activity;
 import android.app.AlertDialog;
-import android.content.ActivityNotFoundException;
-import android.app.FragmentTransaction;
+import android.app.Fragment;
+import android.app.SearchManager;
+import android.content.ComponentName;
 import android.content.ContentResolver;
 import android.content.Context;
 import android.content.DialogInterface;
-import android.content.DialogInterface.OnMultiChoiceClickListener;
 import android.content.Intent;
-import android.content.pm.PackageManager;
-import android.content.pm.PackageManager.NameNotFoundException;
+import android.content.Intent.ShortcutIconResource;
 import android.content.res.Configuration;
 import android.content.res.Resources;
-import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.graphics.drawable.BitmapDrawable;
-import android.graphics.drawable.Drawable;
-import android.graphics.Rect;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
-import android.preference.CheckBoxPreference;
-import android.preference.ListPreference;
-import android.preference.Preference;
-import android.preference.PreferenceActivity;
-import android.preference.PreferenceCategory;
-import android.preference.PreferenceGroup;
-import android.preference.Preference.OnPreferenceChangeListener;
-import android.preference.PreferenceScreen;
-import android.provider.CalendarContract.Calendars;
+import android.os.Handler;
+import android.os.Message;
+import android.os.UserHandle;
+import android.preference.PreferenceFragment;
 import android.provider.MediaStore;
 import android.provider.Settings;
-import android.provider.Settings.SettingNotFoundException;
+import android.text.TextUtils;
 import android.util.Log;
-import android.util.TypedValue;
-import android.view.Display;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
-import android.view.View;
-import android.view.Window;
-import android.widget.AdapterView.AdapterContextMenuInfo;
-import android.widget.Toast;
+import android.view.*;
+import android.view.ViewGroup.LayoutParams;
+import android.widget.*;
+import android.widget.AdapterView.OnItemSelectedListener;
 
+import static com.android.internal.util.sourcery.AwesomeConstants.*;
+import com.android.internal.util.sourcery.LockScreenHelpers;
+import com.android.internal.widget.multiwaveview.GlowPadView;
+import com.android.internal.widget.multiwaveview.TargetDrawable;
+import com.sourcery.magiccontrol.util.ShortcutPickerHelper;
+import com.sourcery.magiccontrol.R;
+import com.sourcery.magiccontrol.util.Helpers;
+import com.sourcery.magiccontrol.SettingsPreferenceFragment;
+import com.sourcery.magiccontrol.MagicControlActivity;
+import net.margaritov.preference.colorpicker.ColorPickerDialog;
+
+import java.util.ArrayList;
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.util.ArrayList;
+import java.net.URISyntaxException;
+import java.lang.NumberFormatException;
 
-import com.sourcery.magiccontrol.SettingsPreferenceFragment;
-import com.sourcery.magiccontrol.R;
-import com.sourcery.magiccontrol.MagicControlActivity;
+public class Lockscreens extends SettingsPreferenceFragment implements
+        ShortcutPickerHelper.OnPickListener, ColorPickerDialog.OnColorChangedListener,
+        GlowPadView.OnTriggerListener {
+    private static final String TAG = "Lockscreen";
+    private static final boolean DEBUG = false;
 
-import net.margaritov.preference.colorpicker.ColorPickerView;
-
-public class Lockscreens extends SettingsPreferenceFragment implements OnPreferenceChangeListener {
-
-
-    private static final String TAG = "Lockscreens";
-    private static final boolean DEBUG = true;
-
-    private static final int REQUEST_CODE_BG_WALLPAPER = 1024;
-
-    private static final int LOCKSCREEN_BACKGROUND_COLOR_FILL = 0;
-    private static final int LOCKSCREEN_BACKGROUND_CUSTOM_IMAGE = 1;
-    private static final int LOCKSCREEN_BACKGROUND_DEFAULT_WALLPAPER = 2;
-
-    private static final String PREF_VOLUME_ROCKER_WAKE = "volume_rocker_wake";
-    private static final String PREF_VOLUME_MUSIC = "volume_music_controls";
-    private static final String PREF_LOCKSCREEN_AUTO_ROTATE = "lockscreen_auto_rotate";
-    private static final String PREF_LOCKSCREEN_ALL_WIDGETS = "lockscreen_all_widgets";
-    private static final String PREF_LOCKSCREEN_BATTERY = "lockscreen_battery";
-    private static final String PREF_LOCKSCREEN_TEXT_COLOR = "lockscreen_text_color";
-    private static final String PREF_LOCKSCREEN_MAXIMIZE_WIDGETS = "lockscreen_maximize_widgets";
-    private static final String PREF_LOCKSCREEN_HIDE_INITIAL_PAGE_HINTS = "lockscreen_hide_initial_page_hints";
-    public static final String KEY_SEE_THROUGH = "see_through";
-    private static final String PREF_LOCKSCREEN_LONGPRESS_CHALLENGE = "lockscreen_longpress_challenge";
-    private static final String PREF_LOCKSCREEN_USE_CAROUSEL = "lockscreen_use_widget_container_carousel";
-    private static final String KEY_BACKGROUND_PREF = "lockscreen_background";
-
-    public static final int REQUEST_PICK_WALLPAPER = 199;
     public static final int REQUEST_PICK_CUSTOM_ICON = 200;
-    public static final int SELECT_ACTIVITY = 2;
-    public static final int SELECT_WALLPAPER = 3;
+    public static final int REQUEST_PICK_LANDSCAPE_ICON = 201;
 
-    private static final String WALLPAPER_NAME = "lockscreen_wallpaper.jpg";
+    private Context mContext;
+    private Resources mResources;
 
-    Preference mLockscreenWallpaper;
-    Preference mLockscreenTargets;
+    private ContentResolver cr;
 
-    CheckBoxPreference mVolumeMusic;
-    CheckBoxPreference mVolumeRockerWake;
-    CheckBoxPreference mLockscreenBattery;
-    ColorPickerPreference mLockscreenTextColor;
-    CheckBoxPreference mLockscreenAutoRotate;
-    CheckBoxPreference mLockscreenAllWidgets;
-    CheckBoxPreference mMaximizeWidgets;
-    CheckBoxPreference mLockscreenHideInitialPageHints;
-    CheckBoxPreference mLockscreenLongpressChallenge;
-    CheckBoxPreference mLockscreenUseCarousel;
-    private CheckBoxPreference mSeeThrough;
-    private ListPreference mCustomBackground;
+    private GlowPadView mGlowPadView;
+    private TextView mHelperText;
+    private View mLockscreenOptions;
+    private boolean mIsLandscape;
 
-    private File mWallpaperImage;
-    private File mWallpaperTemporary;
+    private Switch mLongPressStatus;
+    private Switch mLockBatterySwitch;
+    private Switch mLockRotateSwitch;
+    private Switch mLockVolControlSwitch;
+    private Switch mLockVolWakeSwitch;
+    private Switch mLockPageHintSwitch;
+    private Switch mLockMinimizeChallangeSwitch;
+    private Switch mLockCarouselSwitch;
+    private Switch mLockAllWidgetsSwitch;
+    private Switch mLockUnlimitedWidgetsSwitch;
+    private Button mLockTextColorButton;
+
+    private TextView mLongPressText;
+    private TextView mLockTextColorText;
+    private TextView mLockBatteryText;
+    private TextView mLockRotateText;
+    private TextView mLockVolControlText;
+    private TextView mLockVolWakeText;
+    private TextView mLockPageHintText;
+    private TextView mLockMinimizeChallangeText;
+    private TextView mLockCarouselText;
+    private TextView mLockAllWidgetsText;
+    private TextView mLockUnlimitedWidgetsText;
+
+    private ShortcutPickerHelper mPicker;
+    private String[] targetActivities = new String[8];
+    private String[] longActivities = new String[8];
+    private String[] customIcons = new String[8];
+    private ViewGroup mContainer;
+
+    private int defaultColor;
+    private int textColor;
+
+    private boolean mBoolLongPress;
+    private int mTargetIndex;
+    private int mTarget = 0;
+
+    public static enum DialogConstant {
+        ICON_ACTION {
+            @Override
+            public String value() {
+                return "**icon**";
+            }
+        },
+        LONG_ACTION {
+            @Override
+            public String value() {
+                return "**long**";
+            }
+        },
+        SHORT_ACTION {
+            @Override
+            public String value() {
+                return "**short**";
+            }
+        },
+        CUSTOM_APP {
+            @Override
+            public String value() {
+                return "**app**";
+            }
+        },
+        NOT_IN_ENUM {
+            @Override
+            public String value() {
+                return "**notinenum**";
+            }
+        };
+        public String value() {
+            return this.value();
+        }
+    }
+
+    public static DialogConstant funcFromString(String string) {
+        DialogConstant[] allTargs = DialogConstant.values();
+        for (int i = 0; i < allTargs.length; i++) {
+            if (string.equals(allTargs[i].value())) {
+                return allTargs[i];
+            }
+        }
+        // not in ENUM must be custom
+        return DialogConstant.NOT_IN_ENUM;
+    }
+
+    private String mString;
+
+    private static final int MENU_RESET = Menu.FIRST;
+    private static final int MENU_SAVE = Menu.FIRST + 1;
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setTitle(R.string.title_lockscreens);
-
-        // Load the preferences from an XML resource
-        addPreferencesFromResource(R.xml.prefs_lockscreens);
-
-        mSeeThrough = (CheckBoxPreference) findPreference(KEY_SEE_THROUGH);
-
-        mVolumeRockerWake = (CheckBoxPreference) findPreference(PREF_VOLUME_ROCKER_WAKE);
-        mVolumeRockerWake.setChecked(Settings.System.getBoolean(mContext
-                .getContentResolver(), Settings.System.VOLUME_WAKE_SCREEN, false));
-
-        mVolumeMusic = (CheckBoxPreference) findPreference(PREF_VOLUME_MUSIC);
-        mVolumeMusic.setChecked(Settings.System.getBoolean(mContext.getContentResolver(),
-                Settings.System.VOLUME_MUSIC_CONTROLS, false));
-
-        mMaximizeWidgets = (CheckBoxPreference) findPreference(PREF_LOCKSCREEN_MAXIMIZE_WIDGETS);
-        mMaximizeWidgets.setOnPreferenceChangeListener(this);
-        
-        mLockscreenAutoRotate = (CheckBoxPreference)findPreference(PREF_LOCKSCREEN_AUTO_ROTATE);
-        mLockscreenAutoRotate.setChecked(Settings.System.getBoolean(mContext
-                .getContentResolver(), Settings.System.LOCKSCREEN_AUTO_ROTATE, false));
-
-        mLockscreenAllWidgets = (CheckBoxPreference)findPreference(PREF_LOCKSCREEN_ALL_WIDGETS);
-        mLockscreenAllWidgets.setChecked(Settings.System.getBoolean(getActivity().getContentResolver(),
-                Settings.System.LOCKSCREEN_ALL_WIDGETS, false));
-
-        mLockscreenBattery = (CheckBoxPreference)findPreference(PREF_LOCKSCREEN_BATTERY);
-        mLockscreenBattery.setChecked(Settings.System.getBoolean(getActivity().getContentResolver(),
-                Settings.System.LOCKSCREEN_BATTERY, false));
-
-        mLockscreenTextColor = (ColorPickerPreference) findPreference(PREF_LOCKSCREEN_TEXT_COLOR);
-        mLockscreenTextColor.setOnPreferenceChangeListener(this);
-
-        mLockscreenWallpaper = findPreference("wallpaper");
-        
-        mLockscreenHideInitialPageHints = (CheckBoxPreference)findPreference(PREF_LOCKSCREEN_HIDE_INITIAL_PAGE_HINTS);
- 	mLockscreenHideInitialPageHints.setChecked(Settings.System.getBoolean(getActivity().getContentResolver(),
-                Settings.System.LOCKSCREEN_HIDE_INITIAL_PAGE_HINTS, false));
-
-        mLockscreenUseCarousel = (CheckBoxPreference)findPreference(PREF_LOCKSCREEN_USE_CAROUSEL);
-        mLockscreenUseCarousel.setChecked(Settings.System.getBoolean(getActivity().getContentResolver(),
-                Settings.System.LOCKSCREEN_USE_WIDGET_CONTAINER_CAROUSEL, false));
-
-        mLockscreenLongpressChallenge = (CheckBoxPreference)findPreference(PREF_LOCKSCREEN_LONGPRESS_CHALLENGE);
-        mLockscreenLongpressChallenge.setChecked(Settings.System.getBoolean(getActivity().getContentResolver(),
-                Settings.System.LOCKSCREEN_LONGPRESS_CHALLENGE, false));
-
-    //     if (isTablet(mContext)) {
-     //       ((PreferenceGroup)findPreference("layout")).removePreference((Preference)findPreference(PREF_LOCKSCREEN_MAXIMIZE_WIDGETS));
-     //       ((PreferenceGroup)findPreference("layout")).removePreference((Preference)findPreference(PREF_LOCKSCREEN_LONGPRESS_CHALLENGE));
-     //   }
-
-        mCustomBackground = (ListPreference) findPreference(KEY_BACKGROUND_PREF);
-        mCustomBackground.setOnPreferenceChangeListener(this);
-        updateCustomBackgroundSummary();
-
-        mWallpaperImage = new File(getActivity().getFilesDir()+"/lockwallpaper");
-        mWallpaperTemporary = new File(getActivity().getCacheDir()+"/lockwallpaper.tmp");
-			    }
-
-    private void updateCustomBackgroundSummary() {
-        int resId;
-        String value = Settings.System.getString(getContentResolver(),
-                Settings.System.LOCKSCREEN_BACKGROUND);
-        if (value == null) {
-            resId = R.string.lockscreen_background_default_wallpaper;
-            mCustomBackground.setValueIndex(LOCKSCREEN_BACKGROUND_DEFAULT_WALLPAPER);
-        } else if (value.isEmpty()) {
-            resId = R.string.lockscreen_background_custom_image;
-            mCustomBackground.setValueIndex(LOCKSCREEN_BACKGROUND_CUSTOM_IMAGE);
-        } else {
-            resId = R.string.lockscreen_background_color_fill;
-            mCustomBackground.setValueIndex(LOCKSCREEN_BACKGROUND_COLOR_FILL);
-        }
-        mCustomBackground.setSummary(getResources().getString(resId));
-
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+            Bundle savedInstanceState) {
+        mContainer = container;
         setHasOptionsMenu(true);
+        mContext = getActivity();
+        mResources = getResources();
+        cr = mContext.getContentResolver();
+        mPicker = new ShortcutPickerHelper(this, this);
+        return inflater.inflate(R.layout.lockscreen_targets, container, false);
     }
+
+    @Override
+    public void onActivityCreated(Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        mGlowPadView = ((GlowPadView) getActivity().findViewById(R.id.lock_target));
+        mGlowPadView.setOnTriggerListener(this);
+        mLockscreenOptions = ((View) getActivity().findViewById(R.id.lockscreen_options));
+        if (mLockscreenOptions != null) {
+            mLockscreenOptions.getParent().bringChildToFront(mLockscreenOptions);
+            mIsLandscape = false;
+        } else {
+            mIsLandscape = true;
+        }
+        mHelperText = ((TextView) getActivity().findViewById(R.id.helper_text));
+        defaultColor = mResources
+                .getColor(com.android.internal.R.color.config_defaultNotificationColor);
+        textColor = Settings.System.getInt(mContext.getContentResolver(),
+                Settings.System.LOCKSCREEN_CUSTOM_TEXT_COLOR, defaultColor);
+
+        mLockTextColorText = ((TextView) getActivity().findViewById(R.id.lockscreen_button_id));
+        mLockTextColorText.setOnClickListener(mLockTextColorTextListener);
+        mLockTextColorButton = ((Button) getActivity().findViewById(R.id.lockscreen_color_button));
+        mLockTextColorButton.setBackgroundColor(textColor);
+        mLockTextColorButton.setOnClickListener(new Button.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ColorPickerDialog picker = new ColorPickerDialog(mContext, textColor);
+                picker.setOnColorChangedListener(Lockscreens.this);
+                picker.show();
+            }
+        });
+
+        mLockBatteryText = ((TextView) getActivity().findViewById(R.id.lockscreen_battery_id));
+        mLockBatteryText.setOnClickListener(mLockBatteryTextListener);
+        mLockBatterySwitch = (Switch) getActivity().findViewById(R.id.lockscreen_battery_switch);
+        mLockBatterySwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton v, boolean checked) {
+                Settings.System.putBoolean(cr, Settings.System.LOCKSCREEN_BATTERY, checked);
+                updateSwitches();
+            }
+        });
+
+       mLockRotateText = ((TextView) getActivity().findViewById(R.id.lockscreen_rotate_id));
+       mLockRotateText.setOnClickListener(mLockRotateTextListener);
+       mLockRotateSwitch = (Switch) getActivity().findViewById(R.id.lockscreen_rotate_switch);
+       mLockRotateSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+         @Override
+          public void onCheckedChanged(CompoundButton v, boolean checked) {
+              Settings.System.putBoolean(cr, Settings.System.LOCKSCREEN_AUTO_ROTATE, checked);
+             updateSwitches();
+          }
+      });
+
+        mLockVolControlText = ((TextView) getActivity().findViewById(
+                R.id.lockscreen_vol_controls_id));
+        mLockVolControlText.setOnClickListener(mLockVolControlTextListener);
+        mLockVolControlSwitch = (Switch) getActivity().findViewById(
+                R.id.lockscreen_vol_controls_switch);
+        mLockVolControlSwitch
+                .setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                    @Override
+                    public void onCheckedChanged(CompoundButton v, boolean checked) {
+                        Settings.System.putBoolean(cr, Settings.System.VOLUME_MUSIC_CONTROLS,
+                                checked);
+                        updateSwitches();
+                    }
+                });
+
+        mLockVolWakeText = ((TextView) getActivity().findViewById(R.id.lockscreen_vol_wake_id));
+        mLockVolWakeText.setOnClickListener(mLockVolWakeTextListener);
+        mLockVolWakeSwitch = (Switch) getActivity().findViewById(R.id.lockscreen_vol_wake_switch);
+        mLockVolWakeSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton v, boolean checked) {
+                Settings.System.putBoolean(cr, Settings.System.VOLUME_WAKE_SCREEN, checked);
+                updateSwitches();
+            }
+        });
+
+        mLockAllWidgetsText = ((TextView) getActivity()
+                .findViewById(R.id.lockscreen_all_widgets_id));
+        mLockAllWidgetsText.setOnClickListener(mLockAllWidgetsTextListener);
+        mLockAllWidgetsSwitch = (Switch) getActivity().findViewById(
+                R.id.lockscreen_all_widgets_switch);
+        mLockAllWidgetsSwitch
+                .setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                    @Override
+                    public void onCheckedChanged(CompoundButton v, boolean checked) {
+                        Settings.System.putBoolean(cr, Settings.System.LOCKSCREEN_ALL_WIDGETS,
+                                checked);
+                        updateSwitches();
+                    }
+                });
+
+        mLockUnlimitedWidgetsText = ((TextView) getActivity().findViewById(
+                R.id.lockscreen_unlimited_widgets_id));
+        mLockUnlimitedWidgetsText.setOnClickListener(mLockUnlimitedWidgetsTextListener);
+        mLockUnlimitedWidgetsSwitch = (Switch) getActivity().findViewById(
+                R.id.lockscreen_unlimited_widgets_switch);
+        mLockUnlimitedWidgetsSwitch
+                .setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                    @Override
+                    public void onCheckedChanged(CompoundButton v, boolean checked) {
+                        Settings.System.putBoolean(cr,
+                                Settings.System.LOCKSCREEN_UNLIMITED_WIDGETS, checked);
+                        updateSwitches();
+                    }
+                });
+
+        mLockPageHintText = ((TextView) getActivity().findViewById(
+                R.id.lockscreen_hide_page_hints_id));
+        mLockPageHintText.setOnClickListener(mLockPageHintTextListener);
+        mLockPageHintSwitch = (Switch) getActivity().findViewById(
+                R.id.lockscreen_hide_page_hints_switch);
+        mLockPageHintSwitch
+                .setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                    @Override
+                    public void onCheckedChanged(CompoundButton v, boolean checked) {
+                        Settings.System.putBoolean(cr,
+                                Settings.System.LOCKSCREEN_HIDE_INITIAL_PAGE_HINTS, checked);
+                        updateSwitches();
+                    }
+                });
+
+        mLockMinimizeChallangeText = ((TextView) getActivity().findViewById(
+                R.id.lockscreen_minimize_challange_id));
+        mLockMinimizeChallangeText.setOnClickListener(mLockMinimizeChallangeTextListener);
+        mLockMinimizeChallangeSwitch = (Switch) getActivity().findViewById(
+                R.id.lockscreen_minimize_challange_switch);
+        mLockMinimizeChallangeSwitch
+                .setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                    @Override
+                    public void onCheckedChanged(CompoundButton v, boolean checked) {
+                        Settings.System.putBoolean(cr,
+                                Settings.System.LOCKSCREEN_MINIMIZE_LOCKSCREEN_CHALLENGE, checked);
+                        updateSwitches();
+                    }
+                });
+
+        if (isTablet(mContext) || isPhablet(mContext)) {
+            Settings.System.putBoolean(cr,
+                Settings.System.LOCKSCREEN_MINIMIZE_LOCKSCREEN_CHALLENGE, false);
+            mLockMinimizeChallangeText.setVisibility(View.GONE);
+            mLockMinimizeChallangeSwitch.setVisibility(View.GONE);
+        }
+
+        mLockCarouselText = ((TextView) getActivity().findViewById(R.id.lockscreen_carousel_id));
+        mLockCarouselText.setOnClickListener(mLockCarouselTextListener);
+        mLockCarouselSwitch = (Switch) getActivity().findViewById(R.id.lockscreen_carousel_switch);
+        mLockCarouselSwitch
+                .setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                    @Override
+                    public void onCheckedChanged(CompoundButton v, boolean checked) {
+                        Settings.System.putBoolean(cr,
+                                Settings.System.LOCKSCREEN_USE_WIDGET_CONTAINER_CAROUSEL, checked);
+                        updateSwitches();
+                    }
+                });
+
+        mLongPressText = ((TextView) getActivity()
+                .findViewById(R.id.lockscreen_target_longpress_id));
+        mLongPressText.setOnClickListener(mLongPressTextListener);
+        mLongPressStatus = (Switch) getActivity().findViewById(R.id.longpress_switch);
+        mLongPressStatus.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton v, boolean checked) {
+                Settings.System.putBoolean(cr, Settings.System.LOCKSCREEN_TARGETS_LONGPRESS,
+                        checked);
+                updateDrawables();
+            }
+        });
+        updateSwitches();
+        updateDrawables();
+    }
+
+    private TextView.OnClickListener mLockTextColorTextListener = new TextView.OnClickListener() {
+        public void onClick(View v) {
+            createMessage(
+                    getResources().getString(R.string.lockscreen_text_color_title),
+                    getResources().getString(R.string.lockscreen_text_color_summary));
+        }
+    };
+
+    private TextView.OnClickListener mLongPressTextListener = new TextView.OnClickListener() {
+        public void onClick(View v) {
+            createMessage(
+                    getResources().getString(R.string.lockscreen_target_longpress_text),
+                    getResources().getString(R.string.lockscreen_target_longpress_summary));
+        }
+    };
+
+    private TextView.OnClickListener mLockBatteryTextListener = new TextView.OnClickListener() {
+        public void onClick(View v) {
+            createMessage(
+                    getResources().getString(R.string.lockscreen_battery_title),
+                    getResources().getString(R.string.lockscreen_battery_summary));
+        }
+    };
+
+   private TextView.OnClickListener mLockRotateTextListener = new TextView.OnClickListener() {
+       public void onClick(View v) {
+           createMessage(
+                   getResources().getString(R.string.lockscreen_auto_rotate_title),
+                   getResources().getString(R.string.lockscreen_auto_rotate_summary));
+       }
+   };
+
+    private TextView.OnClickListener mLockVolControlTextListener = new TextView.OnClickListener() {
+        public void onClick(View v) {
+            createMessage(
+                    getResources().getString(R.string.volume_music_controls_title),
+                    getResources().getString(R.string.volume_music_controls_summary));
+        }
+    };
+
+    private TextView.OnClickListener mLockVolWakeTextListener = new TextView.OnClickListener() {
+        public void onClick(View v) {
+            createMessage(
+                    getResources().getString(R.string.volume_rocker_wake_title),
+                    getResources().getString(R.string.volume_rocker_wake_summary));
+        }
+    };
+
+    private TextView.OnClickListener mLockUnlimitedWidgetsTextListener = new TextView.OnClickListener() {
+        public void onClick(View v) {
+            createMessage(
+                    getResources().getString(R.string.lockscreen_unlimited_widgets_title),
+                    getResources().getString(R.string.lockscreen_unlimited_widgets_summary));
+        }
+    };
+
+    private TextView.OnClickListener mLockAllWidgetsTextListener = new TextView.OnClickListener() {
+        public void onClick(View v) {
+            createMessage(
+                    getResources().getString(R.string.lockscreen_all_widgets_title),
+                    getResources().getString(R.string.lockscreen_all_widgets_summary));
+        }
+    };
+
+    private TextView.OnClickListener mLockPageHintTextListener = new TextView.OnClickListener() {
+        public void onClick(View v) {
+            createMessage(
+                    getResources().getString(R.string.lockscreen_hide_initial_page_hints_title),
+                    getResources().getString(R.string.lockscreen_hide_initial_page_hints_summary));
+        }
+    };
+
+    private TextView.OnClickListener mLockMinimizeChallangeTextListener = new TextView.OnClickListener() {
+        public void onClick(View v) {
+            createMessage(
+                    getResources().getString(R.string.lockscreen_minimize_challenge_title),
+                    getResources().getString(R.string.lockscreen_minimize_challenge_summary));
+        }
+    };
+
+    private TextView.OnClickListener mLockCarouselTextListener = new TextView.OnClickListener() {
+        public void onClick(View v) {
+            createMessage(
+                    getResources().getString(
+                            R.string.lockscreen_use_widget_container_carousel_title),
+                    getResources().getString(
+                            R.string.lockscreen_use_widget_container_carousel_summary));
+        }
+    };
+
+    private void updateSwitches() {
+        mLockBatterySwitch.setChecked(Settings.System.getBoolean(cr,
+                Settings.System.LOCKSCREEN_BATTERY, false));
+        mLockRotateSwitch.setChecked(Settings.System.getBoolean(cr,
+                Settings.System.LOCKSCREEN_AUTO_ROTATE, false));
+        mLockVolControlSwitch.setChecked(Settings.System.getBoolean(cr,
+                Settings.System.VOLUME_MUSIC_CONTROLS, false));
+        mLockVolWakeSwitch.setChecked(Settings.System.getBoolean(cr,
+                Settings.System.VOLUME_WAKE_SCREEN, false));
+        mLockAllWidgetsSwitch.setChecked(Settings.System.getBoolean(cr,
+                Settings.System.LOCKSCREEN_ALL_WIDGETS, false));
+        mLockUnlimitedWidgetsSwitch.setChecked(Settings.System.getBoolean(cr,
+                Settings.System.LOCKSCREEN_UNLIMITED_WIDGETS, false));
+        mLockPageHintSwitch.setChecked(Settings.System.getBoolean(cr,
+                Settings.System.LOCKSCREEN_HIDE_INITIAL_PAGE_HINTS, false));
+        mLockMinimizeChallangeSwitch.setChecked(Settings.System.getBoolean(cr,
+                Settings.System.LOCKSCREEN_MINIMIZE_LOCKSCREEN_CHALLENGE, false));
+        mLockCarouselSwitch.setChecked(Settings.System.getBoolean(cr,
+                Settings.System.LOCKSCREEN_USE_WIDGET_CONTAINER_CAROUSEL, false));
+    }
+
+
+    private void setDrawables() {
+        mLongPressStatus.setChecked(mBoolLongPress);
+
+        // Custom Targets
+        ArrayList<TargetDrawable> storedDraw = new ArrayList<TargetDrawable>();
+
+        // Add User Targets
+        for (int i = 0; i < 8; i++) {
+            TargetDrawable drawable;
+            if (!TextUtils.isEmpty(customIcons[i])) {
+                drawable = LockScreenHelpers.getCustomDrawable(mContext, customIcons[i]);
+            } else {
+                drawable = LockScreenHelpers.getTargetDrawable(mContext, targetActivities[i]);
+            }
+            drawable.setEnabled(true);
+            storedDraw.add(drawable);
+        }
+        mGlowPadView.setTargetResources(storedDraw);
+        maybeSwapSearchIcon();
+    }
+
+    private void maybeSwapSearchIcon() {
+        // Update the search icon with drawable from the search .apk
+        Intent intent = ((SearchManager) mContext.getSystemService(Context.SEARCH_SERVICE))
+                .getAssistIntent(mContext, UserHandle.USER_CURRENT);
+        if (intent != null) {
+            ComponentName component = intent.getComponent();
+            boolean replaced = mGlowPadView.replaceTargetDrawablesIfPresent(component,
+                    ASSIST_ICON_METADATA_NAME + "_google",
+                    com.android.internal.R.drawable.ic_action_assist_generic);
+            if (!replaced && !mGlowPadView.replaceTargetDrawablesIfPresent(component,
+                    ASSIST_ICON_METADATA_NAME,
+                    com.android.internal.R.drawable.ic_action_assist_generic)) {
+                Log.v(TAG, "Couldn't grab icon from package " + component);
+            }
+        }
+    }
+
     @Override
     public void onResume() {
         super.onResume();
-
-    ContentResolver cr = getActivity().getContentResolver();
-    if (mMaximizeWidgets != null) {
-            mMaximizeWidgets.setChecked(Settings.System.getInt(cr,
-                    Settings.System.LOCKSCREEN_MAXIMIZE_WIDGETS, 0) == 1);
-        }
-
     }
 
     @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        menu.add(0, MENU_RESET, 0, R.string.profile_reset_title)
+                .setIcon(R.drawable.ic_settings_backup)
+                .setAlphabeticShortcut('r')
+                .setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM |
+                        MenuItem.SHOW_AS_ACTION_WITH_TEXT);
+        menu.add(0, MENU_SAVE, 0, R.string.wifi_save)
+                .setIcon(R.drawable.ic_menu_save)
+                .setAlphabeticShortcut('s')
+                .setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM |
+                        MenuItem.SHOW_AS_ACTION_WITH_TEXT);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case MENU_RESET:
+                resetAll();
+                return true;
+            case MENU_SAVE:
+                saveAll();
+                Toast.makeText(mContext, R.string.lockscreen_target_save, Toast.LENGTH_LONG).show();
+                return true;
+            default:
+                return false;
+        }
+    }
+
+    /**
+     * Resets the target layout to stock
+     */
+    private void resetAll() {
+        final AlertDialog d = new AlertDialog.Builder(mContext)
+                .setTitle(R.string.lockscreen_target_reset_title)
+                .setIconAttribute(android.R.attr.alertDialogIcon)
+                .setMessage(R.string.lockscreen_target_reset_message)
+                .setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int id) {
+                        for (int i = 0; i < 8; i++) {
+                            Settings.System.putString(cr,
+                                    Settings.System.LOCKSCREEN_TARGETS_SHORT[i], null);
+                            Settings.System.putString(cr,
+                                    Settings.System.LOCKSCREEN_TARGETS_LONG[i], null);
+                            Settings.System.putString(cr,
+                                    Settings.System.LOCKSCREEN_TARGETS_ICON[i], null);
+
+                        }
+                        updateDrawables();
+                        Toast.makeText(mContext,
+                                R.string.lockscreen_target_reset,
+                                Toast.LENGTH_LONG).show();
+                    }
+                })
+                .setNegativeButton(R.string.cancel, null)
+                .create();
+
+        d.show();
+    }
+
+    /**
+     * Save targets to settings provider
+     */
+    private void saveAll() {
+        if (mUnlockCounter() > 0) {
+            for (int i = 0; i < 8; i++) {
+                Settings.System.putString(cr,
+                        Settings.System.LOCKSCREEN_TARGETS_SHORT[i], targetActivities[i]);
+                Settings.System.putString(cr,
+                        Settings.System.LOCKSCREEN_TARGETS_LONG[i], longActivities[i]);
+                Settings.System.putString(cr,
+                        Settings.System.LOCKSCREEN_TARGETS_ICON[i], customIcons[i]);
+            }
+            updateDrawables();
+        } else {
+            Toast.makeText(mContext, getResources()
+                    .getString(R.string.save_error), Toast.LENGTH_LONG).show();
+        }
+    }
+
+    @Override
+    public void shortcutPicked(String uri, String friendlyName, Bitmap bmp, boolean isApplication) {
+        switch (mTarget) {
+            case 0:
+                targetActivities[mTargetIndex] = uri;
+                break;
+            case 1:
+                longActivities[mTargetIndex] = uri;
+                Toast.makeText(mContext, getProperSummary(uri) + "  "
+                        + getResources().getString(R.string.action_long_save),
+                        Toast.LENGTH_LONG).show();
+                break;
+            default:
+                break;
+        }
+
+        setDrawables();
+    }
+
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (requestCode == REQUEST_CODE_BG_WALLPAPER) {
-            int hintId;
+        if (resultCode == Activity.RESULT_OK) {
+            if (requestCode == ShortcutPickerHelper.REQUEST_PICK_SHORTCUT
+                    || requestCode == ShortcutPickerHelper.REQUEST_PICK_APPLICATION
+                    || requestCode == ShortcutPickerHelper.REQUEST_CREATE_SHORTCUT) {
+                mPicker.onActivityResult(requestCode, resultCode, data);
 
-            if (resultCode == Activity.RESULT_OK) {
-                if (mWallpaperTemporary.exists()) {
-                    mWallpaperTemporary.renameTo(mWallpaperImage);
+            } else if ((requestCode == REQUEST_PICK_CUSTOM_ICON)
+                    || (requestCode == REQUEST_PICK_LANDSCAPE_ICON)) {
+
+                String iconName = getIconFileName(mTargetIndex);
+                FileOutputStream iconStream = null;
+                try {
+                    iconStream = mContext.openFileOutput(iconName, Context.MODE_WORLD_READABLE);
+                } catch (FileNotFoundException e) {
+                    return; // NOOOOO
                 }
-                mWallpaperImage.setReadOnly();
-                hintId = R.string.lockscreen_background_result_successful;
-                Settings.System.putString(getContentResolver(),
-                        Settings.System.LOCKSCREEN_BACKGROUND, "");
-                updateCustomBackgroundSummary();
-            } else {
-                if (mWallpaperTemporary.exists()) {
-                    mWallpaperTemporary.delete();
+
+                Uri selectedImageUri = getTempFileUri();
+                try {
+                    Log.e(TAG, "Selected image path: " + selectedImageUri.getPath());
+                    Bitmap bitmap = BitmapFactory.decodeFile(selectedImageUri.getPath());
+                    bitmap.compress(Bitmap.CompressFormat.PNG, 100, iconStream);
+                } catch (NullPointerException npe) {
+                    Log.e(TAG, "SeletedImageUri was null.");
+                    super.onActivityResult(requestCode, resultCode, data);
+                    return;
                 }
-                hintId = R.string.lockscreen_background_result_not_successful;
+                customIcons[mTargetIndex] = Uri
+                        .fromFile(new File(mContext.getFilesDir(), iconName)).getPath();
+
+                File f = new File(selectedImageUri.getPath());
+                if (f.exists())
+                    f.delete();
+
+                Toast.makeText(
+                        mContext,
+                        mTargetIndex
+                                + getResources().getString(
+                                        R.string.custom_app_icon_successfully),
+                        Toast.LENGTH_LONG).show();
+                setDrawables();
             }
-            Toast.makeText(getActivity(),
-                    getResources().getString(hintId), Toast.LENGTH_LONG).show();
+        } else if (resultCode == Activity.RESULT_CANCELED && data != null) {
+
         }
+        super.onActivityResult(requestCode, resultCode, data);
     }
 
+    public void updateDrawables() {
+        for (int i = 0; i < 8; i++) {
+            targetActivities[i] = Settings.System.getString(cr,
+                    Settings.System.LOCKSCREEN_TARGETS_SHORT[i]);
+            longActivities[i] = Settings.System.getString(cr,
+                    Settings.System.LOCKSCREEN_TARGETS_LONG[i]);
+            customIcons[i] = Settings.System.getString(cr,
+                    Settings.System.LOCKSCREEN_TARGETS_ICON[i]);
+        }
+        mBoolLongPress = (Settings.System.getBoolean(cr,
+                Settings.System.LOCKSCREEN_TARGETS_LONGPRESS, false));
+
+        if (mUnlockCounter() < 1) {
+            targetActivities[0] = AwesomeConstant.ACTION_UNLOCK.value();
+        }
+        setDrawables();
+    }
+
+    public void onValueChange(String uri) {
+        DialogConstant mFromString = funcFromString(uri);
+        switch (mFromString) {
+            case CUSTOM_APP:
+                mPicker.pickShortcut();
+                break;
+            case SHORT_ACTION:
+                mTarget = 0;
+                mString = Settings.System.LOCKSCREEN_TARGETS_SHORT[mTargetIndex];
+                createDialog(
+                        getResources().getString(R.string.choose_action_short_title),
+                        getResources().getStringArray(R.array.lockscreen_dialog_entries),
+                        getResources().getStringArray(R.array.lockscreen_dialog_values));
+                break;
+            case LONG_ACTION:
+                mTarget = 1;
+                mString = Settings.System.LOCKSCREEN_TARGETS_LONG[mTargetIndex];
+                createDialog(
+                        getResources().getString(R.string.choose_action_long_title),
+                        getResources().getStringArray(R.array.lockscreen_dialog_entries),
+                        getResources().getStringArray(R.array.lockscreen_dialog_values));
+                break;
+            case ICON_ACTION:
+                int width = 90;
+                int height = width;
+
+                Intent intent = new Intent(Intent.ACTION_GET_CONTENT, null);
+                intent.setType("image/*");
+                intent.putExtra("crop", "true");
+                intent.putExtra("aspectX", width);
+                intent.putExtra("aspectY", height);
+                intent.putExtra("outputX", width);
+                intent.putExtra("outputY", height);
+                intent.putExtra("scale", true);
+                intent.putExtra(MediaStore.EXTRA_OUTPUT, getTempFileUri());
+                intent.putExtra("outputFormat", Bitmap.CompressFormat.PNG.toString());
+                Log.i(TAG, "started for result, should output to: " + getTempFileUri());
+                startActivityForResult(intent, REQUEST_PICK_CUSTOM_ICON);
+                break;
+            case NOT_IN_ENUM:
+                switch (mTarget) {
+                    case 0:
+                        targetActivities[mTargetIndex] = uri;
+                        break;
+                    case 1:
+                        longActivities[mTargetIndex] = uri;
+                        Toast.makeText(mContext, getProperSummary(uri)
+                                + "  " + getResources().getString(R.string.action_long_save),
+                                Toast.LENGTH_LONG).show();
+                        break;
+                    default:
+                        break;
+                }
+                break;
+
+        }
+        setDrawables();
+    }
 
     @Override
-    public boolean onPreferenceTreeClick(PreferenceScreen preferenceScreen, Preference preference) {
-        if (preference == mVolumeRockerWake) {
-            Settings.System.putBoolean(mContext.getContentResolver(),
-                    Settings.System.VOLUME_WAKE_SCREEN,
-                    ((CheckBoxPreference) preference).isChecked());
-            return true;
-        } else if (preference == mVolumeMusic) {
-            Settings.System.putBoolean(mContext.getContentResolver(),
-                    Settings.System.VOLUME_MUSIC_CONTROLS,
-                    ((CheckBoxPreference) preference).isChecked());
-            return true;
-        } else if (preference == mLockscreenAllWidgets) {
-            Settings.System.putBoolean(mContext.getContentResolver(),
-                    Settings.System.LOCKSCREEN_ALL_WIDGETS,
-                    ((CheckBoxPreference) preference).isChecked());
-            return true;
-        } else if (preference == mLockscreenBattery) {
-            Settings.System.putInt(getActivity().getContentResolver(),
-                    Settings.System.LOCKSCREEN_BATTERY,
-                    ((CheckBoxPreference)preference).isChecked() ? 1 : 0);
-            return true;
-        } else if (preference == mLockscreenAutoRotate) {
-            Settings.System.putBoolean(mContext.getContentResolver(),
-                    Settings.System.LOCKSCREEN_AUTO_ROTATE,
-                    ((CheckBoxPreference) preference).isChecked());
-            return true;
-        } else if (preference == mLockscreenHideInitialPageHints) {
-            Settings.System.putInt(getActivity().getContentResolver(),
-                    Settings.System.LOCKSCREEN_HIDE_INITIAL_PAGE_HINTS,
-                    ((CheckBoxPreference)preference).isChecked() ? 1 : 0);
-            return true;
-        } else if (preference == mLockscreenLongpressChallenge) {
-            Settings.System.putBoolean(getActivity().getContentResolver(),
-                    Settings.System.LOCKSCREEN_LONGPRESS_CHALLENGE,
-                    ((CheckBoxPreference)preference).isChecked());
-            return true;
-        } else if (preference == mLockscreenUseCarousel) {
-            Settings.System.putInt(getActivity().getContentResolver(),
-                    Settings.System.LOCKSCREEN_USE_WIDGET_CONTAINER_CAROUSEL,
-                    ((CheckBoxPreference)preference).isChecked() ? 1 : 0);
-            return true;
-        } else if (preference == mSeeThrough) {
-             Settings.System.putInt(mContext.getContentResolver(),
-                     Settings.System.LOCKSCREEN_SEE_THROUGH, mSeeThrough.isChecked() ? 1 : 0);
-            return true;
+    public void onTrigger(View v, final int target) {
+        mTargetIndex = target;
+        if (mBoolLongPress) {
+            final String[] stringArray = mContext.getResources().getStringArray(
+                    R.array.navring_long_dialog_entries);
+            stringArray[0] = stringArray[0] + "  :  "
+                    + getProperSummary(targetActivities[mTargetIndex]);
+            stringArray[1] = stringArray[1] + "  :  "
+                    + getProperSummary(longActivities[mTargetIndex]);
+            createDialog(
+                    getResources().getString(R.string.choose_action_title), stringArray,
+                    getResources().getStringArray(R.array.navring_long_dialog_values));
+        } else {
+            final String[] stringArray = mContext.getResources().getStringArray(
+                    R.array.navring_short_dialog_entries);
+            stringArray[0] = stringArray[0] + "  :  "
+                    + getProperSummary(targetActivities[mTargetIndex]);
+            createDialog(
+                    getResources().getString(R.string.choose_action_title), stringArray,
+                    getResources().getStringArray(R.array.navring_short_dialog_values));
         }
-        
-        return super.onPreferenceTreeClick(preferenceScreen, preference);
     }
-
-   
 
     @Override
-    public boolean onPreferenceChange(Preference preference, Object newValue) {
-        ContentResolver cr = getActivity().getContentResolver();
-        boolean handled = false;
-        if (preference == mLockscreenTextColor) {
-            String hex = ColorPickerPreference.convertToARGB(Integer.valueOf(String.valueOf(newValue)));
-            preference.setSummary(hex);
-            int intHex = ColorPickerPreference.convertToColorInt(hex);
-            Settings.System.putInt(getActivity().getContentResolver(),
-                    Settings.System.LOCKSCREEN_CUSTOM_TEXT_COLOR, intHex);
-            return true;
-        } else if (preference == mMaximizeWidgets) {
-             boolean value = (Boolean) newValue;
-             Settings.System.putInt(cr, Settings.System.LOCKSCREEN_MAXIMIZE_WIDGETS, value ? 1 : 0);
-             return true;
-         } else if (preference == mCustomBackground) {
-            int selection = mCustomBackground.findIndexOfValue(newValue.toString());
-            return handleBackgroundSelection(selection); 
+    public void onGrabbed(View v, int handle) {
+        if (!mIsLandscape) {
+            updateVisiblity(false);
         }
-        return false;
     }
 
-     private boolean handleBackgroundSelection(int selection) {
-        if (selection == LOCKSCREEN_BACKGROUND_COLOR_FILL) {
-            final ColorPickerView colorView = new ColorPickerView(getActivity());
-            int currentColor = Settings.System.getInt(getContentResolver(),
-                    Settings.System.LOCKSCREEN_BACKGROUND, -1);
+    @Override
+    public void onReleased(View v, int handle) {
+        if (!mIsLandscape) {
+            updateVisiblity(true);
+        }
+    }
 
-            if (currentColor != -1) {
-                colorView.setColor(currentColor);
+    @Override
+    public void onGrabbedStateChange(View v, int handle) {
+    }
+
+    public void onTargetChange(View v, final int target) {
+    }
+
+    public void createDialog(final String title, final String[] entries, final String[] values) {
+        final DialogInterface.OnClickListener l = new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int item) {
+                onValueChange(values[item]);
+                dialog.dismiss();
             }
-            colorView.setAlphaSliderVisible(true);
+        };
 
-            new AlertDialog.Builder(getActivity())
-                    .setTitle(R.string.lockscreen_custom_background_dialog_title)
-                    .setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            Settings.System.putInt(getContentResolver(),
-                                    Settings.System.LOCKSCREEN_BACKGROUND, colorView.getColor());
-                            updateCustomBackgroundSummary();
-                        }
-                    })
-                    .setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            dialog.dismiss();
-                        }
-                    })
-                    .setView(colorView)
-                    .show();
-        } else if (selection == LOCKSCREEN_BACKGROUND_CUSTOM_IMAGE) {
-            final Intent intent = new Intent(Intent.ACTION_GET_CONTENT, null);
-            intent.setType("image/*");
-            intent.putExtra("crop", "true");
-            intent.putExtra("scale", true);
-            intent.putExtra("scaleUpIfNeeded", false);
-            intent.putExtra("outputFormat", Bitmap.CompressFormat.PNG.toString());
+        final AlertDialog dialog = new AlertDialog.Builder(mContext)
+                .setTitle(title)
+                .setItems(entries, l)
+                .create();
 
-            final Display display = getActivity().getWindowManager().getDefaultDisplay();
-            final Rect rect = new Rect();
-            final Window window = getActivity().getWindow();
+        dialog.show();
+    }
 
-            window.getDecorView().getWindowVisibleDisplayFrame(rect);
-
-            int statusBarHeight = rect.top;
-            int contentViewTop = window.findViewById(Window.ID_ANDROID_CONTENT).getTop();
-            int titleBarHeight = contentViewTop - statusBarHeight;
-            boolean isPortrait = getResources().getConfiguration().orientation ==
-                    Configuration.ORIENTATION_PORTRAIT;
-
-            int width = display.getWidth();
-            int height = display.getHeight() - titleBarHeight;
-
-            intent.putExtra("aspectX", isPortrait ? width : height);
-            intent.putExtra("aspectY", isPortrait ? height : width);
-
-            try {
-                mWallpaperTemporary.createNewFile();
-                mWallpaperTemporary.setWritable(true, false);
-                mWallpaperTemporary.setReadable(true, false);
-                intent.putExtra(MediaStore.EXTRA_OUTPUT ,Uri.fromFile(mWallpaperTemporary));
-                intent.putExtra("return-data", false);
-                getActivity().startActivityFromFragment(this, intent, REQUEST_CODE_BG_WALLPAPER);
-                //Ignored would be preferable to nothing
-            } catch (IOException e) {
-            } catch (ActivityNotFoundException e) {
+    public void createMessage(final String title, final String summary) {
+        AlertDialog ad = new AlertDialog.Builder(mContext).create();
+        ad.setTitle(title);
+        ad.setCancelable(false);
+        ad.setMessage(summary);
+        ad.setButton(getResources().getString(R.string.ok), new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
             }
-        } else if (selection == LOCKSCREEN_BACKGROUND_DEFAULT_WALLPAPER) {
-            Settings.System.putString(getContentResolver(),
-                    Settings.System.LOCKSCREEN_BACKGROUND, null);
-            updateCustomBackgroundSummary();
-            return true;
+        });
+        ad.show();
+    }
+
+    private String getProperSummary(String uri) {
+
+        if (TextUtils.isEmpty(uri) || AwesomeConstant.ACTION_NULL.equals(uri)) {
+            return getResources().getString(R.string.none);
         }
 
-        return false;
+        String newSummary = mContext.getResources().getString(R.string.none);
+        AwesomeConstant stringEnum = fromString(uri);
+        switch (stringEnum) {
+            case ACTION_UNLOCK:
+                newSummary = getResources().getString(R.string.lockscreen_unlock);
+                break;
+            case ACTION_CAMERA:
+                newSummary = getResources().getString(R.string.lockscreen_camera);
+                break;
+            case ACTION_ASSIST:
+                newSummary = getResources().getString(R.string.google_now);
+                break;
+            case ACTION_APP:
+                newSummary = mPicker.getFriendlyNameForUri(uri);
+                break;
+        }
+        return newSummary;
+    }
+
+    private int mUnlockCounter() {
+        int counter = 0;
+        for (int i = 0; i < 8; i++) {
+            if (!TextUtils.isEmpty(targetActivities[i])) {
+                if (targetActivities[i].equals(AwesomeConstant.ACTION_UNLOCK.value())) {
+                    counter += 1;
+                }
+            }
+        }
+        return counter;
+    }
+
+    private Uri getTempFileUri() {
+        return Uri.fromFile(new File(Environment.getExternalStorageDirectory(),
+                "tmp_icon_" + mTargetIndex + ".png"));
+
+    }
+
+    private String getIconFileName(int index) {
+        return "lockscreen_icon_" + index + ".png";
+    }
+
+    private class H extends Handler {
+        public void handleMessage(Message m) {
+            switch (m.what) {
+            }
+        }
+    }
+
+    private H mHandler = new H();
+
+    private void updateVisiblity(boolean visible) {
+        if (visible) {
+            mLongPressStatus.setVisibility(View.VISIBLE);
+            mLockBatterySwitch.setVisibility(View.VISIBLE);
+            mLockRotateSwitch.setVisibility(View.VISIBLE);
+            mLockVolControlSwitch.setVisibility(View.VISIBLE);
+            mLockVolWakeSwitch.setVisibility(View.VISIBLE);
+            mLockPageHintSwitch.setVisibility(View.VISIBLE);
+            mLockMinimizeChallangeSwitch.setVisibility(View.VISIBLE);
+            mLockCarouselSwitch.setVisibility(View.VISIBLE);
+            mLockAllWidgetsSwitch.setVisibility(View.VISIBLE);
+            mLockUnlimitedWidgetsSwitch.setVisibility(View.VISIBLE);
+            mLongPressText.setVisibility(View.VISIBLE);
+            mLockBatteryText.setVisibility(View.VISIBLE);
+            mLockRotateText.setVisibility(View.VISIBLE);
+            mLockVolControlText.setVisibility(View.VISIBLE);
+            mLockVolWakeText.setVisibility(View.VISIBLE);
+            mLockPageHintText.setVisibility(View.VISIBLE);
+            mLockMinimizeChallangeText.setVisibility(View.VISIBLE);
+            mLockCarouselText.setVisibility(View.VISIBLE);
+            mLockAllWidgetsText.setVisibility(View.VISIBLE);
+            mLockUnlimitedWidgetsText.setVisibility(View.VISIBLE);
+            mLockTextColorText.setVisibility(View.VISIBLE);
+            mLockTextColorButton.setVisibility(View.VISIBLE);
+            mHelperText.setText(getResources().getString(R.string.lockscreen_options_info));
+        } else {
+            mLongPressStatus.setVisibility(View.GONE);
+            mLockBatterySwitch.setVisibility(View.GONE);
+            mLockRotateSwitch.setVisibility(View.GONE);
+            mLockVolControlSwitch.setVisibility(View.GONE);
+            mLockVolWakeSwitch.setVisibility(View.GONE);
+            mLockPageHintSwitch.setVisibility(View.GONE);
+            mLockMinimizeChallangeSwitch.setVisibility(View.GONE);
+            mLockCarouselSwitch.setVisibility(View.GONE);
+            mLockAllWidgetsSwitch.setVisibility(View.GONE);
+            mLockUnlimitedWidgetsSwitch.setVisibility(View.GONE);
+            mLongPressText.setVisibility(View.GONE);
+            mLockBatteryText.setVisibility(View.GONE);
+            mLockRotateText.setVisibility(View.GONE);
+            mLockVolControlText.setVisibility(View.GONE);
+            mLockVolWakeText.setVisibility(View.GONE);
+            mLockPageHintText.setVisibility(View.GONE);
+            mLockMinimizeChallangeText.setVisibility(View.GONE);
+            mLockCarouselText.setVisibility(View.GONE);
+            mLockAllWidgetsText.setVisibility(View.GONE);
+            mLockUnlimitedWidgetsText.setVisibility(View.GONE);
+            mLockTextColorText.setVisibility(View.GONE);
+            mLockTextColorButton.setVisibility(View.GONE);
+            mHelperText.setText(getResources().getString(R.string.lockscreen_target_info));
+        }
+    }
+
+    @Override
+    public void onColorChanged(int color) {
+        Settings.System.putInt(mContext.getContentResolver(),
+                Settings.System.LOCKSCREEN_CUSTOM_TEXT_COLOR, color);
+        textColor = color;
+        mLockTextColorButton.setBackgroundColor(textColor);
+    }
+
+    @Override
+    public void onFinishFinalAnimation() {
     }
 }

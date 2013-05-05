@@ -1,6 +1,7 @@
 
 package com.sourcery.magiccontrol;
 
+import android.app.ActionBar;
 import android.app.Activity;
 import android.app.Fragment;
 import android.content.Context;
@@ -8,6 +9,8 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.os.Bundle;
+import android.os.RemoteException;
+import android.os.ServiceManager;
 import android.os.Vibrator;
 import android.preference.Preference;
 import android.preference.PreferenceActivity;
@@ -15,6 +18,7 @@ import android.preference.PreferenceFragment;
 import android.provider.Settings;
 import android.text.TextUtils;
 import android.util.Log;
+import android.view.IWindowManager;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -33,6 +37,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
+
+import android.provider.Settings;
 
 public class MagicControlActivity extends PreferenceActivity implements ButtonBarHandler {
 
@@ -58,6 +64,7 @@ public class MagicControlActivity extends PreferenceActivity implements ButtonBa
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
+
         hasNotificationLed = getResources().getBoolean(R.bool.has_notification_led);
         mVibrator = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
         defaultLocale = Locale.getDefault();
@@ -115,7 +122,8 @@ public class MagicControlActivity extends PreferenceActivity implements ButtonBa
             } catch (ClassCastException e) {
             }
         }
-
+        ActionBar actionBar = getActionBar();
+        actionBar.setDisplayHomeAsUpEnabled(true);
     }
 
     @Override

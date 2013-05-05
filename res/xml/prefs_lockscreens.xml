@@ -17,100 +17,24 @@
 
    </PreferenceCategory>
 
-    <PreferenceCategory
-            android:key="lockscreen"
-            android:title="LockScreen Custom Apps">
-
-     <Preference
-            android:fragment="com.sourcery.magiccontrol.fragments.LockscreenInterface"
-            android:key="lockscreen_targets"
-            android:title="@string/lock_screen_title"
-            android:summary="@string/lock_screen_shortcuts_summary_ring" />
-     <PreferenceScreen
-            android:key="lock_screen_shortcuts"
-            android:fragment="com.sourcery.magiccontrol.shortcuts.Shortcuts"
-            android:title="@string/lock_screen_shortcuts_title" 
-            android:summary="@string/lock_screen_shortcuts_summary" />
-  
-    </PreferenceCategory>
-
+   
     <PreferenceCategory
             android:key="Lock_Screen_Settings"
             android:title="LockScreen Settings">
 
-        <CheckBoxPreference
-        android:key="lockscreen_maximize_widgets"
-        android:persistent="false"
-        android:title="@string/lockscreen_maximize_widgets_title"
-        android:summary="@string/lockscreen_maximize_widgets_summary" />
-
-        <CheckBoxPreference
-        android:key="lockscreen_longpress_challenge"
-        android:title="@string/lockscreen_longpress_challenge_title"
-        android:summary="@string/lockscreen_longpress_challenge_summary" />
-
-        <CheckBoxPreference
-        android:key="lockscreen_hide_initial_page_hints"
-        android:title="@string/lockscreen_hide_initial_page_hints_title"
-        android:summary="@string/lockscreen_hide_initial_page_hints_summary" />
-
-         <CheckBoxPreference
-            android:key="lockscreen_use_widget_container_carousel"
-            android:title="@string/lockscreen_use_widget_container_carousel_title"
-            android:summary="@string/lockscreen_use_widget_container_carousel_summary" />
-
+      
+    
         <CheckBoxPreference
         android:key="see_through"
         android:title="@string/see_through_title"
         android:summary="@string/see_through_summary" />
 
-        <net.margaritov.preference.colorpicker.ColorPickerPreference
-            android:key="lockscreen_text_color"
-            android:title="@string/lockscreen_text_color_title"
-            android:defaultValue="#ffffffff" 
-            alphaSlider="true" />
-
-        <CheckBoxPreference
-            android:key="lockscreen_battery"
-            android:title="@string/lockscreen_battery_title"
-            android:summary="@string/lockscreen_battery_summary" />
     </PreferenceCategory>
 
     
 
-    <PreferenceCategory
-        android:key="music"
-        android:title="@string/lockscreen_music_cat">
-
-        
-        <CheckBoxPreference
-            android:key="volume_music_controls"
-            android:title="@string/volume_music_controls_title"
-            android:summary="@string/volume_music_controls_summary" />
-
-    </PreferenceCategory>
-    <PreferenceCategory
-            android:key="misc"
-            android:title="@string/misc_short">
-
-     <CheckBoxPreference
-            android:key="volume_rocker_wake"
-            android:title="@string/volume_rocker_wake_title"
-            android:summary="@string/volume_rocker_wake_summary"
-            android:defaultValue="false" />
-
-            <CheckBoxPreference
-                android:key="lockscreen_auto_rotate"
-                android:title="@string/lockscreen_auto_rotate_title"
-                android:summary="@string/lockscreen_auto_rotate_summary" />
-             
-            <CheckBoxPreference
-                android:key="lockscreen_all_widgets"
-                android:title="@string/lockscreen_all_widgets_title"
-                android:summary="@string/lockscreen_all_widgets_summary" />
-
-           
-    </PreferenceCategory>
+    
+   
 
   
 </PreferenceScreen>

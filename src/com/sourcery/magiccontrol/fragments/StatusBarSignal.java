@@ -10,6 +10,7 @@ import android.preference.PreferenceScreen;
 import android.preference.Preference.OnPreferenceChangeListener;
 import android.provider.Settings;
 import android.util.Log;
+import android.util.TypedValue;
 
 import com.sourcery.magiccontrol.R;
 import com.sourcery.magiccontrol.SettingsPreferenceFragment;

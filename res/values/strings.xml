@@ -83,8 +83,9 @@
     <string name="expanded_desktop_summary_status_bar">With status bar</string>
     <string name="expanded_desktop_summary_no_status_bar">Without status bar</string>
     <string name="expanded_desktop_disabled">Off</string>
-    <string name="expanded_desktop_staus_bar">With status bar</string>
-    <string name="expanded_desktop_no_staus_bar">Without status bar</string>
+    <string name="expanded_desktop_status_bar">With status bar</string>
+    <string name="expanded_desktop_no_status_bar">Without status bar</string>
+    <string name="power_menu_expanded_desktop">Expanded desktop</string>
   
 
     <!-- Shortcut picker -->

@@ -70,13 +70,12 @@
     <string name="custom_app_icon_successfully">"'s icon set successfully!"</string>
 
     <!-- Power Menu -->
-    <string name="title_show_power_saver">Show power saver</string>
-    <string name="title_show_screenshot">Show screenshot</string>
-    <string name="title_show_torch_toggle">Show torch toggle</string>
-    <string name="title_show_airplane_toggle">Show airplane toggle</string>
-    <string name="title_show_navbar_hide">Show navigation bar toggle</string>
-    <string name="title_show_expanded_desktop_toggle">Show Expanded desktop toggle</string>
-    <string name="title_show_reboot_keyguard">Hide reboot on lockscreen</string>
+    <string name="title_show_screenshot">Screenshot</string>
+    <string name="title_show_torch_toggle">Torch</string>
+    <string name="title_show_airplane_toggle">Airplane mode</string>
+    <string name="title_show_navbar_hide">System Bar toggles</string>
+    <string name="title_show_reboot_keyguard">Reboot on lockscreen</string>
+    <string name="summary_show_reboot_keyguard">Enabling this will show reboot options while on lockscreen</string>
     
     <!-- expanded desktop -->
     <string name="summary_expanded_desktop">%1$s</string>

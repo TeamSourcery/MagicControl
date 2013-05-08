@@ -8,6 +8,7 @@ import android.preference.ListPreference;
 import android.preference.Preference;
 import android.preference.Preference.OnPreferenceChangeListener;
 import android.preference.PreferenceScreen;
+import android.preference.SwitchPreference;
 import android.provider.Settings;
 import android.provider.Settings.SettingNotFoundException;
 
@@ -27,12 +28,12 @@ public class PowerMenu extends SettingsPreferenceFragment implements
     ListPreference mExpandedDesktopPref;
     private static final String PREF_REBOOT_KEYGUARD = "show_reboot_keyguard";
 
-    CheckBoxPreference mShowScreenShot;
-    CheckBoxPreference mShowTorchToggle;
-    CheckBoxPreference mShowAirplaneToggle;
-    CheckBoxPreference mShowNavBarHide;
+    SwitchPreference mShowScreenShot;
+    SwitchPreference mShowTorchToggle;
+    SwitchPreference mShowAirplaneToggle;
+    SwitchPreference mShowNavBarHide;
     CheckBoxPreference mShowExpandedDesktopToggle;
-    CheckBoxPreference mShowRebootKeyguard;
+    SwitchPreference mShowRebootKeyguard;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -41,25 +42,30 @@ public class PowerMenu extends SettingsPreferenceFragment implements
         // Load the preferences from an XML resource
         addPreferencesFromResource(R.xml.prefs_powermenu);
         
-        mShowTorchToggle = (CheckBoxPreference) findPreference(PREF_TORCH_TOGGLE);
+        mShowTorchToggle = (SwitchPreference) findPreference(PREF_TORCH_TOGGLE);
         mShowTorchToggle.setChecked(Settings.System.getBoolean(getActivity()
                 .getContentResolver(), Settings.System.POWER_DIALOG_SHOW_TORCH_TOGGLE, false));
+        mShowTorchToggle.setOnPreferenceChangeListener(this);
 
-        mShowScreenShot = (CheckBoxPreference) findPreference(PREF_SCREENSHOT);
+        mShowScreenShot = (SwitchPreference) findPreference(PREF_SCREENSHOT);
         mShowScreenShot.setChecked(Settings.System.getBoolean(getActivity()
                 .getContentResolver(), Settings.System.POWER_DIALOG_SHOW_SCREENSHOT, false));
+        mShowScreenShot.setOnPreferenceChangeListener(this);
 
-        mShowAirplaneToggle = (CheckBoxPreference) findPreference(PREF_AIRPLANE_TOGGLE);
+        mShowAirplaneToggle = (SwitchPreference) findPreference(PREF_AIRPLANE_TOGGLE);
         mShowAirplaneToggle.setChecked(Settings.System.getBoolean(getActivity()
                 .getContentResolver(), Settings.System.POWER_DIALOG_SHOW_AIRPLANE_TOGGLE, true));
+        mShowAirplaneToggle.setOnPreferenceChangeListener(this);
 
-        mShowNavBarHide = (CheckBoxPreference) findPreference(PREF_NAVBAR_HIDE);
+        mShowNavBarHide = (SwitchPreference) findPreference(PREF_NAVBAR_HIDE);
         mShowNavBarHide.setChecked(Settings.System.getBoolean(getActivity()
                 .getContentResolver(), Settings.System.POWER_DIALOG_SHOW_NAVBAR_HIDE, false));
+        mShowNavBarHide.setOnPreferenceChangeListener(this);
 
-        mShowRebootKeyguard = (CheckBoxPreference) findPreference(PREF_REBOOT_KEYGUARD);
+        mShowRebootKeyguard = (SwitchPreference) findPreference(PREF_REBOOT_KEYGUARD);
         mShowRebootKeyguard.setChecked(Settings.System.getBoolean(getActivity()
                 .getContentResolver(), Settings.System.POWER_DIALOG_SHOW_REBOOT_KEYGUARD, true));
+        mShowRebootKeyguard.setOnPreferenceChangeListener(this);
 
         PreferenceScreen prefSet = getPreferenceScreen();
         mExpandedDesktopPref = (ListPreference) prefSet.findPreference(KEY_EXPANDED_DESKTOP);
@@ -69,47 +75,43 @@ public class PowerMenu extends SettingsPreferenceFragment implements
         updateExpandedDesktopSummary(expandedDesktopValue);
     }
 
-    public boolean onPreferenceChange(Preference preference, Object newValue) {
-        if (preference == mExpandedDesktopPref) {
-            int expandedDesktopValue = Integer.valueOf((String) newValue);
+    
+    @Override
+    public boolean onPreferenceChange(Preference preference, Object value) {
+           if (preference == mExpandedDesktopPref) {
+            int expandedDesktopValue = Integer.valueOf((String) value);
             Settings.System.putInt(getContentResolver(),
                     Settings.System.EXPANDED_DESKTOP_STYLE, expandedDesktopValue);
             updateExpandedDesktopSummary(expandedDesktopValue);
             return true;
-        }
-        return false;
-    }
-
-    @Override
-    public boolean onPreferenceTreeClick(PreferenceScreen preferenceScreen, Preference preference) {
-           if (preference == mShowScreenShot) {
+        } else if (preference == mShowScreenShot) {
             Settings.System.putBoolean(getActivity().getContentResolver(),
                     Settings.System.POWER_DIALOG_SHOW_SCREENSHOT,
-                    ((CheckBoxPreference)preference).isChecked());
+                    (Boolean) value);
             return true;
         } else if (preference == mShowTorchToggle) {
             Settings.System.putBoolean(getActivity().getContentResolver(),
                     Settings.System.POWER_DIALOG_SHOW_TORCH_TOGGLE,
-                    ((CheckBoxPreference)preference).isChecked());
+                    (Boolean) value);
             return true;
         } else if (preference == mShowAirplaneToggle) {
             Settings.System.putBoolean(getActivity().getContentResolver(),
                     Settings.System.POWER_DIALOG_SHOW_AIRPLANE_TOGGLE,
-                    ((CheckBoxPreference)preference).isChecked());
+                    (Boolean) value);
             return true;
         } else if (preference == mShowNavBarHide) {
             Settings.System.putBoolean(getActivity().getContentResolver(),
                     Settings.System.POWER_DIALOG_SHOW_NAVBAR_HIDE,
-                    ((CheckBoxPreference)preference).isChecked());
+                    (Boolean) value);
             return true;
          } else if (preference == mShowRebootKeyguard) {
             Settings.System.putBoolean(getActivity().getContentResolver(),
                     Settings.System.POWER_DIALOG_SHOW_REBOOT_KEYGUARD,
-                    ((CheckBoxPreference)preference).isChecked());
+                    (Boolean) value);
             return true;
         }
 
-        return super.onPreferenceTreeClick(preferenceScreen, preference);
+        return false;
     }
     private void updateExpandedDesktopSummary(int value) {
         Resources res = getResources();

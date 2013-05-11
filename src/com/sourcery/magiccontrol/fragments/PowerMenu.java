@@ -19,21 +19,20 @@ import com.sourcery.magiccontrol.R.xml;
 public class PowerMenu extends SettingsPreferenceFragment implements
         OnPreferenceChangeListener {
 
-    private static final String KEY_EXPANDED_DESKTOP = "power_menu_expanded_desktop";
-    
+       
     private static final String PREF_SCREENSHOT = "show_screenshot";
     private static final String PREF_TORCH_TOGGLE = "show_torch_toggle";
     private static final String PREF_AIRPLANE_TOGGLE = "show_airplane_toggle";
     private static final String PREF_NAVBAR_HIDE = "show_navbar_hide";
-    ListPreference mExpandedDesktopPref;
+    private static final String KEY_EXPANDED_DESKTOP = "power_menu_expanded_desktop";
     private static final String PREF_REBOOT_KEYGUARD = "show_reboot_keyguard";
 
     SwitchPreference mShowScreenShot;
     SwitchPreference mShowTorchToggle;
     SwitchPreference mShowAirplaneToggle;
     SwitchPreference mShowNavBarHide;
-    CheckBoxPreference mShowExpandedDesktopToggle;
     SwitchPreference mShowRebootKeyguard;
+    private ListPreference mExpandedDesktopPref;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -41,6 +40,8 @@ public class PowerMenu extends SettingsPreferenceFragment implements
 
         // Load the preferences from an XML resource
         addPreferencesFromResource(R.xml.prefs_powermenu);
+
+        PreferenceScreen prefSet = getPreferenceScreen();
         
         mShowTorchToggle = (SwitchPreference) findPreference(PREF_TORCH_TOGGLE);
         mShowTorchToggle.setChecked(Settings.System.getBoolean(getActivity()
@@ -67,24 +68,32 @@ public class PowerMenu extends SettingsPreferenceFragment implements
                 .getContentResolver(), Settings.System.POWER_DIALOG_SHOW_REBOOT_KEYGUARD, true));
         mShowRebootKeyguard.setOnPreferenceChangeListener(this);
 
-        PreferenceScreen prefSet = getPreferenceScreen();
         mExpandedDesktopPref = (ListPreference) prefSet.findPreference(KEY_EXPANDED_DESKTOP);
         mExpandedDesktopPref.setOnPreferenceChangeListener(this);
-        int expandedDesktopValue = Settings.System.getInt(getContentResolver(), Settings.System.EXPANDED_DESKTOP_STYLE, 0);
+        int expandedDesktopValue = Settings.System.getInt(getContentResolver(),
+                        Settings.System.EXPANDED_DESKTOP_MODE, 0);
         mExpandedDesktopPref.setValue(String.valueOf(expandedDesktopValue));
-        updateExpandedDesktopSummary(expandedDesktopValue);
+        mExpandedDesktopPref.setSummary(mExpandedDesktopPref.getEntries()[expandedDesktopValue]);
     }
 
-    
+       
     @Override
     public boolean onPreferenceChange(Preference preference, Object value) {
-           if (preference == mExpandedDesktopPref) {
+        if (preference == mExpandedDesktopPref) {
             int expandedDesktopValue = Integer.valueOf((String) value);
+            int index = mExpandedDesktopPref.findIndexOfValue((String) value);
+            if (expandedDesktopValue == 0) {
+                Settings.System.putInt(getContentResolver(),
+                        Settings.System.POWER_MENU_EXPANDED_DESKTOP_ENABLED, 0);
+            } else {
+                Settings.System.putInt(getContentResolver(),
+                        Settings.System.POWER_MENU_EXPANDED_DESKTOP_ENABLED, 1);
+            }
             Settings.System.putInt(getContentResolver(),
-                    Settings.System.EXPANDED_DESKTOP_STYLE, expandedDesktopValue);
-            updateExpandedDesktopSummary(expandedDesktopValue);
+                    Settings.System.EXPANDED_DESKTOP_MODE, expandedDesktopValue);
+            mExpandedDesktopPref.setSummary(mExpandedDesktopPref.getEntries()[index]);
             return true;
-        } else if (preference == mShowScreenShot) {
+       } else if (preference == mShowScreenShot) {
             Settings.System.putBoolean(getActivity().getContentResolver(),
                     Settings.System.POWER_DIALOG_SHOW_SCREENSHOT,
                     (Boolean) value);
@@ -113,24 +122,5 @@ public class PowerMenu extends SettingsPreferenceFragment implements
 
         return false;
     }
-    private void updateExpandedDesktopSummary(int value) {
-        Resources res = getResources();
-
-        if (value == 0) {
-            /* expanded desktop deactivated */
-            Settings.System.putInt(getContentResolver(),
-                    Settings.System.POWER_MENU_EXPANDED_DESKTOP_ENABLED, 0);
-            mExpandedDesktopPref.setSummary(res.getString(R.string.expanded_desktop_disabled));
-        } else if (value == 1) {
-            Settings.System.putInt(getContentResolver(),
-                    Settings.System.POWER_MENU_EXPANDED_DESKTOP_ENABLED, 1);
-            String statusBarPresent = res.getString(R.string.expanded_desktop_summary_status_bar);
-            mExpandedDesktopPref.setSummary(res.getString(R.string.summary_expanded_desktop, statusBarPresent));
-        } else if (value == 2) {
-            Settings.System.putInt(getContentResolver(),
-                    Settings.System.POWER_MENU_EXPANDED_DESKTOP_ENABLED, 1);
-            String statusBarPresent = res.getString(R.string.expanded_desktop_summary_no_status_bar);
-            mExpandedDesktopPref.setSummary(res.getString(R.string.summary_expanded_desktop, statusBarPresent));
-        }
-    }
+   
 }

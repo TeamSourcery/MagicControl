@@ -685,6 +685,7 @@
         <item>@string/ribbon_swipe_left</item>
         <item>@string/ribbon_swipe_right</item>
         <item>@string/ribbon_swipe_bottom</item>
+        <item>@string/app_window</item>
     </string-array>
     <string-array name="ribbon_chooser_values" translatable="false">
         <item>0</item>
@@ -693,6 +694,7 @@
         <item>2</item>
         <item>4</item>
         <item>5</item>
+        <item>10</item>
     </string-array>
 
      <string-array name="ribbon_icon_size_entries" translatable="false">
@@ -714,6 +716,20 @@
         <item>0</item>
         <item>1</item>
         <item>2</item>
+    </string-array>
+
+     <!-- Window columns quantity -->
+    <string-array name="window_columns_entries" translatable="false">
+        <item>3</item>
+        <item>4</item>
+        <item>5</item>
+        <item>6</item>
+    </string-array>
+    <string-array name="window_columns_values" translatable="false">
+        <item>3</item>
+        <item>4</item>
+        <item>5</item>
+        <item>6</item>
     </string-array>
     
     <!-- Arrays required by Notification Widgets. -->
@@ -948,17 +964,19 @@
         <item>48</item>
     </string-array>
 
-    <!-- Expanded desktop -->
-    <string-array name="expanded_desktop_entries" translatable="false">
+   <!-- Expanded desktop -->
+    <string-array name="expanded_desktop_entries">
         <item>@string/expanded_desktop_disabled</item>
-        <item>@string/expanded_desktop_status_bar</item>
-        <item>@string/expanded_desktop_no_status_bar</item>
+        <item>@string/expanded_desktop_only_nav_bar</item>
+        <item>@string/expanded_desktop_only_status_bar</item>
+        <item>@string/expanded_desktop_both_hidden</item>
     </string-array>
 
     <string-array name="expanded_desktop_values" translatable="false">
         <item>0</item>
         <item>1</item>
         <item>2</item>
+        <item>3</item>
     </string-array>
 
 </resources>

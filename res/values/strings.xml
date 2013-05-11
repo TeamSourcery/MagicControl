@@ -76,16 +76,18 @@
     <string name="title_show_navbar_hide">System Bar toggles</string>
     <string name="title_show_reboot_keyguard">Reboot on lockscreen</string>
     <string name="summary_show_reboot_keyguard">Enabling this will show reboot options while on lockscreen</string>
-    
+    <string name="power_menu_expanded_desktop">Expanded desktop</string>
     <!-- expanded desktop -->
     <string name="summary_expanded_desktop">%1$s</string>
-    <string name="expanded_desktop_summary_status_bar">With status bar</string>
-    <string name="expanded_desktop_summary_no_status_bar">Without status bar</string>
+    <string name="expanded_desktop_summary">Show or change expanded desktop mode</string>
     <string name="expanded_desktop_disabled">Off</string>
-    <string name="expanded_desktop_status_bar">With status bar</string>
-    <string name="expanded_desktop_no_status_bar">Without status bar</string>
-    <string name="power_menu_expanded_desktop">Expanded desktop</string>
+    <string name="expanded_desktop_only_nav_bar">Hide navigation bar</string>
+    <string name="expanded_desktop_only_status_bar">Hide status bar</string>
+    <string name="expanded_desktop_both_hidden">Hide navigation and status bar</string>
   
+    <!-- Auto-Hide Status Bar -->
+    <string name="auto_hide_statusbar">Auto Hide statusbar</string>
+    <string name="auto_hide_statusbar_summary">Statusbar hides itself when there are no notifications</string>
 
     <!-- Shortcut picker -->
     <string name="use_custom_app_title">Use custom application</string>
@@ -940,6 +942,7 @@
     <string name="ribbon_swipe_left">Left swipe Magic Shorcut</string>
     <string name="ribbon_swipe_right">Right swipe Magic Shortcut</string>
     <string name="ribbon_swipe_bottom">Bottom swipe Magic Shortcut</string>
+    <string name="app_window">Application window</string>
     <string name="clone_title">Choose Magic Shortcuts to clone</string>
     <string name="icon_size_normal">Normal</string>
     <string name="icon_size_20">Medium</string>
@@ -958,6 +961,10 @@
     <string name="ribbon_insert">Insert button</string>
     <string name="ribbon_handle_location_title">Magic Shortcuts Handle Location</string>
     <string name="ribbon_icon_location_title">Icon gravity</string>
+    <string name="window_text_color_title">Window text color</string>
+    <string name="window_color_title">Window color</string>
+    <string name="window_opacity_title">Window opacity</string>
+    <string name="window_columns_title">Window columns</string>
     <string name="center">Centered</string>
     <string name="top">Top</string>
     <string name="bottom">Bottom</string>

@@ -8,11 +8,7 @@
         android:entries="@array/battery_icon_entries"
         android:entryValues="@array/battery_icon_values" />
 
-    <CheckBoxPreference
-        android:key="battery_not"
-        android:title="@string/battery_not_title"
-        android:summary="@string/battery_not_summary" />
-
+   
     <PreferenceCategory android:title="@string/battery_color">
 
         <net.margaritov.preference.colorpicker.ColorPickerPreference

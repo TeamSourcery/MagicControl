@@ -1023,4 +1023,20 @@
     <string name="brightness_slider_top">On top</string>
     <string name="brightness_slider_bottom">On the bottom</string>
     <string name="brightness_slider_none">Don\'t Show</string>
+
+    <!-- Status Bar Text Size -->
+    <string name="statusbar_fontsize">Statusbar Font Size</string>
+    <string name="statusbar_fontsize_summary">Change the size of text elements on statusbar\nWill restart UI!</string>
+    <string name="font_8dp">8 dp</string>
+    <string name="font_10dp">10 dp</string>
+    <string name="font_12dp">12 dp</string>
+    <string name="font_14dp">14 dp</string>
+    <string name="font_16dp">16 dp (Default)</string>
+    <string name="font_18dp">18 dp</string>
+    <string name="font_20dp">20 dp</string>
+    <string name="font_22dp">22 dp</string>
+    <string name="font_24dp">24 dp</string>
+    <string name="font_26dp">26 dp(Tanium Sized)</string>
+
+
    </resources>

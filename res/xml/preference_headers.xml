@@ -59,11 +59,7 @@
         android:title="@string/ribbon_settings_title"
         android:summary="@string/ribbon_settings_summary" />
       
-     <header
-        android:id="@+id/pie_control"
-        android:fragment="com.sourcery.magiccontrol.fragments.Pie"
-        android:summary="@string/pie_controls_summary"
-        android:title="@string/pie_controls_title" />
+    
     
 
      <header

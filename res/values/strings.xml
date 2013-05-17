@@ -691,113 +691,11 @@
     <string name="toggles_enable_haptic_feedback_title">Enable haptic feedback</string>
     <string name="toggles_enable_haptic_feedback_summary">Use haptic feedback when pressing toggles</string>
      
-    <!-- Weather -->
-    <string name="weather_enable">Enable weather</string>
-    <string name="weather_enable_summary">Whether to pull weather information and display it throughout the ROM.</string>
-    <string name="weather_use_custom_location">Use custom location</string>
-    <string name="weather_use_custom_location_summary">Setting a custom location can save some battery. Otherwise network-location is used to determine your location.</string>
-    <string name="weather_custom_location_dialog_title">Set your location</string>
-    <string name="weather_custom_location_dialog_message">Be sure to follow the examples! Setting an invalid location will stop you from getting weather updates and may cause unexpected behavior.\n\nExamples: New York,NY // New York, NY // 10033 // London, England</string>
-    <string name="weather_custom_location_title">Custom location</string>
-    <string name="weather_show_location_title">Show location</string>
-    <string name="weather_show_location_summary">Show your location.</string>
-    <string name="weather_refresh_interval">Refresh interval</string>
-    <string name="weather_refresh_interval_minutes">" minutes"</string>
-    <string name="weather_use_celcius">Metric units</string>
-    <string name="weather_use_celcius_summary">Enabling this will display weather temperature in Celsius rather than Fahrenheit and windspeed in km/h rather than mph.</string>
-    <string name="weather_statusbar_style">Statusbar weather style</string>
-    <string name="title_weather_longclick">Weather panel long click actions</string>
-    <string name="title_weather_shortclick">Weather panel short click actions</string>
-    <string name="update">Update weather panel</string>
-    <string name="weather_refreshing">Requesting weather update!</string>
-    <string name="weather_loc_warning_title">Cannot retrieve location!</string>
-    <string name="weather_loc_warning_msg">"Obtaining location from network is currently disabled. This breaks the ability to get the current weather in your current location. Please set a custom location or enable obtaining your location from your network."</string>
-    <string name="weather_loc_warning_positive">"Enable network location"</string>
-    <string name="weather_loc_warning_negative">"Don't enable."</string>
-    <string name="menu_weather_get_weather">Get weather</string>
-    <string name="weather_statusbar_hide">Weather panel hide options</string>
-    <string name="always_on">Always visible</string>
-    <string name="same_toggles">Hide with toggles</string>
-    <string name="opposite_toggles">Hide opposite of toggles</string>
-
-    <!-- Weather Codes -->
-    <string name="weather_0">Tornado</string>
-    <string name="weather_1">Tropical Storm</string>
-    <string name="weather_2">Hurricane</string>
-    <string name="weather_3">Severe Thunderstorms</string>
-    <string name="weather_4">Thunderstorms</string>
-    <string name="weather_5">Mixed Rain and Snow</string>
-    <string name="weather_6">Mixed Rain and Sleet</string>
-    <string name="weather_7">Mixed Snow and Sleet</string>
-    <string name="weather_8">Freezing Drizzle</string>
-    <string name="weather_9">Drizzle</string>
-    <string name="weather_10">Freezing Rain</string>
-    <string name="weather_11">Showers</string>
-    <string name="weather_12">Showers</string>
-    <string name="weather_13">Snow Flurries</string>
-    <string name="weather_14">Light Snow Showers</string>
-    <string name="weather_15">Blowing Snow</string>
-    <string name="weather_16">Snow</string>
-    <string name="weather_17">Hail</string>
-    <string name="weather_18">Sleet</string>
-    <string name="weather_19">Dust</string>
-    <string name="weather_20">Foggy</string>
-    <string name="weather_21">Haze</string>
-    <string name="weather_22">Smoky</string>
-    <string name="weather_23">Blustery</string>
-    <string name="weather_24">Windy</string>
-    <string name="weather_25">Cold</string>
-    <string name="weather_26">Cloudy</string>
-    <!-- mostly cloudy (night) -->
-    <string name="weather_27">Mostly Cloudy</string>
-    <!-- mostly cloudy (day) -->
-    <string name="weather_28">Mostly Cloudy</string>
-    <!-- partly cloudy (night) -->
-    <string name="weather_29">Partly Cloudy</string>
-    <!-- partly cloudy (day) -->
-    <string name="weather_30">Partly Cloudy</string>
-    <!-- clear (night) -->
-    <string name="weather_31">Clear</string>
-    <string name="weather_32">Sunny</string>
-    <!-- fair (night) -->
-    <string name="weather_33">Fair</string>
-    <!-- fair (day) -->
-    <string name="weather_34">Fair</string>
-    <string name="weather_35">Mixed Rain and Hail</string>
-    <string name="weather_36">Hot</string>
-    <string name="weather_37">Isolated Thunderstorms</string>
-    <string name="weather_38">Scattered Thunderstorms</string>
-    <string name="weather_39">Scattered Thunderstorms</string>
-    <string name="weather_40">Scattered Showers</string>
-    <string name="weather_41">Heavy Snow</string>
-    <string name="weather_42">Scattered Snow Showers</string>
-    <string name="weather_43">Scattered Snow Showers</string>
-    <string name="weather_44">Partly Cloudy</string>
-    <string name="weather_45">Thundershowers</string>
-    <string name="weather_46">Snow Showers</string>
-    <string name="weather_47">Isolated Thundershowers</string>
-    <!-- Forecase unavailable -->
-    <string name="weather_3200"></string>
-
-    <!-- Miscellaneous -->
-    <string name="location_unavailable">Unable to retrieve location information for weather update</string>
-
-    <!-- cardinal directions -->
-    <string name="direction_north">N</string>
-    <string name="direction_north_east">NE</string>
-    <string name="direction_east">E</string>
-    <string name="direction_south_east">SE</string>
-    <string name="direction_south">S</string>
-    <string name="direction_south_west">SW</string>
-    <string name="direction_west">W</string>
-    <string name="direction_north_west">NW</string>
-
-    <string name="lockscreen_all_widgets_title">Allow All Widgets on Lockscreen</string>
-    <string name="lockscreen_all_widgets_summary">Warning** Some widgets are not intended to be used
- on the lock screen, Security could be at risk! The widget maker and Team Sourcery are not responsible for your choice of lock screen widgets.</string>
+   
+    
 
       <!-- Lock Screen Shortcuts -->
-    <string name="lockscreen_target_info">Drag the slider to targets to assign shortcuts</string>
+    
     <string name="lockscreen_target_title">Slider shortcuts</string>
     <string name="lockscreen_target_summary">View or change custom lock screen shortcuts</string>
     <string name="lockscreen_target_reset">Lock screen shortcuts reset to default</string>
@@ -916,7 +814,7 @@
      
     <!-- Shortcuts -->
     <string name="lock_screen_shortcuts_title">Lock Screen Shortcuts</string>
-    <string name="lock_screen_shortcuts_summary">Under Clock Line up Shortcuts</string>
+    <string name="lock_screen_shortcuts_summary">Can Not use this and Ribbon on Lockscreen at same time.</string>
     <string name="lock_screen_shortcuts_summary_ring">Ring around Lock Shortcuts</string>
     <string name="lock_screen_shortcuts_add">Add</string>
     <string name="lock_screen_shortcuts_reset">Reset</string>
@@ -1068,5 +966,62 @@
 
     <string name="app_killed_message">App Killed</string>
 
+    <!-- LockScreen -->
+    <string name="lockscreen_text_color_summary">Set the lockscreen text color</string>
+    <string name="lockscreen_targets_title">Lockscreen targets</string>
+    <string name="lockscreen_targets_summary">Lockscreen targets summary…</string>
+    <string name="lockscreen_target_longpress_text">Longpress status</string>
+    <string name="lockscreen_camera">Camera</string>
+    <string name="lockscreen_unlock">Unlock</string>
+    <string name="save_error">Could not save targets! You must have at least one unlock target!</string>
+    <string name="lockscreen_target_info">Drag the unlock icon to targets to assign targets</string>
+    <string name="lockscreen_options_info">Touch text to get summary of each option</string>
+    <string name="lockscreen_target_longpress_summary">Enables long press options for lock screen targets</string>
+    <string name="lockscreen_all_widgets_title">Allow all widgets</string>
+    <string name="lockscreen_all_widgets_summary">Warning** Some widgets are not intended to be used on the lockscreen, The widget maker and Team Sourcery are not responsible for your choice of lockscreen widgets. Choose responsibly.</string>
+    <string name="lockscreen_unlimited_widgets_title">Allow unlimited widgets</string>
+    <string name="lockscreen_unlimited_widgets_summary">Warning** Adding too many widgets can cause lag issues with lockscreen.</string>
+    <string name="lockscreen_minimize_challenge_title">Minimize lockscreen challenge</string>
+    <string name="lockscreen_minimize_challenge_summary">Set whether the lockscreen challenge is minimized when the screen is turned on.</string>
 
+   <!-- Ribbons -->
+   <string name="title_ribbon">Magic Shortcuts Options</string>
+   <string name="ribbon_settings_title">Magic Shortcuts options</string>
+   <string name="ribbon_settings_summary">@null</string>
+   <string name="menu_ribbon_reset">Reset Magic Shortcuts</string>
+   <!-- Ribbon -->
+    <string name="ribbon_instructions">Press icon to select actions or delete</string>
+    <string name="ribbon_targets_cat">Magic Shortcuts options</string>
+    <string name="enable_ribbon_text_title">Show app name</string>
+    <string name="enable_ribbon_vibrate_title">Vibrate on touch of swipe area</string>
+    <string name="enable_ribbon_text_summary">Enable the app name text below the icon</string>
+    <string name="ribbon_icon_size_title">Icon size</string>
+    <string name="ribbon_icon_size_summary">Set size of your icons</string>
+    <string name="ribbon_lockscreen">Lockscreen Magic Shortcuts</string>
+    <string name="ribbon_notifications">Notifications Magic Shortcuts</string>
+    <string name="ribbon_quicksettings">Quick settings Magic Shortcuts</string>
+    <string name="ribbon_swipe">Swipe Magic Shortcuts</string>
+    <string name="clone_title">Choose Magic Shortcuts to clone</string>
+    <string name="icon_size_normal">Normal</string>
+    <string name="icon_size_20">Medium</string>
+    <string name="icon_size_15">Small</string>
+    <string name="ribbon_left_enable_title">Enable swipe from left</string>
+    <string name="ribbon_right_enable_title">Enable swipe from right</string>
+    <string name="ribbon_bottom_enable_title">Enable swipe from bottom</string>
+    <string name="ribbon_bottom_warning_title">You can not use swipe from bottom with Navbar enabled, must use Navbar AutoHide.</string>
+    <string name="ribbon_color_title">Color of Swipe Magic Shortcuts</string>
+    <string name="text_color_title">Color of app label text</string>
+    <string name="ribbon_opacity_title">Opacity of Swipe Magic Shortcuts</string>
+    <string name="timeout_spinner_title">Magic Shortcuts Auto Timeout</string>
+    <string name="ribbon_drag_handle_width_title">Drag Handle Length</string>
+    <string name="ribbon_drag_handle_height_title">Drag Handle Thickness</string>
+    <string name="ribbon_insert">Insert button</string>
+    <string name="ribbon_handle_location_title">Magic Shortcuts Handle Location</string>
+    <string name="ribbon_icon_location_title">Icon gravity</string>
+    <string name="center">Centered</string>
+    <string name="top">Top</string>
+    <string name="bottom">Bottom</string>
+  
+    <string name="ribbon">Magic Shortcuts</string>
+    <string name="nav_widgets">Nav Widgets</string>
    </resources>

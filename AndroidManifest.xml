@@ -117,6 +117,16 @@
             </intent-filter>
         </activity>
 
+       <activity
+            android:name=".fragments.Lockscreenstwo"
+            android:label="Lockscreenstwo">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN"/>
+                <category android:name="com.sourcery.magiccontrol.SHORTCUT"/>
+            </intent-filter>
+        </activity>
+
+
        <activity android:name=".activities.StatusBarStyle" />
        <activity android:name=".activities.NavBarStyle" />
 
@@ -129,7 +139,15 @@
                 <category android:name="com.sourcery.magiccontrol.SHORTCUT" />
             </intent-filter>
         </activity>
-       
+       <activity
+            android:name=".fragments.RibbonTargets"
+            android:label="@string/title_ribbon" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="com.sourcery.magiccontrol.SHORTCUT" />
+            </intent-filter>
+        </activity>
         <activity
             android:name=".fragments.LEDControl"
             android:label="LED Control">

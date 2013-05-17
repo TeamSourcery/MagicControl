@@ -81,15 +81,28 @@
         android:summary="@string/header_summary_toggles"
         android:title="@string/toggles_layout" />
 
-     
+     <header
+        android:id="@+id/ribbon_targets"
+        android:fragment="com.sourcery.magiccontrol.fragments.RibbonTargets"
+        android:title="@string/ribbon_settings_title"
+        android:summary="@string/ribbon_settings_summary" />
+
 
     <header android:title="@string/lockscreen_options" />
 
+    
     <header
 	android:id="@+id/lockscreens"
 	android:fragment="com.sourcery.magiccontrol.fragments.Lockscreens"
 	android:title="@string/lockscreen_options"
 	android:summary="@string/header_summary_lockscreens" />
+
+   <header
+	android:id="@+id/lockscreenstwo"
+	android:fragment="com.sourcery.magiccontrol.fragments.Lockscreenstwo"
+	android:title="@string/lockscreen_options"
+	android:summary="@string/header_summary_lockscreens" />
+
 
     <header
         android:id="@+id/lockscreen_lock_clock"

@@ -91,14 +91,13 @@ public class StatusBar extends SettingsPreferenceFragment implements
     private static final String STATUS_BAR_DONOTDISTURB = "status_bar_donotdisturb";
     private static final String KEY_STATUS_BAR_ICON_OPACITY = "status_bar_icon_opacity";
    
-    private static int STOCK_FONT_SIZE = 16;	
-      
+       
    
     CheckBoxPreference mStatusbarSliderPreference;
     
     private CheckBoxPreference mStatusBarDoNotDisturb;
     private ListPreference mStatusBarIconOpacity;
-    ListPreference mFontsize;
+    
 
     private Activity mActivity;
 
@@ -128,10 +127,7 @@ public class StatusBar extends SettingsPreferenceFragment implements
         mStatusBarIconOpacity.setValue(String.valueOf(iconOpacity));
         mStatusBarIconOpacity.setOnPreferenceChangeListener(this);
       
-        mFontsize = (ListPreference) findPreference("status_bar_fontsize");
-        mFontsize.setOnPreferenceChangeListener(this);
-        mFontsize.setValue(Integer.toString(Settings.System.getInt(mContentRes,
-                Settings.System.STATUSBAR_FONT_SIZE, STOCK_FONT_SIZE)));
+       
                 
         }
 
@@ -175,12 +171,6 @@ public class StatusBar extends SettingsPreferenceFragment implements
             int iconOpacity = Integer.valueOf((String) Value);
             Settings.System.putInt(getActivity().getApplicationContext().getContentResolver(),
                     Settings.System.STATUS_BAR_NOTIF_ICON_OPACITY, iconOpacity);
-            return true;
-        } else if (preference == mFontsize) {
-            int val = Integer.parseInt((String) Value);
-            Settings.System.putInt(mContentRes,
-                    Settings.System.STATUSBAR_FONT_SIZE, val);
-            Helpers.restartSystemUI();
             return true;
              }
             return false;

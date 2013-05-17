@@ -1,6 +1,7 @@
 
 package com.sourcery.magiccontrol;
 
+import android.app.ActionBar;
 import android.app.Activity;
 import android.app.Fragment;
 import android.content.Context;
@@ -115,7 +116,8 @@ public class MagicControlActivity extends PreferenceActivity implements ButtonBa
             } catch (ClassCastException e) {
             }
         }
-
+        ActionBar actionBar = getActionBar();
+        actionBar.setDisplayHomeAsUpEnabled(true);
     }
 
     @Override

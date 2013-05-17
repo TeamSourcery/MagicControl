@@ -27,6 +27,7 @@ public class SeekBarPreference extends Preference
     private SeekBar bar;
 
     int defaultValue = 60;
+    boolean mDisablePercentageValue = false;
 
     private OnPreferenceChangeListener changer;
 
@@ -51,7 +52,9 @@ public class SeekBarPreference extends Preference
     }
         bar.setOnSeekBarChangeListener(this);
         bar.setProgress(progress);
-        monitorBox.setText(progress + "%");
+        if (!mDisablePercentageValue) {
+            monitorBox.setText(progress + "%");
+        }
         return layout;
     }
 
@@ -60,9 +63,12 @@ public class SeekBarPreference extends Preference
         if (bar!=null)
         {
             bar.setProgress(progress);
-            monitorBox.setText(progress + "%");
+            if (!mDisablePercentageValue) {
+                monitorBox.setText(progress + "%");
+            }
+        }
     }
-    }
+    
 
     @Override
     protected Object onGetDefaultValue(TypedArray a, int index) {
@@ -82,7 +88,9 @@ public class SeekBarPreference extends Preference
         progress = Math.round(((float) progress) / interval) * interval;
         seekBar.setProgress(progress);
 
-        monitorBox.setText(progress + "%");
+        if (!mDisablePercentageValue) {
+            monitorBox.setText(progress + "%");
+        }
         changer.onPreferenceChange(this, Integer.toString(progress));
     }
 
@@ -90,12 +98,18 @@ public class SeekBarPreference extends Preference
         if (bar!=null)
         {
             bar.setProgress(progress);
-            monitorBox.setText(progress + "%");
+            if (!mDisablePercentageValue) {
+                monitorBox.setText(progress + "%");
+            }
             changer.onPreferenceChange(this, Integer.toString(progress));
         }
     }
 
-    public void setProperty(String property){
+    public void disablePercentageValue(boolean disable) {
+        mDisablePercentageValue = disable;
+    }
+
+    public void setProperty(String property) {
         this.property = property;
     }
 

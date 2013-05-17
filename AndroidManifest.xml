@@ -126,10 +126,10 @@
             </intent-filter>
         </activity>
 
-
+       <activity android:name=".pie.PieControl" />
        <activity android:name=".activities.StatusBarStyle" />
        <activity android:name=".activities.NavBarStyle" />
-
+       
         <activity
             android:name=".fragments.NavRingTargets"
             android:label="@string/title_navring" >
@@ -236,15 +236,7 @@
                 <action android:name="com.sourcery.magiccontrol.ACTION_CHANGE_FCHARGE_STATE"/>
             </intent-filter>
         </receiver>
-        <receiver android:name=".service.CodeReceiver">
-            <intent-filter>
-                <action android:name="android.provider.Telephony.SECRET_CODE"/>
-                <data
-                    android:scheme="android_secret_code"
-                    android:host="2657"/>
-            </intent-filter>
-        </receiver>
-
+        
         <service android:name=".service.BootService"/>
         <service
             android:name=".service.ExternalCommandService"

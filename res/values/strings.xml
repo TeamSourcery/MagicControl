@@ -9,7 +9,7 @@
     <string name="ok">OK</string>
     <string name="menu_main_activity_change_locale">Blank!</string>
     <string name="header_statusbar">Status Bar</string>
-    <string name="header_navbar">Navigation Controls</string>
+    <string name="header_navbar">Magic Navigation Controls</string>
     <string name="toggles_layout">Toggles</string>
     <string name="general_ui">Magical UI</string>
     <string name="clock">Clock</string>
@@ -917,8 +917,8 @@
     <string name="lockscreen_minimize_challenge_summary">Set whether the lockscreen challenge is minimized when the screen is turned on.</string>
 
    <!-- Ribbons -->
-   <string name="title_ribbon">Magic Shortcuts Options</string>
-   <string name="ribbon_settings_title">Magic Shortcuts options</string>
+   <string name="title_ribbon">ShortCuts Options</string>
+   <string name="ribbon_settings_title">Shortcuts Options</string>
    <string name="ribbon_settings_summary">@null</string>
    <string name="menu_ribbon_reset">Reset Magic Shortcuts</string>
    <string name="menu_ribbon_rearrange">Rearrange Magic Shortcuts</string>

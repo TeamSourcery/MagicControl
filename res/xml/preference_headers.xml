@@ -53,7 +53,11 @@
         android:title="@string/nav_bar"
         android:summary="@string/header_summary_navigation_bar" />
 
-   
+     <header
+        android:id="@+id/ribbon_targets"
+        android:fragment="com.sourcery.magiccontrol.fragments.RibbonTargets"
+        android:title="@string/ribbon_settings_title"
+        android:summary="@string/ribbon_settings_summary" />
       
      <header
         android:id="@+id/pie_control"
@@ -81,11 +85,7 @@
         android:summary="@string/header_summary_toggles"
         android:title="@string/toggles_layout" />
 
-     <header
-        android:id="@+id/ribbon_targets"
-        android:fragment="com.sourcery.magiccontrol.fragments.RibbonTargets"
-        android:title="@string/ribbon_settings_title"
-        android:summary="@string/ribbon_settings_summary" />
+    
 
 
     <header android:title="@string/lockscreen_options" />
@@ -100,7 +100,7 @@
    <header
 	android:id="@+id/lockscreenstwo"
 	android:fragment="com.sourcery.magiccontrol.fragments.Lockscreenstwo"
-	android:title="@string/lockscreen_options"
+	android:title="LockScreen BackGround Options"
 	android:summary="@string/header_summary_lockscreens" />
 
 

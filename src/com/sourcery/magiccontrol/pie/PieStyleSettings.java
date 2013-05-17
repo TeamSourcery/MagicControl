@@ -55,6 +55,7 @@ public class PieStyleSettings extends SettingsPreferenceFragment implements
     private static final float PIE_CONTROL_SIZE_DEFAULT = 0.84f;
 
     Resources mSystemUiResources;
+    private boolean mCheckPreferences;
 
     ColorPickerPreference mPieBackgroundColor;
     ColorPickerPreference mPieSnapColor;
@@ -136,6 +137,10 @@ public class PieStyleSettings extends SettingsPreferenceFragment implements
 
     @Override
     public boolean onPreferenceChange(Preference preference, Object newValue) {
+        if (!mCheckPreferences) {
+            return false;
+        }
+
         if (preference == mPieBackgroundAlpha) {
             float val = Float.parseFloat((String) newValue);
             Log.e("R", "value: " + val / 100);
@@ -177,7 +182,7 @@ public class PieStyleSettings extends SettingsPreferenceFragment implements
             return true;
       
         }
-        updateStyleValues();
+        
         return false;
     }
 
@@ -188,6 +193,7 @@ public class PieStyleSettings extends SettingsPreferenceFragment implements
     }
 
     private void updateStyleValues() {
+        mCheckPreferences = false;
         String hexColor;
         int intColor;
 
@@ -254,5 +260,7 @@ public class PieStyleSettings extends SettingsPreferenceFragment implements
                     ((PIE_CONTROL_SIZE_MAX - PIE_CONTROL_SIZE_MIN) / 100)) / 100;
         mPieControlSize.setInitValue((int) (controlSizeValue * 100));
         mPieControlSize.disablePercentageValue(true);
+
+        mCheckPreferences = true;
     }
 }

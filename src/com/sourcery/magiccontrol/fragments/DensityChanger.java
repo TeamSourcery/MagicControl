@@ -25,8 +25,8 @@ import android.widget.EditText;
 
 import com.sourcery.magiccontrol.SettingsPreferenceFragment;
 import com.sourcery.magiccontrol.R;
-import com.sourcery.magiccontrol.util.DENSITYCMDProcessor;
-import com.sourcery.magiccontrol.util.DENSITYCMDProcessor.CommandResult;
+import com.sourcery.magiccontrol.util.CMDProcessor;
+import com.sourcery.magiccontrol.util.CommandResult;
 import com.sourcery.magiccontrol.util.Helpers;
 
 public class DensityChanger extends SettingsPreferenceFragment implements
@@ -64,7 +64,7 @@ public class DensityChanger extends SettingsPreferenceFragment implements
         super.onCreate(savedInstanceState);
         addPreferencesFromResource(R.xml.lcd_density_setup);
 
-        String currentDensity = SystemProperties.get("ro.sf.lcd_density");
+        String currentDensity = SystemProperties.get("persist.lcd_density");
         PreferenceScreen prefs = getPreferenceScreen();
 
         mStockDensity = (ListPreference) findPreference("stock_density");
@@ -82,6 +82,8 @@ public class DensityChanger extends SettingsPreferenceFragment implements
     @Override
     public void onResume() {
         super.onResume();
+
+         mClearMarketData.setSummary("");
     }
 
     @Override
@@ -221,8 +223,15 @@ public class DensityChanger extends SettingsPreferenceFragment implements
 
     private void setLcdDensity(int newDensity) {
         Helpers.getMount("rw");
-        new DENSITYCMDProcessor().su.runWaitFor("busybox sed -i 's|ro.sf.lcd_density=.*|"
-                + "ro.sf.lcd_density" + "=" + newDensity + "|' " + "/system/build.prop");
+         CommandResult cr = CMDProcessor.runSuCommand("grep persist.lcd_density /system/build.prop");
+        // not exists yet 
+        if (cr.getStdout().length() == 0) {
+          CMDProcessor.runSuCommand("echo 'persist.lcd_density=" + newDensity + "' >> /system/build.prop");
+        // set existing value
+        } else {
+          CMDProcessor.runSuCommand("busybox sed -i 's|persist.lcd_density=.*|"
+                  + "persist.lcd_density" + "=" + newDensity + "|' " + "/system/build.prop");
+        }
         Helpers.getMount("ro");
     }
 
@@ -238,36 +247,36 @@ public class DensityChanger extends SettingsPreferenceFragment implements
             String gms = "/data/data/com.google.android.gms/";
             String gsf = "/data/data/com.google.android.gsf/";
 
-            CommandResult cr = new DENSITYCMDProcessor().su.runWaitFor("ls " + vending);
-            CommandResult cr_gms = new DENSITYCMDProcessor().su.runWaitFor("ls " + gms);
-            CommandResult cr_gsf = new DENSITYCMDProcessor().su.runWaitFor("ls " + gsf);
+            CommandResult cr =  CMDProcessor.runSuCommand("ls " + vending);
+            CommandResult cr_gms =  CMDProcessor.runSuCommand("ls " + gms);
+            CommandResult cr_gsf =  CMDProcessor.runSuCommand("ls " + gsf);
 
-            if (cr.stdout == null || cr_gms.stdout == null || cr_gsf.stdout == null)
+            if (cr.getStdout() == null || cr_gms.getStdout() == null || cr_gsf.getStdout() == null)
                 return false;
 
-            for (String dir : cr.stdout.split("\n")) {
+            for (String dir : cr.getStdout().split("\n")) {
                 if (!dir.equals("lib")) {
                     String c = "rm -r " + vending + dir;
                     // Log.i(TAG, c);
-                    if (!new DENSITYCMDProcessor().su.runWaitFor(c).success())
+                    if (! CMDProcessor.runSuCommand(c).success())
                         return false;
                 }
             }
 
-            for (String dir_gms : cr_gms.stdout.split("\n")) {
+            for (String dir_gms : cr_gms.getStdout().split("\n")) {
                 if (!dir_gms.equals("lib")) {
                     String c_gms = "rm -r " + gms + dir_gms;
                     // Log.i(TAG, c);
-                    if (!new DENSITYCMDProcessor().su.runWaitFor(c_gms).success())
+                    if (! CMDProcessor.runSuCommand(c_gms).success())
                         return false;
                 }
             }
 
-            for (String dir_gsf : cr_gsf.stdout.split("\n")) {
+            for (String dir_gsf : cr_gsf.getStdout().split("\n")) {
                 if (!dir_gsf.equals("lib")) {
                     String c_gsf = "rm -r " + gsf + dir_gsf;
                     // Log.i(TAG, c);
-                    if (!new DENSITYCMDProcessor().su.runWaitFor(c_gsf).success())
+                    if (! CMDProcessor.runSuCommand(c_gsf).success())
                         return false;
                 }
             }

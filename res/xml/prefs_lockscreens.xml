@@ -17,19 +17,7 @@
 
    </PreferenceCategory>
 
-    <PreferenceCategory
-            android:key="lockscreen"
-            android:title="LockScreen Custom Apps">
-
-    
-     <PreferenceScreen
-            android:key="lock_screen_shortcuts"
-            android:fragment="com.sourcery.magiccontrol.shortcuts.Shortcuts"
-            android:title="@string/lock_screen_shortcuts_title" 
-            android:summary="@string/lock_screen_shortcuts_summary" />
-  
-    </PreferenceCategory>
-
+   
     <PreferenceCategory
             android:key="Lock_Screen_Settings"
             android:title="LockScreen Settings">

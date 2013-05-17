@@ -195,15 +195,7 @@
              </intent-filter>
         </activity>
 
-        <activity
-             android:name=".shortcuts.Shortcuts"
-             android:label="Lockscreen Shortcuts">
-             <intent-filter>
-                 <action android:name="android.intent.action.MAIN"/>
- 
-                <category android:name="com.sourcery.magiccontrol.SHORTCUT"/>
-             </intent-filter>
-        </activity>
+       
 
         <activity
 	            android:name=".fragments.Pie"

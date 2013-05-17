@@ -1,23 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <CheckBoxPreference android:key="show_reboot_keyguard"
-        android:title="@string/title_show_reboot_keyguard" />
+    <SwitchPreference android:key="show_reboot_keyguard"
+        android:title="@string/title_show_reboot_keyguard"
+        android:summary="@string/summary_show_reboot_keyguard" />
 
-    <CheckBoxPreference android:key="show_navbar_hide"
-        android:title="@string/title_show_navbar_hide" />
-
-   <CheckBoxPreference android:key="show_torch_toggle"
+    <SwitchPreference android:key="show_torch_toggle"
         android:title="@string/title_show_torch_toggle" />
-
     
-    <CheckBoxPreference android:key="show_screenshot"
+    <SwitchPreference android:key="show_screenshot"
         android:title="@string/title_show_screenshot" />
   
-    <CheckBoxPreference android:key="show_airplane_toggle"
+    <SwitchPreference android:key="show_airplane_toggle"
         android:title="@string/title_show_airplane_toggle" /> 
 
-    <CheckBoxPreference android:key="show_expanded_desktop_toggle"
-        android:title="@string/title_show_expanded_desktop_toggle" />
+     <SwitchPreference android:key="show_navbar_hide"
+        android:title="@string/title_show_navbar_hide" />
+
+     <ListPreference
+        android:key="power_menu_expanded_desktop"
+        android:title="@string/power_menu_expanded_desktop"
+        android:entries="@array/expanded_desktop_entries"
+        android:entryValues="@array/expanded_desktop_values"
+        android:persistent="false" />
+
+   
 
 </PreferenceScreen>

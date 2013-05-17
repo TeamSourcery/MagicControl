@@ -20,4 +20,7 @@
 
     <!-- Whether device has led charging feature -->
     <bool name="has_led_charging_feature">true</bool>
+
+    <!-- Show Expanded Desktop preference -->
+    <bool name="config_show_expandedDesktop">true</bool>
 </resources>

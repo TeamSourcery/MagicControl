@@ -15,21 +15,8 @@
             android:summary="@string/auto_hide_statusbar_summary"
             android:defaultValue="false" />
 
-  <CheckBoxPreference
-            android:key="hidden_statusbar_pulldown"
-            android:title="@string/hidden_statusbar_pulldown_title"
-            android:summary="@string/hidden_statusbar_pulldown_summary" />
-
+  
   <ListPreference
-            android:key="hidden_statusbar_pulldown_timeout"
-            android:entries="@array/hidden_statusbar_pulldown_timeout_entries"
-            android:entryValues="@array/hidden_statusbar_pulldown_timeout_values"
-            android:title="@string/hidden_statusbar_pulldown_timeout_title"
-            android:summary="@string/hidden_statusbar_pulldown_timeout_summary"
-            android:dependency="hidden_statusbar_pulldown" />
-
-
-   <ListPreference
         android:key="status_bar_icon_opacity"
         android:dialogTitle="@string/status_bar_icon_opacity"
         android:title="@string/status_bar_icon_opacity"

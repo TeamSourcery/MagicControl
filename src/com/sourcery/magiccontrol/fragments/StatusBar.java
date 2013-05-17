@@ -91,9 +91,7 @@ public class StatusBar extends SettingsPreferenceFragment implements
     private static final String STATUS_BAR_DONOTDISTURB = "status_bar_donotdisturb";
     private static final String KEY_STATUS_BAR_ICON_OPACITY = "status_bar_icon_opacity";
     private static final String STATUS_BAR_AUTO_HIDE = "status_bar_auto_hide";
-    private static final String HIDDEN_STATUSBAR_PULLDOWN = "hidden_statusbar_pulldown";
-    private static final String HIDDEN_STATUSBAR_PULLDOWN_TIMEOUT = "hidden_statusbar_pulldown_timeout";
-   
+    
        
    
     CheckBoxPreference mStatusbarSliderPreference;
@@ -101,16 +99,13 @@ public class StatusBar extends SettingsPreferenceFragment implements
     private CheckBoxPreference mStatusBarDoNotDisturb;
     private ListPreference mStatusBarIconOpacity;
     private CheckBoxPreference mStatusBarAutoHide;
-    CheckBoxPreference mHiddenStatusbarPulldown;
-    ListPreference mHiddenStatusbarPulldownTimeout;
-    
+      
 
     private Activity mActivity;
 
     private int seekbarProgress;
 
-    
-    
+  
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -129,11 +124,7 @@ public class StatusBar extends SettingsPreferenceFragment implements
         mStatusBarAutoHide.setChecked((Settings.System.getInt(getActivity().getApplicationContext().getContentResolver(),
                 Settings.System.AUTO_HIDE_STATUSBAR, 0) == 1));
         
-        mHiddenStatusbarPulldownTimeout = (ListPreference) findPreference(HIDDEN_STATUSBAR_PULLDOWN_TIMEOUT);
-        mHiddenStatusbarPulldownTimeout.setOnPreferenceChangeListener(this);
-        mHiddenStatusbarPulldownTimeout.setValue(Settings.System.getInt(getActivity().getContentResolver(),
-                Settings.System.HIDDEN_STATUSBAR_PULLDOWN_TIMEOUT, 10000) + "");
-
+      
         mStatusbarSliderPreference = (CheckBoxPreference) findPreference(PREF_STATUSBAR_BRIGHTNESS);
         mStatusbarSliderPreference.setChecked(Settings.System.getBoolean(mContext.getContentResolver(),
                  Settings.System.STATUSBAR_BRIGHTNESS_SLIDER, true));
@@ -193,11 +184,6 @@ public class StatusBar extends SettingsPreferenceFragment implements
             int iconOpacity = Integer.valueOf((String) Value);
             Settings.System.putInt(getActivity().getApplicationContext().getContentResolver(),
                     Settings.System.STATUS_BAR_NOTIF_ICON_OPACITY, iconOpacity);
-            return true;
-        } else if (preference == mHiddenStatusbarPulldownTimeout) {
-            int val = Integer.parseInt((String) Value);
-            Settings.System.putInt(getActivity().getContentResolver(),
-                    Settings.System.HIDDEN_STATUSBAR_PULLDOWN_TIMEOUT, val);
             return true;
              }
             return false;

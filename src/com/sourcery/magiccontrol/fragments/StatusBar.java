@@ -167,7 +167,6 @@ public class StatusBar extends SettingsPreferenceFragment implements
             value = mStatusBarAutoHide.isChecked();
             Settings.System.putInt(getActivity().getApplicationContext().getContentResolver(),
                     Settings.System.AUTO_HIDE_STATUSBAR, value ? 1 : 0);
-            Helpers.restartSystemUI();
             return true;
     }
          return super.onPreferenceTreeClick(preferenceScreen, preference);

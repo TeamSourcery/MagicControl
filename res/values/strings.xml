@@ -990,18 +990,25 @@
    <string name="ribbon_settings_title">Magic Shortcuts options</string>
    <string name="ribbon_settings_summary">@null</string>
    <string name="menu_ribbon_reset">Reset Magic Shortcuts</string>
+   <string name="menu_ribbon_rearrange">Rearrange Magic Shortcuts</string>
    <!-- Ribbon -->
+    <string name="ribbon_dialog_arrange_title">Ribbon layout</string>
     <string name="ribbon_instructions">Press icon to select actions or delete</string>
     <string name="ribbon_targets_cat">Magic Shortcuts options</string>
     <string name="enable_ribbon_text_title">Show app name</string>
     <string name="enable_ribbon_vibrate_title">Vibrate on touch of swipe area</string>
     <string name="enable_ribbon_text_summary">Enable the app name text below the icon</string>
+    <string name="ribbon_icon_vibrate_title">Vibrate on target click</string>
+    <string name="ribbon_icon_space_title">Icon Magic SHortcuts spacing</string>
+    <string name="ribbon_icon_space_vertical_title">Vertical Magic Shortcuts spacing</string>
     <string name="ribbon_icon_size_title">Icon size</string>
     <string name="ribbon_icon_size_summary">Set size of your icons</string>
     <string name="ribbon_lockscreen">Lockscreen Magic Shortcuts</string>
     <string name="ribbon_notifications">Notifications Magic Shortcuts</string>
     <string name="ribbon_quicksettings">Quick settings Magic Shortcuts</string>
-    <string name="ribbon_swipe">Swipe Magic Shortcuts</string>
+    <string name="ribbon_swipe_left">Left swipe Magic Shorcut</string>
+    <string name="ribbon_swipe_right">Right swipe Magic Shortcut</string>
+    <string name="ribbon_swipe_bottom">Bottom swipe Magic Shortcut</string>
     <string name="clone_title">Choose Magic Shortcuts to clone</string>
     <string name="icon_size_normal">Normal</string>
     <string name="icon_size_20">Medium</string>
@@ -1009,7 +1016,8 @@
     <string name="ribbon_left_enable_title">Enable swipe from left</string>
     <string name="ribbon_right_enable_title">Enable swipe from right</string>
     <string name="ribbon_bottom_enable_title">Enable swipe from bottom</string>
-    <string name="ribbon_bottom_warning_title">You can not use swipe from bottom with Navbar enabled, must use Navbar AutoHide.</string>
+   <string name="ribbon_bottom_warning_title">You can not use swipe from bottom with Navbar enabled, must use Navbar AutoHide or manually hide the navbar.</string>
+    <string name="ribbon_button_colorize_title">Action icons match text color</string>
     <string name="ribbon_color_title">Color of Swipe Magic Shortcuts</string>
     <string name="text_color_title">Color of app label text</string>
     <string name="ribbon_opacity_title">Opacity of Swipe Magic Shortcuts</string>

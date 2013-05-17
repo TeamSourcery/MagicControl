@@ -74,8 +74,8 @@
     <string name="title_show_torch_toggle">Torch</string>
     <string name="title_show_airplane_toggle">Airplane mode</string>
     <string name="title_show_navbar_hide">System Bar toggles</string>
-    <string name="title_show_reboot_keyguard">Reboot on lockscreen</string>
-    <string name="summary_show_reboot_keyguard">Enabling this will show reboot options while on lockscreen</string>
+    <string name="title_show_reboot_keyguard">LockScreen Reboot</string>
+    <string name="summary_show_reboot_keyguard">Security Mode..Off to show reboot on lockscreen</string>
     <string name="power_menu_expanded_desktop">Expanded desktop</string>
     <!-- expanded desktop -->
     <string name="summary_expanded_desktop">%1$s</string>
@@ -924,6 +924,9 @@
    <string name="ribbon_settings_summary">@null</string>
    <string name="menu_ribbon_reset">Reset Magic Shortcuts</string>
    <string name="menu_ribbon_rearrange">Rearrange Magic Shortcuts</string>
+   <string name="menu_ribbon_toggles">Setup toggles</string>
+   <string name="menu_ribbon_toggles_error">Toggles are only available for the left and right swipe
+ magic shortcuts.</string>
    <!-- Ribbon -->
     <string name="ribbon_dialog_arrange_title">Ribbon layout</string>
     <string name="ribbon_instructions">Press icon to select actions or delete</string>

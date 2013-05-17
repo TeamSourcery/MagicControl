@@ -45,6 +45,7 @@
     <!-- Header Summaries -->
     <string name="header_summary_clock">@null</string>
     <string name="header_summary_toggles">@null</string>
+    <string name="header_summary_powerwidget">@null</string>
     <string name="header_summary_general_ui">@null</string>
     <string name="header_summary_battery">@null</string>
     <string name="header_summary_signal">@null</string>
@@ -196,7 +197,7 @@
     <string name="summary_settings_behavior_reverse">Short press for Toggles, Long press for Settings</string>
     <string name="title_toggles_autohide">Auto hide toggles</string>
     <string name="summary_toggles_autohide">Hide toggles after drawer closes.</string>
-    <string name="brightness_location_title">Brightness location</string>
+    
     <string name="reset_toggles_title">Reset toggles</string>
     <string name="reset_toggles_summary">Reset all toggles and their order</string>
     <string name="toggle_button_alpha_title">Toggle indicator alpha</string>
@@ -527,9 +528,9 @@
 
   
    
-    <!-- clock stuff -->
+    <!-- clock stuff 
     <string name="right_clock">Right clock</string>
-    <string name="center_clock">Center clock</string>
+    <string name="center_clock">Center clock</string>  -->
     <string name="no_clock">No clock</string>
     <string name="dont_show">Don\'t show</string>
     <string name="small_am_pm">Small AM/PM</string>
@@ -1019,4 +1020,63 @@
   
     <string name="ribbon">Magic Shortcuts</string>
     <string name="nav_widgets">Nav Widgets</string>
+
+    <!-- PowerWidget -->
+    <string name="power_widget">Power Widget</string>
+    <string name="title_power_widget">Power Widget</string>
+     <!-- Powerwidget -->
+    <string name="power_widget_summary">Customize the elements of powerwidget.</string>
+    <string name="title_expanded_widget">Powerwidget</string>
+    <string name="power_widget_buttons">Widget Buttons</string>
+    <string name="power_widget_behavior">Widget Behavior</string>
+    <string name="title_expanded_hide_onchange">Close Drawer (On Change)</string>
+    <string name="title_expanded_hide_indicator">Hide Indicators</string>
+    <string name="title_expanded_hide_scrollbar">Hide Scrollbar</string>
+    <string name="title_widget_picker">Widget Buttons</string>
+    <string name="summary_widget_picker">View or change the displayed buttons</string>
+    <string name="title_widget_order">Button Order</string>
+    <string name="summary_widget_order">View or change the order of the buttons</string>
+    <string name="title_buttons">Buttons</string>
+    <string name="title_toggle_wifi">Wi-Fi</string>
+    <string name="title_toggle_bluetooth">Bluetooth</string>
+    <string name="title_toggle_gps">GPS</string>
+    <string name="title_toggle_sound">Sound</string>
+    <string name="title_toggle_brightness">Brightness</string>
+    <string name="title_toggle_sync">Sync</string>
+    <string name="title_toggle_wifiap">Wi-Fi AP</string>
+    <string name="title_toggle_screentimeout">Screen Timeout</string>
+    <string name="title_toggle_mobiledata">Mobile Data</string>
+    <string name="title_toggle_lockscreen">Lockscreen</string>
+    <string name="title_toggle_networkmode">Network Mode</string>
+    <string name="title_toggle_autorotate">Orientation</string>
+    <string name="title_toggle_airplane">Airplane Mode</string>
+    <string name="title_toggle_flashlight">LED Flashlight</string>
+    <string name="title_toggle_sleep">Go To Sleep</string>
+    <string name="title_toggle_media_play_pause">Play/Pause Music</string>
+    <string name="title_toggle_media_previous">Previous Music Track</string>
+    <string name="title_toggle_media_next">Next Music Track</string>
+    <string name="title_toggle_lte">LTE</string>
+    <string name="title_toggle_wimax">WiMAX</string>
+    <string name="title_button_modes">Button Modes</string>
+    <string name="pref_brightness_mode_title">Brightness Modes</string>
+    <string name="pref_brightness_mode_summary">View or change the brightness modes</string>
+    <string name="cm_brightness_mode_auto">Auto</string>
+    <string name="cm_brightness_mode_dim">Dim</string>
+    <string name="pref_network_mode_title">Network Modes</string>
+    <string name="pref_screentimeout_mode_title">Screen Timeout Modes</string>
+    <string name="pref_ring_mode_title">Sound Modes</string>
+    <string name="pref_ring_mode_summary">View or change the sound button modes</string>
+    <string name="cm_sound_mode_silent">Silent</string>
+    <string name="cm_sound_mode_vibrate">Vibrate</string>
+    <string name="cm_sound_mode_sound">Sound</string>
+    <string name="cm_sound_mode_soundVibrate">Sound &amp; Vibrate</string>
+    <string name="pref_flash_mode_title">Flash Mode</string>
+    <string name="expanded_haptic_feedback_title">Haptic Feedback</string>
+    <string name="power_widget_additional_options_cat">Additional options</string>
+    <string name="right_clock">Right clock</string>
+    <string name="center_clock">Center clock</string>
+    <string name="brightness_location_title">Brightness slider location</string>
+    <string name="brightness_slider_top">On top</string>
+    <string name="brightness_slider_bottom">On the bottom</string>
+    <string name="brightness_slider_none">Don\'t Show</string>
    </resources>

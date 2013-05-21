@@ -56,6 +56,7 @@ public class UserInterface extends SettingsPreferenceFragment implements OnPrefe
     private static final String PREF_FULLSCREEN_KEYBOARD = "fullscreen_keyboard";
     private static final String KEYBOARD_ROTATION_TOGGLE = "keyboard_rotation_toggle";
     private static final String KEYBOARD_ROTATION_TIMEOUT = "keyboard_rotation_timeout";
+    private static final String SHOW_ENTER_KEY = "show_enter_key";
 
     CheckBoxPreference mAllow180Rotation;
     CheckBoxPreference mStatusBarNotifCount;
@@ -77,6 +78,7 @@ public class UserInterface extends SettingsPreferenceFragment implements OnPrefe
     CheckBoxPreference mFullscreenKeyboard;
     CheckBoxPreference mKeyboardRotationToggle;
     ListPreference mKeyboardRotationTimeout;
+    CheckBoxPreference mShowEnterKey;
     
 
     private static final int KEYBOARD_ROTATION_TIMEOUT_DEFAULT = 5000; // 5s
@@ -145,6 +147,10 @@ public class UserInterface extends SettingsPreferenceFragment implements OnPrefe
         mFullscreenKeyboard = (CheckBoxPreference) findPreference(PREF_FULLSCREEN_KEYBOARD);
         mFullscreenKeyboard.setChecked(Settings.System.getInt(getActivity().getContentResolver(),
                 Settings.System.FULLSCREEN_KEYBOARD, 0) == 1);
+
+        mShowEnterKey = (CheckBoxPreference) findPreference(SHOW_ENTER_KEY);
+        mShowEnterKey.setChecked(Settings.System.getInt(getActivity().getContentResolver(),
+                Settings.System.FORMAL_TEXT_INPUT, 0) == 1);
 
         mKeyboardRotationToggle = (CheckBoxPreference) findPreference(KEYBOARD_ROTATION_TOGGLE);
         mKeyboardRotationToggle.setChecked(Settings.System.getInt(getActivity().getContentResolver(),
@@ -249,6 +255,10 @@ public class UserInterface extends SettingsPreferenceFragment implements OnPrefe
             Settings.System.putBoolean(getActivity().getContentResolver(),
                     Settings.System.SHOW_STATUSBAR_IME_SWITCHER,
                     isCheckBoxPreferenceChecked(preference));
+            return true;
+        } else if (preference == mShowEnterKey) {
+            Settings.System.putInt(getActivity().getContentResolver(),
+                Settings.System.FORMAL_TEXT_INPUT, mShowEnterKey.isChecked() ? 1 : 0);
             return true;
         } else if (preference == mFullscreenKeyboard) {
             Settings.System.putInt(getActivity().getContentResolver(), Settings.System.FULLSCREEN_KEYBOARD,

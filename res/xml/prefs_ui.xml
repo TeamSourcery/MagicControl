@@ -43,6 +43,12 @@
         android:summary="@string/fullscreen_keyboard_summary"
         android:defaultValue="false" />
 
+   <CheckBoxPreference
+        android:key="show_enter_key"
+        android:title="@string/show_enter_key_title"
+        android:summary="@string/show_enter_key_summary"
+        android:persistent="false" />
+
     <CheckBoxPreference
         android:key="keyboard_rotation_toggle"
         android:title="@string/keyboard_rotation_toggle_title"

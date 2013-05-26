@@ -1048,7 +1048,7 @@
     <string name="font_20dp">20 dp</string>
     <string name="font_22dp">22 dp</string>
     <string name="font_24dp">24 dp</string>
-    <string name="font_26dp">26 dp(Tanium Sized)</string>
+    <string name="font_26dp">26 dp</string>
 
     <!-- Keyboard Rotation -->
     <string name="keyboard_rotation_toggle_title">Auto keyboard rotation</string>

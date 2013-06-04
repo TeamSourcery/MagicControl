@@ -1,15 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:prvandroid="http://schemas.android.com/apk/prv/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="horizontal"
-    android:weightSum="1" >
+    android:gravity="center_horizontal" >
 
     <LinearLayout
-        android:layout_width="0dp"
+        android:id="@+id/lockscreen_options"
+        android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_weight="0.4"
         android:orientation="vertical" >
 
         <TextView
@@ -320,35 +319,6 @@
             android:layout_height="wrap_content"
             android:gravity="center_vertical" >
 
-             <TextView
-                android:id="@+id/lockscreen_glow_torch_id"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentLeft="true"
-                android:layout_marginStart="4dip"
-                android:layout_toLeftOf="@id/glow_torch_switch"
-                android:ellipsize="marquee"
-                android:gravity="left"
-                android:padding="4dip"
-                android:singleLine="true"
-                android:text="@string/lockscreen_glow_torch_text"
-                android:textAppearance="?android:attr/textAppearanceSmall"
-                android:textColor="#FFFFFF" />
-
-            <Switch
-                android:id="@+id/glow_torch_switch"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
-                android:layout_marginEnd="4dip"
-                android:padding="4dip" />
-        </RelativeLayout>
-
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center_vertical" >
-
             <TextView
                 android:id="@+id/lockscreen_target_longpress_id"
                 android:layout_width="wrap_content"
@@ -376,12 +346,12 @@
 
     <com.android.internal.widget.multiwaveview.GlowPadView
         android:id="@+id/lock_target"
-        android:layout_width="0dp"
-        android:layout_height="match_parent"
-        android:layout_gravity="center_vertical"
-        android:layout_weight="0.6"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
         android:contentDescription="@*android:string/keyguard_accessibility_slide_area"
-        android:gravity="left"
+        android:gravity="bottom"
         android:orientation="horizontal"
         prvandroid:allowScaling="true"
         prvandroid:directionDescriptions="@*android:array/lockscreen_direction_descriptions"
@@ -399,4 +369,4 @@
         prvandroid:targetDrawables="@*android:array/lockscreen_targets_unlock_only"
         prvandroid:vibrationDuration="20" />
 
-</LinearLayout>
+</RelativeLayout>

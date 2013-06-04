@@ -104,7 +104,8 @@ public class TabletMode extends SettingsPreferenceFragment implements OnPreferen
         mUserModeUI.setOnPreferenceChangeListener(this);
            
     mLcdDensity = findPreference("lcd_density_setup");
-    String currentProperty = SystemProperties.get("ro.sf.lcd_density");
+    String currentProperty = SystemProperties.get("persist.lcd_density");
+    if (currentProperty.length() == 0) currentProperty = SystemProperties.get("ro.sf.lcd_density");
     try {
          newDensityValue = Integer.parseInt(currentProperty);
     } catch (Exception e) {

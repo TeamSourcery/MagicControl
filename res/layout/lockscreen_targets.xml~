@@ -1,15 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:prvandroid="http://schemas.android.com/apk/prv/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="horizontal"
-    android:weightSum="1" >
+    android:layout_height="match_parent" >
 
     <LinearLayout
-        android:layout_width="0dp"
-        android:layout_height="match_parent"
-        android:layout_weight="0.4"
+        android:id="@+id/lockscreen_options"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:orientation="vertical" >
 
         <TextView
@@ -36,7 +34,7 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentLeft="true"
                 android:layout_marginStart="4dip"
-                android:layout_toLeftOf="@id/lockscreen_color_button"
+                android:layout_toLeftOf="@+id/lockscreen_color_button"
                 android:gravity="left"
                 android:padding="4dip"
                 android:text="@string/lockscreen_text_color_title"
@@ -44,7 +42,7 @@
                 android:textColor="#FFFFFF" />
 
             <Button
-                android:id="@+id/lockscreen_color_button"
+                android:id="@id/lockscreen_color_button"
                 android:layout_width="wrap_content"
                 android:layout_height="20dip"
                 android:layout_alignParentRight="true"
@@ -65,7 +63,7 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentLeft="true"
                 android:layout_marginStart="4dip"
-                android:layout_toLeftOf="@id/lockscreen_battery_switch"
+                android:layout_toLeftOf="@+id/lockscreen_battery_switch"
                 android:ellipsize="marquee"
                 android:gravity="left"
                 android:padding="4dip"
@@ -75,7 +73,7 @@
                 android:textColor="#FFFFFF" />
 
             <Switch
-                android:id="@+id/lockscreen_battery_switch"
+                android:id="@id/lockscreen_battery_switch"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
@@ -94,7 +92,7 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentLeft="true"
                 android:layout_marginStart="4dip"
-                android:layout_toLeftOf="@id/lockscreen_rotate_switch"
+                android:layout_toLeftOf="@+id/lockscreen_rotate_switch"
                 android:ellipsize="marquee"
                 android:gravity="left"
                 android:padding="4dip"
@@ -104,7 +102,7 @@
                 android:textColor="#FFFFFF" />
 
             <Switch
-                android:id="@+id/lockscreen_rotate_switch"
+                android:id="@id/lockscreen_rotate_switch"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
@@ -123,7 +121,7 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentLeft="true"
                 android:layout_marginStart="4dip"
-                android:layout_toLeftOf="@id/lockscreen_vol_controls_switch"
+                android:layout_toLeftOf="@+id/lockscreen_vol_controls_switch"
                 android:ellipsize="marquee"
                 android:gravity="left"
                 android:padding="4dip"
@@ -133,7 +131,7 @@
                 android:textColor="#FFFFFF" />
 
             <Switch
-                android:id="@+id/lockscreen_vol_controls_switch"
+                android:id="@id/lockscreen_vol_controls_switch"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
@@ -152,7 +150,7 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentLeft="true"
                 android:layout_marginStart="4dip"
-                android:layout_toLeftOf="@id/lockscreen_vol_wake_switch"
+                android:layout_toLeftOf="@+id/lockscreen_vol_wake_switch"
                 android:ellipsize="marquee"
                 android:gravity="left"
                 android:padding="4dip"
@@ -162,7 +160,7 @@
                 android:textColor="#FFFFFF" />
 
             <Switch
-                android:id="@+id/lockscreen_vol_wake_switch"
+                android:id="@id/lockscreen_vol_wake_switch"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
@@ -181,7 +179,7 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentLeft="true"
                 android:layout_marginStart="4dip"
-                android:layout_toLeftOf="@id/lockscreen_all_widgets_switch"
+                android:layout_toLeftOf="@+id/lockscreen_all_widgets_switch"
                 android:ellipsize="marquee"
                 android:gravity="left"
                 android:padding="4dip"
@@ -191,7 +189,7 @@
                 android:textColor="#FFFFFF" />
 
             <Switch
-                android:id="@+id/lockscreen_all_widgets_switch"
+                android:id="@id/lockscreen_all_widgets_switch"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
@@ -210,7 +208,7 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentLeft="true"
                 android:layout_marginStart="4dip"
-                android:layout_toLeftOf="@id/lockscreen_unlimited_widgets_switch"
+                android:layout_toLeftOf="@+id/lockscreen_unlimited_widgets_switch"
                 android:ellipsize="marquee"
                 android:gravity="left"
                 android:padding="4dip"
@@ -220,7 +218,7 @@
                 android:textColor="#FFFFFF" />
 
             <Switch
-                android:id="@+id/lockscreen_unlimited_widgets_switch"
+                android:id="@id/lockscreen_unlimited_widgets_switch"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
@@ -239,7 +237,7 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentLeft="true"
                 android:layout_marginStart="4dip"
-                android:layout_toLeftOf="@id/lockscreen_hide_page_hints_switch"
+                android:layout_toLeftOf="@+id/lockscreen_hide_page_hints_switch"
                 android:ellipsize="marquee"
                 android:gravity="left"
                 android:padding="4dip"
@@ -249,7 +247,7 @@
                 android:textColor="#FFFFFF" />
 
             <Switch
-                android:id="@+id/lockscreen_hide_page_hints_switch"
+                android:id="@id/lockscreen_hide_page_hints_switch"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
@@ -268,7 +266,7 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentLeft="true"
                 android:layout_marginStart="4dip"
-                android:layout_toLeftOf="@id/lockscreen_minimize_challange_switch"
+                android:layout_toLeftOf="@+id/lockscreen_minimize_challange_switch"
                 android:ellipsize="marquee"
                 android:gravity="left"
                 android:padding="4dip"
@@ -278,7 +276,7 @@
                 android:textColor="#FFFFFF" />
 
             <Switch
-                android:id="@+id/lockscreen_minimize_challange_switch"
+                android:id="@id/lockscreen_minimize_challange_switch"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
@@ -297,7 +295,7 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentLeft="true"
                 android:layout_marginStart="4dip"
-                android:layout_toLeftOf="@id/lockscreen_carousel_switch"
+                android:layout_toLeftOf="@+id/lockscreen_carousel_switch"
                 android:ellipsize="marquee"
                 android:gravity="left"
                 android:padding="4dip"
@@ -307,36 +305,7 @@
                 android:textColor="#FFFFFF" />
 
             <Switch
-                android:id="@+id/lockscreen_carousel_switch"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
-                android:layout_marginEnd="4dip"
-                android:padding="4dip" />
-        </RelativeLayout>
-
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center_vertical" >
-
-             <TextView
-                android:id="@+id/lockscreen_glow_torch_id"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentLeft="true"
-                android:layout_marginStart="4dip"
-                android:layout_toLeftOf="@id/glow_torch_switch"
-                android:ellipsize="marquee"
-                android:gravity="left"
-                android:padding="4dip"
-                android:singleLine="true"
-                android:text="@string/lockscreen_glow_torch_text"
-                android:textAppearance="?android:attr/textAppearanceSmall"
-                android:textColor="#FFFFFF" />
-
-            <Switch
-                android:id="@+id/glow_torch_switch"
+                android:id="@id/lockscreen_carousel_switch"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
@@ -355,7 +324,7 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentLeft="true"
                 android:layout_marginStart="4dip"
-                android:layout_toLeftOf="@id/longpress_switch"
+                android:layout_toLeftOf="@+id/longpress_switch"
                 android:ellipsize="marquee"
                 android:gravity="left"
                 android:padding="4dip"
@@ -365,7 +334,7 @@
                 android:textColor="#FFFFFF" />
 
             <Switch
-                android:id="@+id/longpress_switch"
+                android:id="@id/longpress_switch"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
@@ -376,12 +345,13 @@
 
     <com.android.internal.widget.multiwaveview.GlowPadView
         android:id="@+id/lock_target"
-        android:layout_width="0dp"
-        android:layout_height="match_parent"
-        android:layout_gravity="center_vertical"
-        android:layout_weight="0.6"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="-40dp"
         android:contentDescription="@*android:string/keyguard_accessibility_slide_area"
-        android:gravity="left"
+        android:gravity="bottom"
         android:orientation="horizontal"
         prvandroid:allowScaling="true"
         prvandroid:directionDescriptions="@*android:array/lockscreen_direction_descriptions"
@@ -399,4 +369,4 @@
         prvandroid:targetDrawables="@*android:array/lockscreen_targets_unlock_only"
         prvandroid:vibrationDuration="20" />
 
-</LinearLayout>
+</RelativeLayout>

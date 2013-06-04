@@ -913,6 +913,7 @@
     <string name="lockscreen_target_info">Drag the unlock icon to targets to assign targets</string>
     <string name="lockscreen_options_info">Touch text to get summary of each option</string>
     <string name="lockscreen_target_longpress_summary">Enables long press options for lock screen targets</string>
+    <string name="lockscreen_target_longpress_text">Longpress status</string>
     <string name="lockscreen_glow_torch_text">GlowPad torch</string>
     <string name="lockscreen_glow_torch_summary">Longpressing the center of the lockcircle will turn torch on.  Release finger to turn torch off.</string>
     <string name="lockscreen_all_widgets_title">Allow all widgets</string>

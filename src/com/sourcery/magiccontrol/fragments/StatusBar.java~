@@ -25,9 +25,7 @@ import java.io.InputStream;
 import java.net.URISyntaxException;
 
 import android.app.Activity;
-import android.app.ActivityManager;
 import android.app.AlertDialog;
-import android.app.INotificationManager;
 import android.app.Dialog;
 import android.app.DialogFragment;
 import android.content.ActivityNotFoundException;
@@ -42,8 +40,6 @@ import android.graphics.drawable.Drawable;
 import android.graphics.Rect;
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.RemoteException;
-import android.os.ServiceManager;
 import android.os.SystemProperties;
 import android.preference.CheckBoxPreference;
 import android.preference.ListPreference;
@@ -95,33 +91,20 @@ public class StatusBar extends SettingsPreferenceFragment implements
     private static final String STATUS_BAR_DONOTDISTURB = "status_bar_donotdisturb";
     private static final String KEY_STATUS_BAR_ICON_OPACITY = "status_bar_icon_opacity";
     private static final String STATUS_BAR_AUTO_HIDE = "status_bar_auto_hide";
-    private static final String KEY_HALO_ENABLED = "halo_enabled";
-    private static final String KEY_WE_WANT_POPUPS = "show_popup";
-    private static final String KEY_HALO_PAUSE = "halo_pause";
-    private static final String KEY_HALO_STATE = "halo_state";
-    private static final String KEY_HALO_HIDE = "halo_hide";
-    private static final String KEY_HALO_REVERSED = "halo_reversed";
+    
     private static int STOCK_FONT_SIZE = 16;
-      
+   
     CheckBoxPreference mStatusbarSliderPreference;
     
     private CheckBoxPreference mStatusBarDoNotDisturb;
     private ListPreference mStatusBarIconOpacity;
     private CheckBoxPreference mStatusBarAutoHide;
-    private CheckBoxPreference mHaloEnabled;
-    private CheckBoxPreference mWeWantPopups;
-    private CheckBoxPreference mHaloPause;
-    private ListPreference mHaloState;
-    private CheckBoxPreference mHaloHide;
-    private CheckBoxPreference mHaloReversed;
-
     ListPreference mFontsize;  
-   
+
     private Activity mActivity;
 
     private int seekbarProgress;
- 
-    private INotificationManager mNotificationManager;
+
   
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -130,7 +113,7 @@ public class StatusBar extends SettingsPreferenceFragment implements
 
         addPreferencesFromResource(R.xml.prefs_statusbar_add);
 
-        PreferenceScreen prefSet = getPreferenceScreen();
+
         PreferenceScreen prefs = getPreferenceScreen();
 
         mStatusBarDoNotDisturb = (CheckBoxPreference) findPreference(STATUS_BAR_DONOTDISTURB);
@@ -156,36 +139,6 @@ public class StatusBar extends SettingsPreferenceFragment implements
         mFontsize.setOnPreferenceChangeListener(this);
         mFontsize.setValue(Integer.toString(Settings.System.getInt(mContentRes,
                 Settings.System.STATUSBAR_FONT_SIZE, STOCK_FONT_SIZE)));
-
-        mNotificationManager = INotificationManager.Stub.asInterface(
-                ServiceManager.getService(Context.NOTIFICATION_SERVICE));
-
-        mHaloEnabled = (CheckBoxPreference) findPreference(KEY_HALO_ENABLED);
-        mHaloEnabled.setChecked(Settings.System.getInt(getActivity().getContentResolver(),
-                Settings.System.HALO_ENABLED, 0) == 1);
-
-       int showPopups = Settings.System.getInt(getContentResolver(), Settings.System.WE_WANT_POPUPS, 1);
-
-        mWeWantPopups = (CheckBoxPreference) findPreference(KEY_WE_WANT_POPUPS);
-        mWeWantPopups.setOnPreferenceChangeListener(this);
-        mWeWantPopups.setChecked(showPopups > 0);
-
-       int isLowRAM = (ActivityManager.isLargeRAM()) ? 0 : 1;
-        mHaloPause = (CheckBoxPreference) prefSet.findPreference(KEY_HALO_PAUSE);
-        mHaloPause.setChecked(Settings.System.getInt(mContext.getContentResolver(),
-                Settings.System.HALO_PAUSE, isLowRAM) == 1);
-
-        mHaloState = (ListPreference) prefSet.findPreference(KEY_HALO_STATE);
-        mHaloState.setValue(String.valueOf((isHaloPolicyBlack() ? "1" : "0")));
-        mHaloState.setOnPreferenceChangeListener(this);
-
-        mHaloHide = (CheckBoxPreference) prefSet.findPreference(KEY_HALO_HIDE);
-        mHaloHide.setChecked(Settings.System.getInt(mContext.getContentResolver(),
-                Settings.System.HALO_HIDE, 0) == 1);
-
-        mHaloReversed = (CheckBoxPreference) prefSet.findPreference(KEY_HALO_REVERSED);
-        mHaloReversed.setChecked(Settings.System.getInt(mContext.getContentResolver(),
-                Settings.System.HALO_REVERSED, 1) == 1);
                 
         }
 
@@ -195,15 +148,6 @@ public class StatusBar extends SettingsPreferenceFragment implements
      public void onResume() {
          super.onResume();
      }
-
-     private boolean isHaloPolicyBlack() {
-        try {
-            return mNotificationManager.isHaloPolicyBlack();
-        } catch (android.os.RemoteException ex) {
-                // System dead
-        }
-        return true;
-    }
  	
    
  
@@ -227,22 +171,6 @@ public class StatusBar extends SettingsPreferenceFragment implements
             Settings.System.putInt(getActivity().getApplicationContext().getContentResolver(),
                     Settings.System.AUTO_HIDE_STATUSBAR, value ? 1 : 0);
             return true;
-         } else if  (preference == mHaloEnabled) {  
-            Settings.System.putInt(getActivity().getContentResolver(),
-                    Settings.System.HALO_ENABLED, mHaloEnabled.isChecked()
-                    ? 1 : 0);  
-         } else if (preference == mHaloHide) {  
-            Settings.System.putInt(mContext.getContentResolver(),
-                    Settings.System.HALO_HIDE, mHaloHide.isChecked()
-                    ? 1 : 0); 
-         } else if (preference == mHaloPause) {
-            Settings.System.putInt(mContext.getContentResolver(),
-                    Settings.System.HALO_PAUSE, mHaloPause.isChecked()
-                    ? 1 : 0);
-        } else if (preference == mHaloReversed) {  
-            Settings.System.putInt(mContext.getContentResolver(),
-                    Settings.System.HALO_REVERSED, mHaloReversed.isChecked()
-                     ? 1 : 0);  
     }
          return super.onPreferenceTreeClick(preferenceScreen, preference);
 
@@ -259,26 +187,13 @@ public class StatusBar extends SettingsPreferenceFragment implements
             Settings.System.putInt(getActivity().getApplicationContext().getContentResolver(),
                     Settings.System.STATUS_BAR_NOTIF_ICON_OPACITY, iconOpacity);
             return true;
-         } else if (preference == mFontsize) {
+        } else if (preference == mFontsize) {
             int val = Integer.parseInt((String) Value);
             Settings.System.putInt(mContentRes,
                     Settings.System.STATUSBAR_FONT_SIZE, val);
             Helpers.restartSystemUI();
             return true;
-         } else if (preference == mHaloState) {
-            boolean state = Integer.valueOf((String) Value) == 1;
-            try {
-                mNotificationManager.setHaloPolicyBlack(state);
-            } catch (android.os.RemoteException ex) {
-                // System dead
-            }          
-            return true;
-          } else if (preference == mWeWantPopups) {
-            boolean checked = (Boolean) Value;
-                        Settings.System.putBoolean(getActivity().getContentResolver(),
-                                Settings.System.WE_WANT_POPUPS, checked);
-            return true;
-        }
+             }
             return false;
              }
     

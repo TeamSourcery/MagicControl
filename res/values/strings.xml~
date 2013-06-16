@@ -913,6 +913,7 @@
     <string name="lockscreen_target_info">Drag the unlock icon to targets to assign targets</string>
     <string name="lockscreen_options_info">Touch text to get summary of each option</string>
     <string name="lockscreen_target_longpress_summary">Enables long press options for lock screen targets</string>
+    <string name="lockscreen_target_longpress_text">Longpress status</string>
     <string name="lockscreen_glow_torch_text">GlowPad torch</string>
     <string name="lockscreen_glow_torch_summary">Longpressing the center of the lockcircle will turn torch on.  Release finger to turn torch off.</string>
     <string name="lockscreen_all_widgets_title">Allow all widgets</string>
@@ -1083,24 +1084,4 @@
 
     <string name="show_enter_key_title">Show enter key</string>
     <string name="show_enter_key_summary">Force keyboard to show enter instead of emoticon key</string>
-
-<!-- Label for are-notifications-enabled checkbox in app details [CHAR LIMIT=20] -->
-    <string name="app_halo_label_black">Blacklist Crystal Ball notifications</string>
-    <string name="app_halo_label_white">Whitelist Crystal Ball notifications</string>
-<!-- HALO -->
-    <string name="halo_enabled_title">Enable Crystal Ball</string>
-    <string name="halo_enabled_summary">Completely enable or disable Crystal Ball</string>
-    <string name="halo_hide_title">Hide Crystal Ball after activity</string>
-    <string name="halo_hide_summary">Crystal Ball will appear for incoming tasks and scroll out of sight after a while</string>
-    <string name="halo_reversed_title">Reverse Crystal Ball gestures</string>
-    <string name="halo_reversed_summary">Applies tasking or dragging to the double-tap-swipe gesture</string>
-    <string name="halo_state_title">Crystal Ball policy</string>
-    <string name="halo_state_summary">For black/white-listing notifications pinging through Crystal Ball</string>
-    <string name="halo_state_black">Black list</string>
-    <string name="halo_state_white">White list</string>
-    <string name="halo_pause_title">Have Crystal Ball pause active app</string>
-    <string name="halo_pause_summary">When opening an app with Crystal Ball the underlying app will get paused</string>
-<!-- We want popups -->
-    <string name="popups_title">Allow floating windows</string>
-    <string name="popups_summary">Controls whether you want floating windows from notification panel</string>
    </resources>

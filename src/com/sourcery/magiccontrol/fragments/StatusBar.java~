@@ -93,15 +93,14 @@ public class StatusBar extends SettingsPreferenceFragment implements
     private static final String STATUS_BAR_AUTO_HIDE = "status_bar_auto_hide";
     
     private static int STOCK_FONT_SIZE = 16;
-      
+   
     CheckBoxPreference mStatusbarSliderPreference;
     
     private CheckBoxPreference mStatusBarDoNotDisturb;
     private ListPreference mStatusBarIconOpacity;
     private CheckBoxPreference mStatusBarAutoHide;
-
     ListPreference mFontsize;  
-   
+
     private Activity mActivity;
 
     private int seekbarProgress;
@@ -188,7 +187,7 @@ public class StatusBar extends SettingsPreferenceFragment implements
             Settings.System.putInt(getActivity().getApplicationContext().getContentResolver(),
                     Settings.System.STATUS_BAR_NOTIF_ICON_OPACITY, iconOpacity);
             return true;
-         } else if (preference == mFontsize) {
+        } else if (preference == mFontsize) {
             int val = Integer.parseInt((String) Value);
             Settings.System.putInt(mContentRes,
                     Settings.System.STATUSBAR_FONT_SIZE, val);

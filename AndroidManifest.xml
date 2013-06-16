@@ -61,6 +61,14 @@
                 <category android:name="com.sourcery.magiccontrol.SHORTCUT"/>
             </intent-filter>
         </activity>
+        <activity
+            android:name=".fragments.CrystalBall"
+            android:label="Crystal Ball" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN"/>
+                <category android:name="com.sourcery.magiccontrol.SHORTCUT"/>
+            </intent-filter>
+        </activity>
         <activity android:name=".activities.StatusBarStyle"/>
         <activity android:name=".activities.NavBarStyle"/>
         <activity

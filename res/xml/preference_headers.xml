@@ -31,6 +31,11 @@
         android:id="@+id/transparency"
 	android:fragment="com.sourcery.magiccontrol.fragments.StatusBar"
         android:title="Status Bar Magic" />
+
+   <header
+        android:id="@+id/crystal_ball"
+	android:fragment="com.sourcery.magiccontrol.fragments.CrystalBall"
+        android:title="Crystal Ball" />
     
       <header
         android:id="@+id/tablet"
